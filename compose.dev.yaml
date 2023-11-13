@@ -1,0 +1,62 @@
+networks:
+  frontend:
+  backend:
+
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "5173:5173"
+      - "24678:24678"
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/postgres-user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      POSTGRES_DB: app
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    secrets:
+      - postgres-user
+      - postgres-password
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    networks:
+      - backend
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/postgres-user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      POSTGRES_DB: app
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    secrets:
+      - postgres-user
+      - postgres-password
+  redis:
+    image: redis:7.2.3
+    restart: unless-stopped
+    networks:
+      - backend
+    volumes:
+      - redis:/data
+
+volumes:
+  postgres:
+  redis:
+
+secrets:
+  postgres-user: 
+    file: ./secrets/postgres-user.txt
+  postgres-password: 
+    file: ./secrets/postgres-password.txt
+

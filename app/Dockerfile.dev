@@ -1,0 +1,27 @@
+# Base image
+FROM node:21.1.0
+
+# Set environment variables
+ENV NODE_ENV=development
+
+# Set working directory
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Build the app
+# RUN npm run build
+
+# Expose ports for SvelteKit and Vite's HMR
+EXPOSE 5173
+EXPOSE 24678
+
+# Start SvelteKit development server
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
