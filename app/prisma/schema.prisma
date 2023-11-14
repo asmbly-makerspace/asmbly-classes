@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  // auto-incrementing primary key
+  id Int @id @default(autoincrement())
+  barcode String
+  name String
+}
