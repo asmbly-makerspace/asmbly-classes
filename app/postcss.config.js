@@ -3,8 +3,8 @@ import tailwind from 'tailwindcss';
 
 const config = {
     plugins: [
-        tailwind(),
         autoprefixer(),
+        tailwind(),
     ]
 };
 

@@ -7,9 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
+model NeonEventCategory {
   // auto-incrementing primary key
   id Int @id @default(autoincrement())
-  barcode String
-  name String
+  name String @unique @db.VarChar(50)
+  events NeonEventType[]
+  instances NeonEventInstance[]
+}
+
+model NeonEventTeacher {
+  id Int @id @default(autoincrement())
+  name String @unique @db.VarChar(50)
+  events NeonEventType[]
+  instances NeonEventInstance[]
+}
+
+model NeonBaseRegLink {
+  id Int @id @default(autoincrement())
+  url String @unique
+}
+
+model NeonEventType {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(50)
+  capacity Int 
+  price Float 
+  summary String 
+  teacher NeonEventTeacher[]
+  category NeonEventCategory[]
+  instances NeonEventInstance[]
+
+  @@unique(name: "uniqueEvent", [capacity, name, price, summary])
+}
+
+model NeonEventInstance {
+  eventId Int @id 
+  eventType NeonEventType @relation(fields:[eventTypeId], references: [id])
+  eventTypeId Int
+  teacher NeonEventTeacher @relation(fields: [teacherId], references: [id])
+  teacherId Int
+  category NeonEventCategory @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  attendeeCount Int
+  startDateTime DateTime 
+  endDateTime DateTime 
 }

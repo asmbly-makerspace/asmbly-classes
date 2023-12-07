@@ -22,18 +22,21 @@ COPY . .
 # Expose ports for SvelteKit and Vite's HMR
 EXPOSE 5173
 EXPOSE 24678
+EXPOSE 5555
 
 COPY ./entrypoint.sh /entrypoint.sh
 COPY ./wait-for-it.sh /wait-for-it.sh
-RUN chmod +x /entrypoint.sh
-RUN chmod +x /wait-for-it.sh
+RUN chmod +x /entrypoint.sh \
+    && chmod +x /wait-for-it.sh
 
 ARG POSTGRES_DB
 ARG POSTGRES_PORT
-ENV POSTGRES_DB=$POSTGRES_DB
-ENV POSTGRES_PORT=$POSTGRES_PORT
+ENV POSTGRES_DB=$POSTGRES_DB \
+    POSTGRES_PORT=$POSTGRES_PORT
 
 ENTRYPOINT [ "/wait-for-it.sh", "db:5432", "-t", "10", "-s", "--", "/entrypoint.sh" ]
 
 # Start SvelteKit development server
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+
+#CMD ["npx", "prisma", "studio", "--port", "5555"]

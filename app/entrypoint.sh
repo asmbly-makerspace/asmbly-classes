@@ -9,6 +9,6 @@ PG_USER=$(cat /run/secrets/postgres-user) \
 && export DATABASE_URL \
 && npx prisma generate \
 && npx prisma db push \
-&& npx prisma db seed
+&& npx prisma db seed \
 
 exec "$@"
