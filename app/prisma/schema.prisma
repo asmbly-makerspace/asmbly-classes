@@ -11,8 +11,16 @@ model NeonEventCategory {
   // auto-incrementing primary key
   id Int @id @default(autoincrement())
   name String @unique @db.VarChar(50)
+  archCategories AsmblyArchCategory? @relation(fields: [archCategoriesId], references: [id])
+  archCategoriesId Int?
   events NeonEventType[]
   instances NeonEventInstance[]
+}
+
+model AsmblyArchCategory {
+  id Int @id @default(autoincrement())
+  name String @unique @db.VarChar(50)
+  baseCategories NeonEventCategory[]
 }
 
 model NeonEventTeacher {

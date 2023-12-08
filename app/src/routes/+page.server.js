@@ -11,16 +11,19 @@ export async function load() {
 			}
 		},
 		include: {
-			category: true
+			category: {
+				include: {
+					archCategories: true,
+				}
+			}
 		}
 	});
 
 	let classJson = [];
-	let classNames = [];
 	let classCategories = new Set();
 
 	for (const event of eventTypes) {
-		classCategories.add(event.category[0].name);
+		classCategories.add(event.category[0].archCategories.name);
 		let classContext = {};
 		const instances = await prisma.NeonEventInstance.findMany({
 			where: {
@@ -52,14 +55,13 @@ export async function load() {
 		classContext.summary = event.summary;
 		classContext.price = event.price;
 		classContext.capacity = event.capacity;
-		classContext.category = event.category[0].name;
+		classContext.category = event.category[0].archCategories.name;
+		classContext.typeId = event.id;
 		classJson.push(classContext);
-		classNames.push(event.name);
 	}
 
 	const data = {
 		classJson: classJson,
-		classNames: classNames,
 		classCategories: classCategories
 	}
 
