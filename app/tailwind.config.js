@@ -53,7 +53,7 @@ export default {
                     "primary": "#2b2c6b",
                     "secondary": "#f2f4ef",
                     "accent": "#37cdbe",
-                    "neutral": "#3d4451",
+                    "neutral": "#7c879c",
                     "base-100": "#3d4451",
                 }
             }

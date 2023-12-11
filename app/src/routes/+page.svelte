@@ -1,12 +1,27 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	import cnc from '$lib/images/LagunaSwift.jpg';
-
-	console.log(data)
+	import defaultImg from '$lib/images/AsmblyLogoWhite.png?enhanced';
+	import Beginner_CNC_Router from '$lib/images/Beginner_CNC_Router.jpg?enhanced';
 
 	let searchTerm = '';
 	let classList = data.classJson;
+
+	const classImages = {
+		"Beginner CNC Router": Beginner_CNC_Router,
+	};
+
+	function getClassImage(className) {
+		const result = classImages[className];
+		if (result === undefined) {
+			return defaultImg;
+		}
+		return result;
+	}
+
+	for (const event of classList) {
+		event.imgName = getClassImage(event.name);
+	}
 
 	let archCategories = new Map([
 		['Orientation', false],
@@ -44,8 +59,6 @@
 			return classList
 		}
 	} 
-
-	$: classList = filterBySearch(filterByCategory(data.classJson, archCategories), searchTerm);
 
 	const svgs = {
 		'Orientation': ['m122.16,77.71V0H0v44.44h20.85C9.16,51.21,1.05,63.5.1,77.71h-.1v5.59h.1c1.38,20.74,18.01,37.37,38.75,38.75v.1h5.59v-.1c14.22-.95,26.5-9.06,33.27-20.75v20.85h83.3v-44.44h-38.86Zm-5.59,0h-33.27v-33.27h33.27v33.27ZM44.44,44.44h33.27v33.27h-33.27v-33.27ZM83.3,5.59h33.27v33.27h-33.27V5.59Zm-38.86,0h33.27v33.27h-33.27V5.59Zm-38.86,0h33.27v33.27H5.59V5.59Zm33.27,38.96v33.16H5.69c1.36-17.66,15.5-31.81,33.16-33.16ZM5.69,83.3h33.16v33.16c-17.66-1.36-31.81-15.5-33.16-33.16Zm38.75,33.16v-33.16h33.16c-1.36,17.66-15.5,31.81-33.16,33.16Zm72.13.11h-33.27v-33.27h33.27v33.27Zm38.86,0h-33.27v-33.27h33.27v33.27Z'],
@@ -93,36 +106,36 @@
 
 	function generateFillColor(category, alwaysChecked = false) {
 		const baseColorVariants = {
-			"Orientation": 'fill-neutral group-hover:fill-asmbly-hover',
+			"Orientation": 'fill-neutral group-hover:fill-asmbly-hover stroke-neutral group-hover:stroke-asmbly-hover',
 			"Woodworking": 'fill-neutral group-hover:fill-woodwork-hover',
 			"Metalworking": 'fill-neutral group-hover:fill-metalwork-hover',
 			"Laser Cutting": 'fill-neutral group-hover:fill-lasers-hover',
 			"3D Printing": 'fill-neutral group-hover:fill-3dprinting-hover',
 			"Textiles": 'fill-neutral group-hover:fill-textiles-hover',
 			"Electronics": 'fill-neutral group-hover:fill-electronics-hover',
-			"Miscellaneous": 'fill-neutral group-hover:fill-asmbly-hover'
+			"Miscellaneous": 'fill-neutral group-hover:fill-asmbly-hover stroke-neutral group-hover:stroke-asmbly-hover'
 		};
 
 		const checkedColorVariants = {
-			"Orientation": 'group-hover:fill-asmbly-hover fill-asmbly-hover',
+			"Orientation": 'group-hover:fill-asmbly-hover fill-asmbly-hover stroke-asmbly-hover group-hover:stroke-asmbly-hover',
 			"Woodworking": 'group-hover:fill-woodwork-hover fill-woodwork-hover',
 			"Metalworking": 'group-hover:fill-metalwork-hover fill-metalwork-hover',
 			"Laser Cutting": 'group-hover:fill-lasers-hover fill-lasers-hover',
 			"3D Printing": 'group-hover:fill-3dprinting-hover fill-3dprinting-hover',
 			"Textiles": 'group-hover:fill-textiles-hover fill-textiles-hover',
 			"Electronics": 'group-hover:fill-electronics-hover fill-electronics-hover',
-			"Miscellaneous": 'group-hover:fill-asmbly-hover fill-asmbly-hover'
+			"Miscellaneous": 'group-hover:fill-asmbly-hover fill-asmbly-hover stroke-asmbly-hover group-hover:stroke-asmbly-hover'
 		}
 
 		const alwaysCheckedVariants = {
-			"Orientation": 'fill-asmbly dark:fill-secondary',
+			"Orientation": 'stroke-asmbly',
 			"Woodworking": 'fill-woodwork',
 			"Metalworking": 'fill-metalwork',
 			"Laser Cutting": 'fill-lasers',
 			"3D Printing": 'fill-3dprinting',
 			"Textiles": 'fill-textiles',
 			"Electronics": 'fill-electronics',
-			"Miscellaneous": 'fill-asmbly dark:fill-secondary'
+			"Miscellaneous": 'stroke-asmbly'
 		}
 
 		if (archCategories.get(category) && !alwaysChecked) {
@@ -151,32 +164,98 @@
 				return 0;
 			}
 		})
+		return classList;
 	}
 
 	function sortByDate(classList) {
+
 		classList.sort((a, b) => {
-			if (a.classInstances[0].startDateTime < b.classInstances[0].startDateTime) {
-				return 1;
-			} else if (a.classInstances[0].startDateTime > b.classInstances[0].startDateTime) {
+			let sortedClassA = a.classInstances.sort((c1, c2) => {
+				if (c1.startDateTime < c2.startDateTime) {
+					return -1;
+				} else if (c1.startDateTime > c2.startDateTime) {
+					return 1;
+				} else {
+					return 0;
+				}
+				});
+			let sortedClassB = b.classInstances.sort((c1, c2) => {
+				if (c1.startDateTime < c2.startDateTime) {
+					return -1;
+				} else if (c1.startDateTime > c2.startDateTime) {
+					return 1;
+				} else {
+					return 0;
+				}
+			})
+			if (sortedClassA[0].startDateTime < sortedClassB[0].startDateTime) {
 				return -1;
+			} else if (sortedClassA[0].startDateTime > sortedClassB[0].startDateTime) {
+				return 1;
 			} else {
 				return 0;
 			}
 		})
+		return classList;
 	}
 
 	function sortByPrice(classList) {
 		classList.sort((a, b) => {
 			if (a.price < b.price) {
-				return 1;
-			} else if (a.price > b.price) {
 				return -1;
+			} else if (a.price > b.price) {
+				return 1;
 			} else {
 				return 0;
 			}
 		})
+		return classList;
 	}
-	console.log(data.classJson)
+
+	function sortBy(classList, sortByKeyword) {
+		if (sortByKeyword === 'Nearest Date') {
+			if (sortOrderKeyword === 'Asc') {
+				return sortByDate(classList);
+			} else {
+				return sortByDate(classList).reverse();
+			}
+		} else if (sortByKeyword === 'Name') {
+			if (sortOrderKeyword === 'Asc') {
+				return sortByName(classList);
+			} else {
+				return sortByName(classList).reverse();
+			}
+		} else if (sortByKeyword === 'Price') {
+			if (sortOrderKeyword === 'Asc') {
+				return sortByPrice(classList);
+			} else {
+				return sortByPrice(classList).reverse();
+			}
+		}
+	}
+
+	function sortClickHandler(keyword) {
+		sortByKeyword = keyword;
+		document.getElementById('sortDropdown').removeAttribute('open');
+	}
+
+	function sortOrderHandler() {
+		if (sortOrderKeyword === 'Asc') {
+			sortOrderKeyword = 'Desc';
+		} else {
+			sortOrderKeyword = 'Asc';
+		}
+	}
+
+	let sortByKeyword = 'Nearest Date';
+	let sortOrderKeyword = 'Asc';
+
+	$: sortContent = 'Sort by: ' + sortByKeyword;
+	$: sortOrderContent = 'Order: ' + sortOrderKeyword;
+
+	$: sortedClassList = sortBy(classList, sortByKeyword, sortOrderKeyword);
+
+	$: finalClassList = filterBySearch(filterByCategory(sortedClassList, archCategories), searchTerm);
 </script>
 
 <div class="flex justify-center mt-4">
@@ -198,7 +277,7 @@
 			<input
 				type="search"
 				name="q"
-				class="w-full py-2 text-sm text-secondary bg-base-300 rounded-md pl-10 focus:outline-none focus:bg-secondary focus:text-neutral"
+				class="w-full py-2 text-sm text-neutral bg-base-300 rounded-md pl-10 focus:outline-none focus:bg-secondary focus:text-secondary-content"
 				placeholder="Search by class name..."
 				autocomplete="off"
 				bind:value={searchTerm}
@@ -215,12 +294,12 @@
 									fill="none"
 									stroke-linecap="round"
 									stroke-linejoin="round"
-									stroke-width={category === "Miscellaneous" || category === "Orientation" ? "5px" : "2.5px"}
-									viewBox={category === "Miscellaneous" || category === "Orientation" ? "0 0 161 122" : "0 0 195 195"}
+									stroke-width={category === "Miscellaneous" || category === "Orientation" ? "5" : "2.5"}
+									viewBox={category === "Miscellaneous" || category === "Orientation" ? "-7.5 0 175 100" : "0 0 195 195"}
 									class="w-4 h-4"
 								>
 								{#each svgs[category] as svgPath}
-								<path class="{generateFillColor(category)}" d={svgPath}/>
+								<path stroke-width={category === "Miscellaneous" || category === "Orientation" ? "8" : "2.5"} class="{generateFillColor(category)}" d={svgPath}/>
 								{/each}
 								</svg>
 							</div>
@@ -232,11 +311,28 @@
 			{/each}
 		</div>
 	</div>
-	<div class="lg:container lg:max-w-5xl">
-		{#each classList as event}
-			<div class="card lg:card-side bg-base-100 shadow-xl mx-2 mb-4 max-h-72">
+	<div class="grid place-content-start lg:container lg:max-w-5xl">
+		<div class="flex justify-self-start">
+			<details id="sortDropdown" class="dropdown">
+				<summary class="ml-2 mb-2 btn btn-ghost">{sortContent}
+				<svg fill="none" viewBox="0 0 20 20" class="w-4 h-4 transition-transform duration-200 transform"><path class="fill-base-content" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+				</summary>	
+				<ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-40">
+				<li><a on:click={() => sortClickHandler('Nearest Date')}>Nearest Date</a></li>
+				<li><a on:click={() => sortClickHandler('Name')}>Name</a></li>
+				<li><a on:click={() => sortClickHandler('Price')}>Price</a></li>
+				</ul>
+			</details>
+			<div>
+				<a on:click={() => sortOrderHandler()} class="ml-2 mb-2 btn btn-ghost">{sortOrderContent}
+				<svg fill="none" viewBox="0 0 20 20" class="w-4 h-4 transition-transform duration-200 transform"><path class="fill-base-content" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+				</a>	
+			</div>
+		</div>
+		{#each finalClassList as event}
+			<div class="card lg:card-side bg-base-100 shadow-xl mx-2 mb-4 max-h-64">
 				<figure class="w-full md:w-1/2">
-					<img class="h-full" src={cnc} alt="{event.name} image" />
+					<enhanced:img class="h-full" src={event.imgName} alt="{event.name} image" />
 				</figure>
 				<div class="card-body w-full">
 					<div class="flex justify-between">
@@ -246,12 +342,11 @@
 								fill="none"
 								stroke-linecap="round"
 								stroke-linejoin="round"
-								stroke-width={event.categroy === "Miscellaneous" || event.category === "Orientation" ? "5px" : "2.5px"}
-								viewBox={event.category === "Miscellaneous" || event.category === "Orientation" ? "0 0 161 122" : "0 0 195 195"}
+								viewBox={event.category === "Miscellaneous" || event.category === "Orientation" ? "-7.5 0 175 100" : "0 0 195 195"}
 								class="w-6 h-6"
 							>
 							{#each svgs[event.category] as svgPath}
-							<path class="{generateFillColor(event.category, true)}" d={svgPath}/>
+								<path stroke-width={event.category === "Miscellaneous" || event.category === "Orientation" ? "8" : "2.5"} class="{generateFillColor(event.category, true)}" d={svgPath}/>
 							{/each}
 							</svg>
 						</div>
