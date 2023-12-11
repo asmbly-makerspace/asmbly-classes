@@ -1,26 +1,47 @@
 <script>
+	import { get } from 'svelte/store';
+
 	/** @type {import('./$types').PageData} */
 	export let data;
-	import defaultImg from '$lib/images/AsmblyLogoWhite.png?enhanced';
-	import Beginner_CNC_Router from '$lib/images/Beginner_CNC_Router.jpg?enhanced';
 
 	let searchTerm = '';
 	let classList = data.classJson;
 
-	const classImages = {
-		"Beginner CNC Router": Beginner_CNC_Router,
-	};
-
-	function getClassImage(className) {
-		const result = classImages[className];
-		if (result === undefined) {
-			return defaultImg;
+	const classImages = import.meta.glob(
+		'$lib/images/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp}',
+		{	
+			eager: true,
+			query: {
+				enhanced: true
+			}
 		}
-		return result;
-	}
+	);
 
-	for (const event of classList) {
-		event.imgName = getClassImage(event.name);
+	function getClassImage(className, category) {
+		const result = classImages["/src/lib/images/" + className.replace(/\s+/g, '_') + ".jpg"];
+
+		if (result === undefined) {
+			switch (category) {
+				case "Orientation":
+				case "Miscellaneous":
+					return classImages["/src/lib/images/classDefault.jpg"].default;
+				case "Woodworking":
+					return classImages["/src/lib/images/woodworkingDefault.jpg"].default;
+				case "Metalworking":
+					return classImages["/src/lib/images/metalworkingDefault.jpg"].default;
+				case "Laser Cutting":
+					return classImages["/src/lib/images/lasersDefault.jpg"].default;
+				case "3D Printing":
+					return classImages["/src/lib/images/3dprintingDefault.jpg"].default;
+				case "Textiles":
+					return classImages["/src/lib/images/textilesDefault.jpg"].default;
+				case "Electronics":
+					return classImages["/src/lib/images/electronicsDefault.jpg"].default;
+				default:
+					return classImages["/src/lib/images/classDefault.jpg"].default;
+			}
+		}
+		return result.default;
 	}
 
 	let archCategories = new Map([
@@ -277,7 +298,7 @@
 			<input
 				type="search"
 				name="q"
-				class="w-full py-2 text-sm text-neutral bg-base-300 rounded-md pl-10 focus:outline-none focus:bg-secondary focus:text-secondary-content"
+				class="w-full py-2 text-sm text-neutral placeholder:text-neutral placeholder:italic bg-base-300 rounded-md pl-10 focus:outline-none focus:bg-secondary focus:text-secondary-content"
 				placeholder="Search by class name..."
 				autocomplete="off"
 				bind:value={searchTerm}
@@ -311,7 +332,7 @@
 			{/each}
 		</div>
 	</div>
-	<div class="grid place-content-start lg:container lg:max-w-5xl">
+	<div class="grid place-content-start lg:container lg:max-w-4xl">
 		<div class="flex justify-self-start">
 			<details id="sortDropdown" class="dropdown">
 				<summary class="ml-2 mb-2 btn btn-ghost">{sortContent}
@@ -330,9 +351,9 @@
 			</div>
 		</div>
 		{#each finalClassList as event}
-			<div class="card lg:card-side bg-base-100 shadow-xl mx-2 mb-4 max-h-64">
-				<figure class="w-full md:w-1/2">
-					<enhanced:img class="h-full" src={event.imgName} alt="{event.name} image" />
+			<div class="card lg:card-side bg-base-100 shadow-xl mx-2 mb-4 lg:max-h-64">
+				<figure class="w-full lg:w-4/5">
+					<enhanced:img class="h-full" src={getClassImage(event.name, event.category)} alt="{event.name} image" />
 				</figure>
 				<div class="card-body w-full">
 					<div class="flex justify-between">
@@ -351,11 +372,13 @@
 							</svg>
 						</div>
 					</div>
-					<p>
+					<p class="text-md">
 						{event.summary.length > 200 ? event.summary.substring(0, 200) + '...' : event.summary}
 					</p>
-					<p>Price: { event.price === 0 ? 'Free' : '$' + event.price + '.00'}</p>
-					<a class="btn btn-primary" href="/event/{event.typeId}">Learn More</a>
+					<div class="card-actions justify-end content-center">
+						<p>Price: { event.price === 0 ? 'Free' : '$' + event.price + '.00'}</p>
+						<a class="btn btn-primary" href="/event/{event.typeId}">Learn More</a>
+					</div>
 				</div>
 			</div>
 		{/each}
