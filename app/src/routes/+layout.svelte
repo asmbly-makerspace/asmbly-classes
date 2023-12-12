@@ -3,7 +3,7 @@
 	import logo from '$lib/images/AsmblyLogoWhite.png';
 </script>
 
-<nav class="flex justify-center bg-primary rounded-box rounded-full shadow-lg h-16 mx-3 mt-3">
+<nav class="flex justify-center bg-primary lg:rounded-box lg:rounded-full shadow-lg h-16 lg:mx-3 lg:mt-3">
 <div class="navbar bg-primary text-primary-content rounded-box rounded-full w-full max-w-7xl">
 	<div class="navbar-start">
 		<div class="dropdown">

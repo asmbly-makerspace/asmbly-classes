@@ -279,108 +279,128 @@
 	$: finalClassList = filterBySearch(filterByCategory(sortedClassList, archCategories), searchTerm);
 </script>
 
-<div class="flex justify-center mt-4">
-	<div class="lg:container lg:max-w-xs">
-		<div class="w-full relative text-neutral focus-within:text-neutral pr-2">
-			<span class="absolute inset-y-0 left-0 flex items-center pl-2">
-				<button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
-					<svg
-						fill="none"
-						stroke="currentColor"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						viewBox="0 0 24 24"
-						class="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg
-					>
-				</button>
-			</span>
-			<input
-				type="search"
-				name="q"
-				class="w-full py-2 text-sm text-neutral placeholder:text-neutral placeholder:italic bg-base-300 rounded-md pl-10 focus:outline-none focus:bg-secondary focus:text-secondary-content"
-				placeholder="Search by class name..."
-				autocomplete="off"
-				bind:value={searchTerm}
-			/>
-		</div>
-		<div class="divider mr-2 mt-6">Filter by Category</div>
-		<div class="w-full pr-2 pt-2 mr-2 mt-2 ">
-			{#each [...archCategories.keys()] as category}
-				<div class="form-control mr-2">
-					<label class="label cursor-pointer group">
-						<div class="flex items-center gap-4">
-							<div class="grid place-items-center rounded-box rounded-lg {generateBackgroundColor(category)} shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10)] group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)] h-8 w-8">
+<div class="drawer lg:drawer-open">
+	<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+	<div class="drawer-content">
+	  <!-- Page content here -->
+	    <div class="flex justify-start mt-4">
+			<div class="grid place-content-start lg:max-w-4xl">
+				<div class="grid grid-rows-2 lg:flex lg:pl-2 lg:justify-self-start">
+					<div class="lg:max-w-md row-start-1 relative text-neutral focus-within:text-neutral px-2">
+						<span class="absolute inset-y-0 left-0 flex items-center pl-2">
+							<button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
 								<svg
 									fill="none"
+									stroke="currentColor"
 									stroke-linecap="round"
 									stroke-linejoin="round"
-									stroke-width={category === "Miscellaneous" || category === "Orientation" ? "5" : "2.5"}
-									viewBox={category === "Miscellaneous" || category === "Orientation" ? "-7.5 0 175 100" : "0 0 195 195"}
-									class="w-4 h-4"
+									stroke-width="2"
+									viewBox="0 0 24 24"
+									class="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg
 								>
-								{#each svgs[category] as svgPath}
-								<path stroke-width={category === "Miscellaneous" || category === "Orientation" ? "8" : "2.5"} class="{generateFillColor(category)}" d={svgPath}/>
-								{/each}
-								</svg>
-							</div>
-							<span class="label-text group-hover:text-secondary">{category}</span>
+							</button>
+						</span>
+						<input
+							type="search"
+							name="q"
+							class="py-2 my-2 w-full text-sm text-neutral placeholder:text-neutral placeholder:italic bg-base-300 rounded-md pl-10 focus:outline-none focus:bg-secondary focus:text-secondary-content"
+							placeholder="Search by class name..."
+							autocomplete="off"
+							bind:value={searchTerm}
+						/>
+					</div>
+					<div class="row-start-2 flex justify-center">
+						<details id="sortDropdown" class="dropdown">
+							<summary class="lg:ml-2 lg:mb-2 btn btn-ghost">{sortContent}
+							<svg fill="none" viewBox="0 0 20 20" class="w-4 h-4 transition-transform duration-200 transform"><path class="fill-base-content" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+							</summary>	
+							<ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-40">
+							<li><a on:click={() => sortClickHandler('Nearest Date')}>Nearest Date</a></li>
+							<li><a on:click={() => sortClickHandler('Name')}>Name</a></li>
+							<li><a on:click={() => sortClickHandler('Price')}>Price</a></li>
+							</ul>
+						</details>
+						<div>
+							<a on:click={() => sortOrderHandler()} class="lg:ml-2 lg:mb-2 btn btn-ghost">{sortOrderContent}
+							<svg fill="none" viewBox="0 0 20 20" class="w-4 h-4 transition-transform duration-200 transform"><path class="fill-base-content" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+							</a>	
 						</div>
-						<input on:change={() => toggleArchCategory(category)} type="checkbox" checked="" class="checkbox peer" />
+					</div>
+				</div>
+				<div class="divider mx-2 mt-0 lg:hidden"></div>
+				<div class="flex justify-center mx-2 mb-4">
+					<label for="my-drawer-2" class="flex btn btn-block btn-primary drawer-button lg:hidden">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 -960 960 960" class="inline-block w-6 h-6 stroke-current fill-primary-content"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z"></path></svg>
+						<span class="">Show Filters</span>
 					</label>
 				</div>
-			{/each}
-		</div>
-	</div>
-	<div class="grid place-content-start lg:container lg:max-w-4xl">
-		<div class="flex justify-self-start">
-			<details id="sortDropdown" class="dropdown">
-				<summary class="ml-2 mb-2 btn btn-ghost">{sortContent}
-				<svg fill="none" viewBox="0 0 20 20" class="w-4 h-4 transition-transform duration-200 transform"><path class="fill-base-content" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-				</summary>	
-				<ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-40">
-				<li><a on:click={() => sortClickHandler('Nearest Date')}>Nearest Date</a></li>
-				<li><a on:click={() => sortClickHandler('Name')}>Name</a></li>
-				<li><a on:click={() => sortClickHandler('Price')}>Price</a></li>
-				</ul>
-			</details>
-			<div>
-				<a on:click={() => sortOrderHandler()} class="ml-2 mb-2 btn btn-ghost">{sortOrderContent}
-				<svg fill="none" viewBox="0 0 20 20" class="w-4 h-4 transition-transform duration-200 transform"><path class="fill-base-content" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-				</a>	
+				{#each finalClassList as event}
+					<div class="card lg:card-side bg-base-100 shadow-xl mx-2 mb-4 lg:max-h-64">
+						<figure class="w-full lg:w-4/5">
+							<enhanced:img class="h-full" src={getClassImage(event.name, event.category)} alt="{event.name} image" />
+						</figure>
+						<div class="card-body w-full">
+							<div class="flex justify-between">
+								<h2 class="card-title">{event.name}</h2>
+								<div class="grid place-items-center h-8 w-8">
+									<svg 
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										viewBox={event.category === "Miscellaneous" || event.category === "Orientation" ? "-7.5 0 175 100" : "0 0 195 195"}
+										class="w-6 h-6"
+									>
+									{#each svgs[event.category] as svgPath}
+										<path stroke-width={event.category === "Miscellaneous" || event.category === "Orientation" ? "8" : "2.5"} class="{generateFillColor(event.category, true)}" d={svgPath}/>
+									{/each}
+									</svg>
+								</div>
+							</div>
+							<p class="text-md">
+								{event.summary.length > 200 ? event.summary.substring(0, 200) + '...' : event.summary}
+							</p>
+							<div class="card-actions justify-end content-center">
+								<p>Price: { event.price === 0 ? 'Free' : '$' + event.price + '.00'}</p>
+								<a class="btn btn-primary" href="/event/{event.typeId}">Learn More</a>
+							</div>
+						</div>
+					</div>
+				{/each}
 			</div>
 		</div>
-		{#each finalClassList as event}
-			<div class="card lg:card-side bg-base-100 shadow-xl mx-2 mb-4 lg:max-h-64">
-				<figure class="w-full lg:w-4/5">
-					<enhanced:img class="h-full" src={getClassImage(event.name, event.category)} alt="{event.name} image" />
-				</figure>
-				<div class="card-body w-full">
-					<div class="flex justify-between">
-						<h2 class="card-title">{event.name}</h2>
-						<div class="grid place-items-center h-8 w-8">
-							<svg 
+	</div> 
+	<div class="drawer-side lg:mt-2 lg:pt-2 lg:pl-2 lg:ml-2">
+	  <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label> 
+	  <ul class="overflow-y-auto p-4 w-64 xl:w-80 min-h-full bg-base-200 lg:bg-transparent text-base-content">
+		<!-- Sidebar content here -->
+		<h2 class="font-semibold pl-2">Filter by Category</h2>
+		<li class="divider"></li>
+		{#each [...archCategories.keys()] as category}
+			<li><div class="form-control mr-2">
+				<label class="label cursor-pointer group">
+					<div class="flex items-center gap-4">
+						<div class="grid place-items-center rounded-box rounded-lg {generateBackgroundColor(category)} shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10)] group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)] h-8 w-8">
+							<svg
 								fill="none"
 								stroke-linecap="round"
 								stroke-linejoin="round"
-								viewBox={event.category === "Miscellaneous" || event.category === "Orientation" ? "-7.5 0 175 100" : "0 0 195 195"}
-								class="w-6 h-6"
+								stroke-width={category === "Miscellaneous" || category === "Orientation" ? "5" : "2.5"}
+								viewBox={category === "Miscellaneous" || category === "Orientation" ? "-7.5 0 175 100" : "0 0 195 195"}
+								class="w-4 h-4"
 							>
-							{#each svgs[event.category] as svgPath}
-								<path stroke-width={event.category === "Miscellaneous" || event.category === "Orientation" ? "8" : "2.5"} class="{generateFillColor(event.category, true)}" d={svgPath}/>
+							{#each svgs[category] as svgPath}
+							<path stroke-width={category === "Miscellaneous" || category === "Orientation" ? "8" : "2.5"} class="{generateFillColor(category)}" d={svgPath}/>
 							{/each}
 							</svg>
 						</div>
+						<span class="label-text group-hover:text-neutral-content">{category}</span>
 					</div>
-					<p class="text-md">
-						{event.summary.length > 200 ? event.summary.substring(0, 200) + '...' : event.summary}
-					</p>
-					<div class="card-actions justify-end content-center">
-						<p>Price: { event.price === 0 ? 'Free' : '$' + event.price + '.00'}</p>
-						<a class="btn btn-primary" href="/event/{event.typeId}">Learn More</a>
-					</div>
-				</div>
+					<input on:change={() => toggleArchCategory(category)} type="checkbox" checked="" class="checkbox" />
+				</label>
 			</div>
+			</li>
 		{/each}
+	  </ul>
 	</div>
 </div>
+  
