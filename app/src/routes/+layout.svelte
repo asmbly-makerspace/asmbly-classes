@@ -1,13 +1,27 @@
 <script>
+	import logo from '$lib/images/AsmblyLogoWhite.png?enhanced';
 	import '../app.css';
-	import logo from '$lib/images/AsmblyLogoWhite.png';
 </script>
 
 <nav class="flex justify-center bg-primary lg:rounded-box lg:rounded-full shadow-lg h-16 lg:mx-3 lg:mt-3">
 <div class="navbar bg-primary text-primary-content rounded-box rounded-full w-full max-w-7xl">
-	<div class="navbar-start">
-		<div class="dropdown">
-			<div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+	<div class="navbar-start w-full lg:w-1/2">
+		<a class="btn btn-ghost hidden lg:flex" href="https://asmbly.org">
+			<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-5 w-5 fill-primary-content"
+					fill="none"
+					viewBox="0 -960 960 960"
+					stroke="currentColor"
+					><path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"
+					/></svg>
+		</a>
+		<details class="dropdown">
+			<summary tabindex="0" role="button" class="btn btn-ghost lg:hidden">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-5 w-5"
@@ -21,25 +35,26 @@
 						d="M4 6h16M4 12h8m-8 6h16"
 					/></svg
 				>
-			</div>
+			</summary>
 			<ul
 				tabindex="0"
-				class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+				class="menu menu-md dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 text-base-content rounded-box w-52"
 			>
 				<li><a href="/">Search for Classes</a></li>
 				<li><a href="/my-classes">My Classes</a></li>
-				<li><a href="/checkout">Private and Checkout Classes</a></li>
+				<li><a href="/mentor-series">Mentor Series</a></li>
+				<li><a href="https://asmbly.org">Return to Main Site</a></li>
 			</ul>
-		</div>
+		</details>
 		<a href="https://asmbly.org" class="m-4">
-			<img src={logo} alt="logo" class="h-8" />
+			<enhanced:img src={logo} alt="logo" class="h-8 w-auto" />
 		</a>
 	</div>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal px-1">
 			<li><a href="/" class="text-md">Search for Classes</a></li>
 			<li><a href="/my-classes" class="text-md">My Classes</a></li>
-			<li><a href="/checkout" class="text-md">Private and Checkout Classes</a></li>
+			<li><a href="/mentor-series" class="text-md">Mentor Series</a></li>
 		</ul>
 	</div>
 	<div class="navbar-end m-2.5">

@@ -1,6 +1,6 @@
 import { prisma } from '$lib/db.server';
 
-/** @type {import('./$types').PageServerLoad} */
+/** @type {import('./$types').LayoutServerLoad} */
 export async function load() {
 	const eventTypes = await prisma.NeonEventType.findMany({
 		where: {
@@ -18,6 +18,8 @@ export async function load() {
 			}
 		}
 	});
+
+	const baseRegLink = await prisma.NeonBaseRegLink.findFirst();
 
 	let classJson = [];
 	let classCategories = new Set();
@@ -62,7 +64,8 @@ export async function load() {
 
 	const data = {
 		classJson: classJson,
-		classCategories: classCategories
+		classCategories: classCategories,
+		baseRegLink: baseRegLink
 	}
 
 	return data;
