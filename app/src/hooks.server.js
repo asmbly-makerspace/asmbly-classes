@@ -19,6 +19,7 @@ export async function handle ({ event, resolve }) {
     // the page wasn't cached or a populated object
     // containing body and headers
     let cached = await redisClient.hGetAll(key);
+    console.log(cached);
 
     if (!cached.body) {
       // if it wasn't cached, we render the pages

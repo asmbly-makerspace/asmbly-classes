@@ -75,9 +75,17 @@
 
 	function filterBySearch(classList, searchTerm) {
 		if (searchTerm !== '') {
-			return classList.filter( i => i.name.toLowerCase().includes(searchTerm.toLowerCase()) ) 
+			const options = { 
+				keys: ['name'],
+				threshold: 0.5
+			};
+			const fuse = new Fuse(classList, options);
+			const result = fuse.search(searchTerm);
+
+			const finalClassList = result.map( i => i.item );
+			return finalClassList;
 		} else {
-			return classList
+			return classList;
 		}
 	} 
 

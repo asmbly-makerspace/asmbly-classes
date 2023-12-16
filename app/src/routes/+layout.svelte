@@ -1,12 +1,13 @@
 <script>
 	import logo from '$lib/images/AsmblyLogoWhite.png?enhanced';
 	import '../app.css';
+	import { page } from '$app/stores';
 </script>
 
 <nav class="flex justify-center bg-primary lg:rounded-box lg:rounded-full shadow-lg h-16 lg:mx-3 lg:mt-3">
 <div class="navbar bg-primary text-primary-content rounded-box rounded-full w-full max-w-7xl">
 	<div class="navbar-start w-full lg:w-1/2">
-		<a class="btn btn-ghost hidden lg:flex" href="https://asmbly.org">
+		<a class="btn btn-ghost hidden lg:flex" href={$page.url.pathname === '/' ? 'https://asmbly.org' : "/"}>
 			<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-5 w-5 fill-primary-content"
@@ -43,6 +44,7 @@
 				<li><a href="/">Search for Classes</a></li>
 				<li><a href="/my-classes">My Classes</a></li>
 				<li><a href="/mentor-series">Mentor Series</a></li>
+				<li><a href="/classes-faq">Classes FAQ</a></li>
 				<li><a href="https://asmbly.org">Return to Main Site</a></li>
 			</ul>
 		</details>
@@ -55,6 +57,7 @@
 			<li><a href="/" class="text-md">Search for Classes</a></li>
 			<li><a href="/my-classes" class="text-md">My Classes</a></li>
 			<li><a href="/mentor-series" class="text-md">Mentor Series</a></li>
+			<li><a href="/classes-faq" class="text-md">Classes FAQ</a></li>
 		</ul>
 	</div>
 	<div class="navbar-end m-2.5">
