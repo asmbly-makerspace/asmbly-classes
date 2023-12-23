@@ -3,6 +3,10 @@ import { redisClient } from "./redis";
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle ({ event, resolve }) {
     const { url } = event;
+
+    if (url.pathname.startsWith('/event')) {
+      return await resolve(event);
+    }
   
     // Create a unique key to store the page in the
     // cache. I'm using "rendered" to differentiate

@@ -315,7 +315,7 @@
 						<input
 							type="search"
 							name="q"
-							class="py-2 my-2 w-full text-sm text-neutral placeholder:text-neutral placeholder:italic bg-base-300 rounded-md pl-10 focus:outline-none focus:bg-secondary focus:text-secondary-content"
+							class="py-2 my-2 w-full text-sm text-neutral placeholder:text-neutral placeholder:italic bg-base-300 pl-10 focus:outline-none focus:bg-secondary focus:text-secondary-content"
 							placeholder="Search by class name..."
 							autocomplete="off"
 							bind:value={searchTerm}
@@ -323,17 +323,17 @@
 					</div>
 					<div class="row-start-2 flex justify-center">
 						<details id="sortDropdown" class="dropdown">
-							<summary class="lg:ml-2 btn btn-ghost">{sortContent}
+							<summary class="lg:ml-2 btn rounded-none btn-ghost">{sortContent}
 							<svg fill="none" viewBox="0 0 20 20" class="w-4 h-4 transition-transform duration-200 transform"><path class="fill-base-content" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
 							</summary>	
-							<ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-40">
-								<li><a on:click={() => sortClickHandler('Date')}>Date</a></li>
-								<li><a on:click={() => sortClickHandler('Name')}>Name</a></li>
-								<li><a on:click={() => sortClickHandler('Price')}>Price</a></li>
+							<ul class="p-2 shadow menu rounded-none dropdown-content z-[1] bg-base-100 rounded-box w-40">
+								<li><a class="rounded-none" on:click={() => sortClickHandler('Date')}>Date</a></li>
+								<li><a class="rounded-none" on:click={() => sortClickHandler('Name')}>Name</a></li>
+								<li><a class="rounded-none" on:click={() => sortClickHandler('Price')}>Price</a></li>
 							</ul>
 						</details>
 						<div>
-							<a on:click={() => sortOrderHandler()} class="lg:ml-2 btn btn-ghost">{sortOrderContent}
+							<a on:click={() => sortOrderHandler()} class="lg:ml-2 btn rounded-none btn-ghost">{sortOrderContent}
 							<svg fill="none" viewBox="0 0 20 20" class="w-4 h-4 transition-transform duration-200 transform"><path class="fill-base-content" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
 							</a>	
 						</div>
@@ -341,19 +341,19 @@
 				</div>
 				<div class="divider mx-2 mt-0 lg:hidden"></div>
 				<div class="flex justify-center mx-2 mb-4">
-					<label for="my-drawer-2" class="flex btn btn-block btn-primary drawer-button lg:hidden">
+					<label for="my-drawer-2" class="flex btn rounded-none btn-block btn-primary drawer-button lg:hidden">
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 -960 960 960" class="inline-block w-6 h-6 stroke-current fill-primary-content"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z"></path></svg>
 						<span class="">Show Filters</span>
 					</label>
 				</div>
 				{#each finalClassList as event}
-					<div class="card lg:card-side bg-base-100 shadow-xl mx-2 mb-4 lg:max-h-64">
+					<div class="card rounded-none lg:card-side bg-base-100 shadow-xl mx-2 mb-4 lg:max-h-64">
 						<figure class="w-full lg:w-4/5">
 							<enhanced:img class="h-full" src={getClassImage(event.name, event.category)} alt="{event.name} image" />
 						</figure>
 						<div class="card-body w-full">
 							<div class="flex justify-between">
-								<h2 class="card-title">{event.name}</h2>
+								<h2 class="font-asmbly font-light card-title">{event.name}</h2>
 								<div class="grid place-items-center h-8 w-8">
 									<svg 
 										fill="none"
@@ -373,23 +373,23 @@
 							</p>
 							<div class="card-actions justify-end content-center">
 								<p>Price: { event.price === 0 ? 'Free' : '$' + event.price + '.00'}</p>
-								<a class="btn btn-primary" href="/event/{event.typeId}">Learn More</a>
+								<a class="btn rounded-none btn-primary" href="/event/{event.typeId}">Learn More</a>
 							</div>
 						</div>
 					</div>
 				{/each}
 				{#if finalClassList.length === 0}
-				<div class="card lg:card-side bg-base-100 shadow-xl mx-2 mb-4 lg:max-h-64 lg:mr-64">
+				<div class="card rounded-none lg:card-side bg-base-100 shadow-xl mx-2 mb-4 lg:max-h-64 lg:mr-64">
 					<figure class="w-full lg:w-4/5 h-64">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-full h-full fill-base-content"><path d="M480-420q-68 0-123.5 38.5T276-280h408q-25-63-80.5-101.5T480-420Zm-168-60 44-42 42 42 42-42-42-42 42-44-42-42-42 42-44-42-42 42 42 44-42 42 42 42Zm250 0 42-42 44 42 42-42-42-42 42-44-42-42-44 42-42-42-42 42 42 44-42 42 42 42ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z"/></svg>
 					</figure>
 					<div class="card-body w-full">
-						<h2 class="card-title">Sorry, no results found</h2>
+						<h2 class="font-asmbly font-light card-title">Sorry, no results found</h2>
 						<p class="text-md">
 							We couldn't find any classes that match your search. Try adjusting your filters or checking your spelling.
 						</p>
 						<div class="card-actions justify-end content-center">
-							<button on:click={() => clearSearch()} class="btn btn-primary">Clear Search</button>
+							<button on:click={() => clearSearch()} class="btn rounded-none btn-primary">Clear Search</button>
 						</div>
 					</div>
 				</div>
@@ -401,13 +401,13 @@
 	  <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label> 
 	  <ul class="overflow-y-auto p-4 w-64 xl:w-80 min-h-full bg-base-200 lg:bg-transparent text-base-content">
 		<!-- Sidebar content here -->
-		<h2 class="font-semibold pl-2">Filter by Category</h2>
+		<h2 class="font-asmbly font-light pl-2">Filter by Category</h2>
 		<li class="divider"></li>
 		{#each [...archCategories.keys()] as category}
 			<li><div class="form-control mr-2">
 				<label class="label cursor-pointer group">
 					<div class="flex items-center gap-4">
-						<div class="grid place-items-center rounded-box rounded-lg {generateBackgroundColor(category)} shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10)] group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)] h-8 w-8">
+						<div class="grid place-items-center {generateBackgroundColor(category)} shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10)] group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)] h-8 w-8">
 							<svg
 								fill="none"
 								stroke-linecap="round"
@@ -421,9 +421,9 @@
 							{/each}
 							</svg>
 						</div>
-						<span class="label-text group-hover:text-neutral-content">{category}</span>
+						<span class="label-text group-hover:text-base-content/60">{category}</span>
 					</div>
-					<input on:change={() => toggleArchCategory(category)} type="checkbox" checked="" class="checkbox" />
+					<input on:change={() => toggleArchCategory(category)} type="checkbox" checked="" class="checkbox rounded-none" />
 				</label>
 			</div>
 			</li>

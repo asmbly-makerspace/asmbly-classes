@@ -4,6 +4,14 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script language="javascript" type="text/javascript">
+			let isSystemDefaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			let isDarkMode =
+				localStorage.getItem('theme') === 'dark' ||
+				(!('theme' in localStorage) && isSystemDefaultDark);
+			let currentTheme = isDarkMode ? 'asmblyDark' : 'asmbly';
+			document.documentElement.setAttribute('data-theme', currentTheme);
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

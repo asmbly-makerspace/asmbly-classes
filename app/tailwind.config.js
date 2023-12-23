@@ -2,7 +2,8 @@
 export default {
     content: [
         './src/app.html',
-        './src/routes/**/*.{svelte,js,ts}'
+        './src/routes/**/*.{svelte,js,ts}',
+        './src/lib/components/**/*.{svelte,js,ts}',
     ],
     theme: {
         colors: {
@@ -34,7 +35,13 @@ export default {
                 DEFAULT: "#ee6e23",
                 "hover": "#f6b691",
             },
-        } 
+        } ,
+        extend: {
+            fontFamily: {
+                asmbly: ['asmbly', 'sans-serif'],
+                sans: ['Roboto', 'sans-serif']
+            },
+        },
     },
     plugins: [require('daisyui')],
     daisyui: {

@@ -1,10 +1,24 @@
 <script>
+  import { page } from '$app/stores';
+
   /** @type {import('./$types').PageData} */
   export let data;
   import { DateTime } from 'luxon';
 
+  import SuperForm from '$lib/components/classRequestForm.svelte';
+	import TextField from '$lib/components/textField.svelte';
+  import RadioField from '$lib/components/radioField.svelte';
+  import { schema, privateRequestSchema } from '$lib/zodSchemas/schema.js';
+
+  const noCheckouts = [
+    "Beginner CNC Router", 
+    "Big Lasers Class",
+    "Small Lasers Class",
+  ];
+
   const { classJson } = data;
   const classType = classJson.filter( i => i.typeId == data.slug )[0];
+  console.log(classType);
 
   const classInstances = classType.classInstances;
   const classDates = classInstances.map( i => DateTime.fromJSDate(i.startDateTime));
@@ -38,8 +52,8 @@
 </script>
 
 <div class="container mx-auto flex flex-col items-center justify-center pb-8">
-  <h1 class="text-center text-xl pt-8 pb-4 lg:pb-6">{classType.name}</h1>
-	<div class="card lg:card-side w-full max-w-6xl shadow-lg flex justify-center mt-4">
+  <h1 class="font-asmbly text-center text-xl pt-8 pb-4 lg:pb-6">{classType.name}</h1>
+	<div class="card rounded-none lg:card-side w-full max-w-6xl shadow-lg flex justify-center mt-4">
 		<div class="md:p-8 p-5 rounded">
 			<div class="px-4 flex items-center justify-between">
         <button
@@ -112,7 +126,7 @@
                   on:click={() => {
                     date = DateTime.local(currentDate.year, currentDate.month, day + 1);
                   }}
-                  class="focus:bg-primary focus:text-primary-content hover:bg-base-300 text-base-content w-full h-full flex items-center justify-center font-medium bg-base-200 rounded-full"
+                  class="{date.hasSame(DateTime.local(currentDate.year, currentDate.month, day + 1), "day") ? 'bg-primary text-primary-content hover:bg-primary' : 'hover:bg-base-300 text-base-content bg-base-200'}  w-10 h-10 flex items-center justify-center font-medium rounded-full"
                   >{day + 1}</a
                 >
               </div>
@@ -135,17 +149,55 @@
             <p class="text-sm font-light leading-3">{DateTime.fromJSDate(classOnDate.startDateTime).setZone("utc").toLocaleString(DateTime.TIME_SIMPLE)} - {DateTime.fromJSDate(classOnDate.endDateTime).setZone("utc").toLocaleString(DateTime.TIME_SIMPLE)}</p>
             <p class="text-sm pt-2 leading-4 leading-none">Teacher: {classOnDate.teacher}</p>
             <p class="text-sm pt-2 leading-4 leading-none">
-              <!-- Capacity: {event.capacity} -->
               Capacity: {classType.capacity}
             </p>
             <p class="text-sm pt-2 leading-4 leading-none">Attendees: {classOnDate.attendees}</p>
             <p class="text-sm pt-2 leading-4 leading-none">Price: {classType.price === 0 ? "Free" : "$" + classType.price + ".00"}</p>
             {#if classOnDate.attendees === classType.capacity}
-            <p class="text-sm pt-2 leading-4 leading-none w-36 lg:w-52"><span class="text-error">Note:</span> Class is full. You may still register to add yourself to the waitlist, but payment will not be collected.</p>
+            <p class="text-sm py-2 mb-2 leading-4 leading-none w-36 lg:w-52"><span class="text-error">Note:</span> Class is full. </p>
+            <button class="btn rounded-none btn-primary" onclick="fullClassNotification.showModal()">Notify me if a seat becomes available</button>
+            <dialog id="fullClassNotification" class="modal">
+              
+              <div class="modal-box rounded-none">
+                <form method="dialog">
+                  <button class="btn rounded-none btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <!-- Modal content -->
+                
+                <SuperForm 
+                  action="?/notificationRequest"
+                  data={data?.notificationForm}
+                  dataType="form"
+                  invalidateAll={false}
+                  validators={ schema }
+                  let:form let:message
+                >
+                  {#if message}
+                    <div class="status {message.status >= 400 ? 'text-error' : ''} {message.status < 300 || !message.status ? 'text-success' : ''}">
+                      {message.text}
+                    </div>
+                  {/if}
+                  <TextField type="text" {form} field="firstName" label="First Name" class="bg-base-200 focus:bg-secondary text-base-content focus:text-secondary-content rounded-none w-full my-2"></TextField>
+                  <TextField type="text" {form} field="lastName" label="Last Name" class="bg-base-200 focus:bg-secondary text-base-content focus:text-secondary-content rounded-none w-full my-2"></TextField>
+                  <TextField type="email" {form} field="email" label="Email" class="bg-base-200 focus:bg-secondary text-base-content focus:text-secondary-content rounded-none w-full my-2"></TextField>
+
+                  <p>
+                    <button class="btn rounded-none btn-primary mt-4 mb-2" type="submit">Submit</button>
+                  </p>
+                </SuperForm>
+              
+                <!-- End Modal content -->
+              </div>
+              <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+              </form>
+            </dialog>
             {/if}
           </div>
           <div class="flex justify-end items-center pb-4 lg:pb-0">
-            <a class="btn btn-primary" href="{data.baseRegLink.url + classOnDate.eventId}" target="_blank">Register</a>
+            {#if classOnDate.attendees < classType.capacity}
+            <a class="btn rounded-none btn-primary" href="{data.baseRegLink.url + classOnDate.eventId}" target="_blank">Register</a>
+            {/if}
           </div>
         </div>
 			</div>
@@ -156,14 +208,40 @@
       </div>
       {#if classType.category !== "Orientation"}
       <div class="flex justify-between px-4 pt-4 max-w-md">
-        <button class="btn btn-primary" onclick="privateAndCheckout.showModal()">Request a Private or Checkout Session</button>
+        <button class="btn rounded-none btn-primary" onclick="privateAndCheckout.showModal()">Request a Private or Checkout Session</button>
         <dialog id="privateAndCheckout" class="modal">
-          <div class="modal-box">
+          
+          <div class="modal-box rounded-none">
             <form method="dialog">
-              <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+              <button class="btn rounded-none btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
-            <h3 class="font-bold text-lg">Hello!</h3>
-            <p class="py-4">Press ESC key or click on ✕ button to close</p>
+            <!-- Modal content -->
+            
+            <SuperForm 
+              action="?/privateRequest"
+              data={data?.privateRequestForm}
+              dataType="form"
+              invalidateAll={false}
+              validators={ privateRequestSchema }
+              let:form let:message
+            >
+              {#if message}
+                <div class="status {message.status >= 400 ? 'text-error' : ''} {message.status < 300 || !message.status ? 'text-success' : ''}">
+                  {message.text}
+                </div>
+              {/if}
+              <TextField type="text" {form} field="firstName" label="First Name" class="bg-base-200 focus:bg-secondary text-base-content focus:outline-none focus:ring focus:ring-asmbly focus:text-secondary-content rounded-none w-full my-2"></TextField>
+              <TextField type="text" {form} field="lastName" label="Last Name" class="bg-base-200 focus:bg-secondary text-base-content focus:outline-none focus:ring focus:ring-asmbly focus:text-secondary-content rounded-none w-full my-2"></TextField>
+              <TextField type="email" {form} field="email" label="Email" class="bg-base-200 focus:bg-secondary text-base-content focus:outline-none focus:ring focus:ring-asmbly focus:text-secondary-content rounded-none w-full my-2"></TextField>
+
+              <RadioField {form} field="sessionType" options={["Private", "Checkout"]} class="my-4" {noCheckouts} className={classType.name}></RadioField>
+            
+              <p>
+                <button class="btn rounded-none btn-primary mt-4 mb-2" type="submit">Submit</button>
+              </p>
+            </SuperForm>
+          
+            <!-- End Modal content -->
           </div>
           <form method="dialog" class="modal-backdrop">
             <button>close</button>
@@ -172,14 +250,39 @@
       </div>
       {/if}
       <div class="flex justify-between p-4 max-w-md">
-        <button class="text-sm font-light"onclick="classNotify.showModal()">Notify me when more sessions are added</button>
+        <button class="text-sm font-light btn btn-ghost btn-sm rounded-none" onclick="classNotify.showModal()">Notify me when additional sessions are added</button>
         <dialog id="classNotify" class="modal">
           <div class="modal-box">
             <form method="dialog">
-              <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+              <button class="btn rounded-none btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
-            <h3 class="font-bold text-lg">Hello!</h3>
-            <p class="py-4">Press ESC key or click on ✕ button to close</p>
+            <!-- Modal content -->
+            
+            <SuperForm 
+              action="?/notificationRequest"
+              data={data?.notificationForm}
+              dataType="form"
+              invalidateAll={false}
+              validators={ schema }
+              let:form let:message
+            >
+              {#if message}
+                <div class="status"
+                  class:error={message.status >= 400}
+                  class:success={!message.status || message.status < 300}
+                >
+                  {message.text}
+                </div>
+              {/if}
+              <TextField type="text" {form} field="firstName" label="First Name" ></TextField>
+              <TextField type="text" {form} field="lastName" label="Last Name" ></TextField>
+              <TextField type="email" {form} field="email" label="Email"></TextField>
+              <p>
+                <button type="submit">Submit</button>
+              </p>
+            </SuperForm>
+            
+            <!-- End Modal content -->
           </div>
           <form method="dialog" class="modal-backdrop">
             <button>close</button>

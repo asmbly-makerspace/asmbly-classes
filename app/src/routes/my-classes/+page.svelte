@@ -4,5 +4,5 @@
 </script>
 
 <div class="card-body h-full">
-  <a class="btn btn-primary" href="https://asmbly.app.neoncrm.com/np/oauth/auth?response_type=code&client_id={clientId}&redirect_uri={redirect_uri}">Login to Neon</a>
+  <a class="btn rounded-none btn-primary" href="https://asmbly.app.neoncrm.com/np/oauth/auth?response_type=code&client_id={clientId}&redirect_uri={redirect_uri}">Login to Neon</a>
 </div>
