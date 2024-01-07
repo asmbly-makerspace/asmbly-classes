@@ -12,7 +12,7 @@ model NeonEventCategory {
   id Int @id @default(autoincrement())
   name String @unique @db.VarChar(50)
   archCategories AsmblyArchCategory? @relation(fields: [archCategoriesId], references: [id])
-  archCategoriesId Int?
+  archCategoriesId Int? @db.Integer
   events NeonEventType[]
   instances NeonEventInstance[]
 }
@@ -32,15 +32,16 @@ model NeonEventTeacher {
 
 model NeonBaseRegLink {
   id Int @id @default(autoincrement())
-  url String @unique
+  url String @unique @db.VarChar(255)
 }
 
 model NeonEventType {
   id Int @id @default(autoincrement())
   name String @db.VarChar(50)
-  capacity Int 
-  price Float 
-  summary String 
+  capacity Int @db.SmallInt
+  price Float @db.Real
+  summary String @db.Text
+  request NeonEventTypeRequest[]
   teacher NeonEventTeacher[]
   category NeonEventCategory[]
   instances NeonEventInstance[]
@@ -51,12 +52,38 @@ model NeonEventType {
 model NeonEventInstance {
   eventId Int @id 
   eventType NeonEventType @relation(fields:[eventTypeId], references: [id])
-  eventTypeId Int
+  eventTypeId Int @db.Integer
   teacher NeonEventTeacher @relation(fields: [teacherId], references: [id])
-  teacherId Int
+  teacherId Int @db.Integer
   category NeonEventCategory @relation(fields: [categoryId], references: [id])
-  categoryId Int
-  attendeeCount Int
+  categoryId Int @db.Integer
+  attendeeCount Int @db.SmallInt
   startDateTime DateTime 
   endDateTime DateTime 
+  requester NeonEventRequester[]
+}
+
+model NeonEventRequester {
+  id Int @id @default(autoincrement())
+  email String @unique
+  firstName String @db.VarChar(30)
+  lastName String @db.VarChar(30)
+  classTypeRequests NeonEventTypeRequest[]
+  classInstanceRequests NeonEventInstance[]
+}
+
+model NeonEventTypeRequest {
+  id Int @id @default(autoincrement())
+  requester NeonEventRequester @relation(fields:[requesterId], references: [id])
+  requesterId Int @db.Integer
+  classType NeonEventType @relation(fields:[classTypeId], references: [id])
+  classTypeId Int @db.Integer
+  requestType RequestType
+
+  @@unique(name: "eventTypeRequest", [requestType, classTypeId, requesterId])
+}
+
+enum RequestType {
+  ONDEMAND
+  NOTIFICATION
 }

@@ -15,9 +15,9 @@
 	const randomId = Math.random().toString(36).substring(2, 15)
 </script>
 
-<div class="control relative mt-10" use:autoAnimate>
+<div class="control relative " use:autoAnimate>
 	<input
-		class={'peer input h-10 rounded-none border-0 border-b-2 border-base-300 placeholder-transparent focus:border-primary focus:outline-none autofill:shadow-[inset_0_0_0px_1000px_rgb(43,44,107,0.3)] ' +
+		class={'peer transition-all input h-20 placeholder-shown:h-14 bg-secondary text-secondary-content rounded-none placeholder-transparent focus:outline-none focus:h-20 ' +
 			_class}
 		name={field}
 		aria-invalid={$errors ? 'true' : undefined}
@@ -29,7 +29,7 @@
 	/>
 	{#if label !== undefined}
 		<label
-			class="label cursor-text absolute -top-7 left-3 text-sm text-base-content/90 transition-all peer-placeholder-shown:top-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-base-content/75 peer-focus:-top-7 peer-focus:text-sm peer-focus:text-sm peer-focus:text-base-content/90"
+			class="label cursor-text absolute -top-1 left-3 text-xs text-secondary-content/90 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-secondary-content/75 peer-focus:-top-1 peer-focus:text-xs peer-focus:text-secondary-content/90"
 			for={field + randomId}>{label}</label
 		>
 	{/if}

@@ -1,15 +1,13 @@
 <script>
 	const clientId = 'BoM2ra2_3TKxvlh9UIQyqRkK2Eo7eW1mUxWg2_E37C36qw4n3XYViFOxlyKEiW2h';
 	const redirect_uri = '127.0.0.1:5173/my-classes';
-	const encodedClientId = encodeURI(clientId);
-	const encodedRedirectUri = encodeURI(redirect_uri);
 
 </script>
 
 <div class="card-body h-full">
 	<a
 		class="btn btn-primary rounded-none"
-		href="https://asmbly.app.neoncrm.com/np/oauth/auth?response_type=code&client_id={encodedClientId}&redirect_uri={encodedRedirectUri}"
+		href="https://asmbly.app.neoncrm.com/np/oauth/auth?response_type=code&client_id={clientId}&redirect_uri={redirect_uri}"
 		>Login to Neon</a
 	>
 </div>

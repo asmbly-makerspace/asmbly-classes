@@ -3,17 +3,14 @@ import { enhancedImages } from '@sveltejs/enhanced-img';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-	plugins: [
-		enhancedImages(), 
-		sveltekit()
-	],
+	plugins: [enhancedImages(), sveltekit()],
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	},
 	vite: {
 		server: {
 			watch: {
-				usePolling: true,
+				usePolling: true
 			}
 		}
 	}

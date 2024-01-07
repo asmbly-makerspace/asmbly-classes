@@ -1,4 +1,6 @@
 import { prisma } from '$lib/db.server';
+import { superValidate } from 'sveltekit-superforms/server';
+import { newsletterSchema } from '$lib/zodSchemas/schema.js';
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load() {
@@ -6,14 +8,14 @@ export async function load() {
 		where: {
 			category: {
 				none: {
-					name : "Private"
+					name: 'Private'
 				}
 			}
 		},
 		include: {
 			category: {
 				include: {
-					archCategories: true,
+					archCategories: true
 				}
 			}
 		}
@@ -31,17 +33,20 @@ export async function load() {
 			where: {
 				eventType: {
 					is: {
-						name : {
+						name: {
 							equals: event.name
 						}
 					}
+				},
+				startDateTime: {
+					gte: new Date()
 				}
 			},
 			include: {
 				teacher: true,
 				eventType: true
 			}
-		})
+		});
 		let classInstances = [];
 		for (const instance of instances) {
 			let instanceContext = {};
@@ -62,11 +67,7 @@ export async function load() {
 		classJson.push(classContext);
 	}
 
-	const data = {
-		classJson: classJson,
-		classCategories: classCategories,
-		baseRegLink: baseRegLink
-	}
+	const newsletterSignupForm = await superValidate(newsletterSchema);
 
-	return data;
+	return { classJson, classCategories, baseRegLink, newsletterSignupForm };
 }
