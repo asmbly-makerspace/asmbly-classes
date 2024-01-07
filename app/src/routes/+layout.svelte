@@ -1,6 +1,8 @@
 <script>
-	import logoWhite from '$lib/images/AsmblyLogoWhite.svg';
-	import logoPurple from '$lib/images/AsmblyLogoPurple.svg';
+	import Logo from '$lib/components/logo.svelte';
+	import LightThemeSVG from '$lib/components/lightThemeSVG.svelte';
+	import DarkThemeSVG from '$lib/components/darkThemeSVG.svelte';
+	import SystemThemeSVG from '$lib/components/systemThemeSVG.svelte';
 	import '../app.css';
 	import { page } from '$app/stores';
 	import { writable } from 'svelte/store';
@@ -18,10 +20,14 @@
 		window.scrollIntoView(navbar, { behavior: 'smooth', block: 'start', inline: 'nearest' });
 	});
 
-	const isDarkMode = writable(undefined);
+	let isDarkMode;
+	let themeSelection = 'system';
 
 	onMount(() => {
-		isDarkMode.set(document.documentElement.getAttribute('data-theme') === 'asmblyDark');
+		isDarkMode = document.documentElement.getAttribute('data-theme') === 'asmblyDark';
+		if (localStorage.getItem('theme')) {
+			themeSelection = localStorage.getItem('theme');
+		}
 	});
 
 	function themeControl(currentTheme) {
@@ -29,18 +35,21 @@
 		switch (currentTheme) {
 			case 'light':
 				localStorage.setItem('theme', 'light');
-				isDarkMode.set(false);
+				isDarkMode = false;
+				themeSelection = 'light';
 				document.documentElement.setAttribute('data-theme', 'asmbly');
 				break;
 			case 'dark':
 				localStorage.setItem('theme', 'dark');
-				isDarkMode.set(true);
+				isDarkMode = true;
+				themeSelection = 'dark';
 				document.documentElement.setAttribute('data-theme', 'asmblyDark');
 				break;
 			case 'system':
 				localStorage.removeItem('theme');
-				isDarkMode.set(window.matchMedia('(prefers-color-scheme: dark)').matches);
-				if ($isDarkMode) {
+				isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				themeSelection = 'system';
+				if (isDarkMode) {
 					document.documentElement.setAttribute('data-theme', 'asmblyDark');
 				} else {
 					document.documentElement.setAttribute('data-theme', 'asmbly');
@@ -48,51 +57,6 @@
 				break;
 		}
 	}
-
-	setContext('isDarkMode', isDarkMode);
-
-	const lightSVG = `<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					fill="none"
-					class="w-6 h-6"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					><circle cx="12" cy="12" r="5" /><path
-						d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"
-					/></svg
-				>`;
-
-	const darkSVG = `<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					fill="none"
-					class="w-6 h-6"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg
-				>`;
-
-	const systemSVG = `<svg 
-					viewBox="0 0 24 24" 
-					fill="none" 
-					stroke="currentColor"
-					class="w-6 h-6">
-					<path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Z" 
-					stroke-width="2" 
-					stroke-linejoin="round" 
-					></path>
-					<path d="M14 15c0 3 2 5 2 5H8s2-2 2-5" 
-					stroke-width="2" 
-					stroke-linecap="round" 
-					stroke-linejoin="round" 
-					></path>
-					</svg>`;
-
-	$: currentThemeSVG = $isDarkMode ? darkSVG : lightSVG;
 </script>
 
 <nav id="navbar" class="flex h-16 justify-center shadow-lg bg-base-100">
@@ -149,15 +113,10 @@
 					</li>
 				</ul>
 			</details>
-			{#if $isDarkMode}
-				<a href="https://asmbly.org" class="m-4">
-					<img src={logoWhite} alt="logo" class="h-8 w-auto" />
-				</a>
-			{:else}
-				<a href="https://asmbly.org" class="m-4">
-					<img src={logoPurple} alt="logo" class="h-8 w-auto" />
-				</a>
-			{/if}
+
+			<a href="https://asmbly.org" class="m-4">
+				<Logo fillColor='fill-accent' strokeColor='stroke-accent' height='h-8' class="w-auto"/>
+			</a>
 		</div>
 		<div class="navbar-center hidden lg:flex">
 			<ul class="menu menu-horizontal px-1">
@@ -186,7 +145,11 @@
 		<div class="navbar-end m-2.5">
 			<details id="themeControl" class="dropdown rounded-none">
 				<summary tabindex="0" class="btn btn-ghost m-1 rounded-none">
-					{@html currentThemeSVG}
+					{#if isDarkMode}
+					<DarkThemeSVG strokeColor="stroke-current" />
+					{:else}
+					<LightThemeSVG strokeColor="stroke-current" />
+					{/if}
 					<svg
 						width="12px"
 						height="12px"
@@ -207,8 +170,8 @@
 							on:click={() => themeControl('light')}
 							class="btn btn-ghost btn-sm flex w-full items-center justify-start rounded-none"
 						>
-							<span class="mr-1">{@html lightSVG}</span>
-							<span>Light</span>
+							<span class="mr-1"><LightThemeSVG strokeColor={themeSelection === 'light' ? 'stroke-[#0ea4e9]' : 'stroke-current'} /></span>
+							<span class={themeSelection === 'light' ? 'text-[#0ea4e9]' : ''}>Light</span>
 						</button>
 					</li>
 					<li class="m-2">
@@ -216,8 +179,8 @@
 							on:click={() => themeControl('dark')}
 							class="btn btn-ghost btn-sm flex w-full items-center justify-start rounded-none"
 						>
-							<span class="mr-1">{@html darkSVG}</span>
-							<span>Dark</span>
+							<span class="mr-1"><DarkThemeSVG strokeColor={themeSelection === 'dark' ? 'stroke-[#0ea4e9]' : 'stroke-current'} /></span>
+							<span class={themeSelection === 'dark' ? 'text-[#0ea4e9]' : ''}>Dark</span>
 						</button>
 					</li>
 					<li class="m-2">
@@ -225,8 +188,8 @@
 							on:click={() => themeControl('system')}
 							class="btn btn-ghost btn-sm flex w-full items-center justify-start rounded-none"
 						>
-							<span class="mr-1">{@html systemSVG}</span>
-							<span>System</span>
+							<span class="mr-1"><SystemThemeSVG strokeColor={themeSelection === 'system' ? 'stroke-[#0ea4e9]' : 'stroke-current'} /></span>
+							<span class={themeSelection === 'system' ? 'text-[#0ea4e9]' : ''}>System</span>
 						</button>
 					</li>
 				</ul>
@@ -242,10 +205,10 @@
 	<div class="pt-[50px] xs:px-12 lg:px-1">
 		<div class="flex flex-wrap justify-start md:justify-center align-top">
 			<div class="px-4 mb-12 xs:w-full md:w-1/4">
-				<img class="lg:max-w-[182px]" src="{logoWhite}" alt="Asmbly Logo">
+				<Logo fillColor='fill-secondary' strokeColor='stroke-secondary' class="lg:max-w-[300px] w-full"/>
 				<br><br><hr><br>
-				<i class="fa fa-map-marker-alt" aria-hidden="true"></i> 9701 Dessau Rd #304 <br>Austin TX 78754 (<a class="underline hover:text-[#fff]" href="https://www.google.com/maps?ll=30.353612,-97.671856&amp;z=10&amp;t=m&amp;hl=en-US&amp;gl=US&amp;mapclient=embed&amp;cid=5479436053178306069" target="_blank" rel="noopener">map</a>)<br><br>
-				<i class="fa fa-envelope" aria-hidden="true"></i> <a class="underline hover:text-[#fff]" href="mailto:membership@asmbly.org">membership@asmbly.org</a>
+				<i class="fa fa-map-marker-alt" aria-hidden="true"></i> <p class="text-secondary">9701 Dessau Rd #304</p> <p class="text-secondary">Austin TX 78754 (<a class="underline text-secondary hover:text-[#fff]" href="https://www.google.com/maps?ll=30.353612,-97.671856&amp;z=10&amp;t=m&amp;hl=en-US&amp;gl=US&amp;mapclient=embed&amp;cid=5479436053178306069" target="_blank" rel="noopener">map</a>)</p><br>
+				<i class="fa fa-envelope" aria-hidden="true"></i> <a class="underline text-secondary hover:text-[#fff]" href="mailto:membership@asmbly.org">membership@asmbly.org</a>
 
 			</div>
 			<div class="px-4 mb-12 xs:w-full md:w-1/2">
@@ -260,12 +223,12 @@
 					>
 						<div>
 							<div>
-								<div class="font-asmbly mb-6 text-3xl">Share Creativity</div>
+								<div class="font-asmbly text-secondary mb-6 text-3xl">Share Creativity</div>
 							</div>
 						</div>
 						<div>
 							<div>
-								<div class="text-md" data-paragraph="true">
+								<div class="text-md text-secondary" data-paragraph="true">
 									Whether you're in Austin or not, we'd love to stay connected and tell you about the cool
 									stuff going on at Asmbly. We don't email often (usually only once a month), so we won't fill
 									up your inbox.
@@ -295,7 +258,7 @@
 									type="submit"
 									class="btn group flex w-full flex-col justify-center rounded-none bg-[#78CBC3] py-7 border-none"
 								>
-									<span class="font-asmbly group-hover:text-secondary text-2xl text-[#000]"
+									<span class="font-asmbly text-2xl text-[#000]"
 										>Subscribe Now</span
 									>
 								</button>
@@ -314,21 +277,21 @@
 				
 			</div>
 			<div class="px-4 mb-12 xs:w-full md:w-1/4">
-				<h3 class="font-asmbly mb-6 text-3xl">Helpful Links</h3>
-				<p class="font-asmbly">Membership & Events</p>
+				<h3 class="font-asmbly text-secondary mb-6 text-3xl">Helpful Links</h3>
+				<p class="font-asmbly text-secondary">Membership & Events</p>
 				<ul>
-					<li><a class="underline hover:text-[#fff]" href="https://asmbly.org/how-to-join-asmbly" target="_blank" rel="noopener">How to Join</a></li>
-					<li><a class="underline hover:text-[#fff]" href="https://asmbly.org/faq" target="_blank" rel="noopener">FAQ</a></li>
-					<li><a class="underline hover:text-[#fff]" href="/">Classes</a></li>
-					<li><a class="underline hover:text-[#fff]" href="https://asmbly.org/calendar" target="_blank" rel="noopener">Event Calendar</a></li>
+					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.org/how-to-join-asmbly" target="_blank" rel="noopener">How to Join</a></li>
+					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.org/faq" target="_blank" rel="noopener">FAQ</a></li>
+					<li><a class="underline text-secondary hover:text-[#fff]" href="/">Classes</a></li>
+					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.org/calendar" target="_blank" rel="noopener">Event Calendar</a></li>
 				</ul>
 				<br>
 				<p class="font-asmbly">Member Links</p>
 				<ul>
-					<li><a class="underline hover:text-[#fff]" href="https://asmbly.app.neoncrm.com" target="_blank" rel="noopener">Neon Member Portal</a></li>
-					<li><a class="underline hover:text-[#fff]" href="https://asmbly.skedda.com" target="_blank" rel="noopener">Skedda</a></li>
-					<li><a class="underline hover:text-[#fff]" href="https://yo.asmbly.org" target="_blank" rel="noopener">Discourse</a></li>
-					<li><a class="underline hover:text-[#fff]" href="https://wiki.asmbly.org" target="_blank" rel="noopener">Asmbly Wiki</a></li>
+					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.app.neoncrm.com" target="_blank" rel="noopener">Neon Member Portal</a></li>
+					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.skedda.com" target="_blank" rel="noopener">Skedda</a></li>
+					<li><a class="underline text-secondary hover:text-[#fff]" href="https://yo.asmbly.org" target="_blank" rel="noopener">Discourse</a></li>
+					<li><a class="underline text-secondary hover:text-[#fff]" href="https://wiki.asmbly.org" target="_blank" rel="noopener">Asmbly Wiki</a></li>
 				</ul>
 			</div>
 

@@ -3,7 +3,8 @@ export default {
 	content: [
 		'./src/app.html',
 		'./src/routes/**/*.{svelte,js,ts}',
-		'./src/lib/components/**/*.{svelte,js,ts}'
+		'./src/lib/components/**/*.{svelte,js,ts}',
+		'./src/lib/images/AsmblyLogo.svg',
 	],
 	theme: {
 		colors: {
@@ -87,7 +88,7 @@ export default {
 				asmbly: {
 					primary: '#2b2c6b',
 					secondary: '#f2f4ef',
-					accent: '#37cdbe',
+					accent: '#2b2c6b',
 					neutral: '#3d4451',
 					'base-100': '#f2f4ef'
 				}
@@ -96,7 +97,7 @@ export default {
 				asmblyDark: {
 					primary: '#2b2c6b',
 					secondary: '#f2f4ef',
-					accent: '#37cdbe',
+					accent: '#f2f4ef',
 					neutral: '#7c879c',
 					'base-100': '#3d4451'
 				}

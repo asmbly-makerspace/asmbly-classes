@@ -9,12 +9,6 @@
 	import TextField from '$lib/components/textField.svelte';
 	import RadioField from '$lib/components/radioField.svelte';
 	import { schema, privateRequestSchema } from '$lib/zodSchemas/schema.js';
-	import { getContext } from 'svelte';
-
-	const isDarkMode = getContext('isDarkMode');
-
-	$: textColor = $isDarkMode ? 'text-base-content' : 'text-asmbly';
-	$: radioColor = $isDarkMode ? 'radio-secondary' : 'radio-primary';
 
 	const noCheckouts = ['Beginner CNC Router', 'Big Lasers Class', 'Small Lasers Class', 'Woodshop Safety', 'Metal Shop Safety'];
 
@@ -22,10 +16,18 @@
 	const classType = classJson.filter((i) => i.typeId == data.slug)[0];
 
 	const classInstances = classType.classInstances;
-	const classDates = classInstances.map((i) => DateTime.fromJSDate(i.startDateTime));
 
+	let classDates = [];
+	if (classInstances.length > 0) {
+		classDates = classInstances.map((i) => DateTime.fromJSDate(i.startDateTime));
+	} 
+	
 	let currentDate = DateTime.now();
-	let date = classDates.sort((a, b) => a - b)[0];
+
+	let date;
+	if (classDates.length > 0) {
+		date = classDates.sort((a, b) => a - b)[0];
+	}
 
 	$: classOnDate = classInstances.filter((i) =>
 		DateTime.fromJSDate(i.startDateTime).hasSame(date, 'day')
@@ -55,7 +57,7 @@
 
 <div id="main" class="container mx-auto flex flex-col items-center justify-center pb-8">
 	<h1
-		class="font-asmbly {textColor} pb-2 pt-8 text-center text-3xl all-under lg:pb-6"
+		class="font-asmbly text-accent pb-2 pt-8 text-center text-3xl all-under lg:pb-6"
 	>
 		{classType.name}
 	</h1>
@@ -155,6 +157,7 @@
 		</div>
 		<div class="divider mx-6 lg:divider-horizontal lg:mx-0 lg:my-8" />
 		<div class="flex flex-col px-5 py-5 md:px-8 md:py-8">
+			{#if classInstances.length > 0}
 			<div class="px-4">
 				<h2 class="pb-4 text-lg font-semibold">{date.toFormat("cccc', 'LLLL d")}</h2>
 				<div class="flex w-72 justify-between lg:w-96">
@@ -251,7 +254,7 @@
 												>Submit</button
 											>
 											{#if delayed}
-											<span class="loading loading-spinner loading-md {textColor}"></span>
+											<span class="loading loading-spinner loading-md "></span>
 											{/if}
 										</p>
 									</SuperForm>
@@ -275,6 +278,101 @@
 					</div>
 				</div>
 			</div>
+			{:else}
+			<div class="px-4">
+				<h2 class="pb-4 text-lg font-semibold">No sessions currently scheduled</h2>
+				<div class="flex w-72 justify-between lg:w-96">
+					<div class="border-base-300 pb-4 lg:pb-0">
+						<p class="text-sm font-light leading-3">
+							We do not currently have any sessions of this class scheduled. If you'd like to request this class,
+							please use the form below to let us know. We will schedule a session once we have enough interest in the class.
+						</p>
+						<button
+							class="btn btn-primary rounded-none mt-2"
+							onclick="onDemandRequest.showModal()"
+							>Request this class</button
+						>
+						<dialog id="onDemandRequest" class="modal">
+							<div class="modal-box rounded-none">
+								<form method="dialog">
+									<button
+										class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 rounded-none"
+										>✕</button
+									>
+								</form>
+								<!-- Modal content -->
+
+								<div class="prose">
+									<h2 class="font-asmbly">Class Request</h2>
+									<p>
+										Sign up below to request this class and receive an email when a session is scheduled.
+									</p>
+								</div>
+
+								<SuperForm
+									action="?/onDemandRequest"
+									data={data?.onDemandRequestForm}
+									dataType="form"
+									invalidateAll={false}
+									validators={schema}
+									classTypeId={data.slug}
+									let:form
+									let:message
+									let:delayed
+								>
+									{#if message}
+										<div
+											class="status {message.status >= 400 ? 'text-error' : ''} {message.status <
+												300 || !message.status
+												? 'text-success'
+												: ''}"
+										>
+											{message.text}
+										</div>
+									{/if}
+									<TextField
+										type="text"
+										{form}
+										field="firstName"
+										label="First Name"
+										class="w-full"
+									/>
+									<TextField
+										type="text"
+										{form}
+										field="lastName"
+										label="Last Name"
+										class="w-full"
+									/>
+									<TextField
+										type="email"
+										{form}
+										field="email"
+										label="Email"
+										class="mb-4 w-full"
+									/>
+
+									<p class="flex">
+										<button class="btn btn-primary mb-2 mt-4 rounded-none mr-2" type="submit"
+											>Submit</button
+										>
+										{#if delayed}
+										<span class="loading loading-spinner loading-md "></span>
+										{/if}
+									</p>
+								</SuperForm>
+
+								<!-- End Modal content -->
+							</div>
+							<form method="dialog" class="modal-backdrop">
+								<button>close</button>
+							</form>
+						</dialog>
+
+					</div>
+				</div>
+			</div>
+			{/if}
 			<div class="ml-4 divider" />
 			<div class="max-w-md px-4">
 				<h2 class="pb-4 text-lg font-semibold">Description</h2>
@@ -334,7 +432,7 @@
 									{form}
 									field="sessionType"
 									options={['Private', 'Checkout']}
-									class="my-4 ml-2 radio {radioColor}"
+									class="my-4 ml-2 radio radio-accent"
 									{noCheckouts}
 									className={classType.name}
 								/>
@@ -344,7 +442,7 @@
 										>Submit</button
 									>
 									{#if delayed}
-									<span class="loading loading-spinner loading-md {textColor}"></span>
+									<span class="loading loading-spinner loading-md "></span>
 									{/if}
 								</p>
 							</SuperForm>
@@ -357,6 +455,7 @@
 					</dialog>
 				</div>
 			{/if}
+			{#if classInstances.length > 0}
 			<div class="flex max-w-md justify-between p-4">
 				<button
 					class="btn btn-ghost btn-sm rounded-none text-sm font-light"
@@ -409,7 +508,7 @@
 									>Submit</button
 								>
 								{#if delayed}
-								<span class="loading loading-spinner loading-md {textColor}"></span>
+								<span class="loading loading-spinner loading-md "></span>
 								{/if}
 							</p>
 						</SuperForm>
@@ -421,6 +520,7 @@
 					</form>
 				</dialog>
 			</div>
+			{/if}
 		</div>
 	</div>
 </div>

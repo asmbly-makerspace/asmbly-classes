@@ -1,14 +1,9 @@
 <script>
 	import Fuse from 'fuse.js';
-	import { getContext } from 'svelte';
 	import autoAnimate from '@formkit/auto-animate';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-
-	const isDarkMode = getContext('isDarkMode');
-
-	$: textColor = $isDarkMode ? 'text-base-content' : 'text-asmbly';
 
 	let searchTerm = '';
 	let classList = data.classJson;
@@ -150,7 +145,7 @@
 		}
 	}
 
-	function generateFillColor(category, alwaysChecked = false, isDarkMode = undefined) {
+	function generateFillColor(category, alwaysChecked = false) {
 		const baseColorVariants = {
 			Orientation:
 				'fill-neutral group-hover:fill-asmbly-hover stroke-neutral group-hover:stroke-asmbly-hover',
@@ -178,14 +173,14 @@
 		};
 
 		const alwaysCheckedVariants = {
-			Orientation: isDarkMode ? 'stroke-secondary' : 'stroke-asmbly',
+			Orientation: 'stroke-accent',
 			Woodworking: 'fill-woodwork',
 			Metalworking: 'fill-metalwork',
 			'Laser Cutting': 'fill-lasers',
 			'3D Printing': 'fill-3dprinting',
 			Textiles: 'fill-textiles',
 			Electronics: 'fill-electronics',
-			Miscellaneous: isDarkMode ? 'stroke-secondary' : 'stroke-asmbly'
+			Miscellaneous: 'stroke-accent'
 		};
 
 		if (archCategories.get(category) && !alwaysChecked) {
@@ -419,7 +414,7 @@
 						</figure>
 						<div class="card-body w-full">
 							<div class="flex justify-between">
-								<h2 class="font-asmbly {textColor} card-title font-light">{event.name}</h2>
+								<h2 class="font-asmbly text-accent card-title font-light">{event.name}</h2>
 								<div class="grid h-8 w-8 place-items-center">
 									<svg
 										fill="none"
@@ -436,7 +431,7 @@
 												event.category === 'Orientation'
 													? '6'
 													: '2.5'}
-												class={generateFillColor(event.category, true, $isDarkMode)}
+												class={generateFillColor(event.category, true)}
 												d={svgPath}
 											/>
 										{/each}
@@ -470,7 +465,7 @@
 							>
 						</figure>
 						<div class="card-body w-full">
-							<h2 class="font-asmbly {textColor} card-title font-light">Sorry, no results found</h2>
+							<h2 class="font-asmbly text-accent card-title font-light">Sorry, no results found</h2>
 							<p class="text-md">
 								We couldn't find any classes that match your search. Try adjusting your filters or
 								checking your spelling.

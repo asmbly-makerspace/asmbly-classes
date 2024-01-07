@@ -1,10 +1,5 @@
 <script>
-	import { getContext } from 'svelte';
 	import FAQField from '$lib/components/classFAQField.svelte';
-
-	const isDarkMode = getContext('isDarkMode');
-
-	$: textColor = $isDarkMode ? 'text-base-content' : 'text-asmbly';
 
 	function scrollIntoView(id) {
 		document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
@@ -13,14 +8,14 @@
 </script>
 <div class="container prose mx-auto flex flex-col items-center justify-center pb-8">
 	<h1
-		class="font-asmbly text-primary pt-8 text-center all-under"
+		class="font-asmbly text-accent pt-8 text-center all-under"
 	>
 		Frequently Asked Questions
 	</h1>
 	<div class="w-full">
 		<div class="join join-vertical w-full bg-base-200 rounded-none">
             <div class="join-item border border-base-300 border-b-4">
-                <h2 class="ml-4 {textColor}">Regular Classes</h2>
+                <h2 class="ml-4 text-accent">Regular Classes</h2>
             </div>
 			<FAQField>
 				<div slot="collpase-title" class="collapse-title text-xl font-medium italic">
@@ -78,7 +73,7 @@
 				</div>
 			</FAQField>
 			<div class="join-item border border-base-300 border-b-4">
-                <h2 class="ml-4 {textColor}">Private and Checkout Classes</h2>
+                <h2 class="ml-4 text-accent">Private and Checkout Classes</h2>
             </div>
 			<FAQField>
 				<div slot="collpase-title" class="collapse-title text-xl font-medium italic">
@@ -151,7 +146,7 @@
 				</div>
 			</FAQField>
 			<div class="join-item border border-base-300 border-b-4">
-                <h2 class="ml-4 {textColor}">Teaching</h2>
+                <h2 class="ml-4 text-accent">Teaching</h2>
             </div>
 			<FAQField>
 				<div slot="collpase-title" class="collapse-title text-xl font-medium italic">

@@ -1,10 +1,5 @@
 <script>
-    import { getContext } from 'svelte';
     import ResponsiveCard from '$lib/components/ResponsiveCard.svelte';
-
-    const isDarkMode = getContext('isDarkMode');
-
-    $: textColor = $isDarkMode ? 'text-base-content' : 'text-asmbly';
 
     let innerWidth;
 </script>
@@ -14,7 +9,7 @@
 
 <div class="flex flex-col items-center justify-center">
     <h1
-        class="font-asmbly {textColor} p-8 text-4xl text-center all-under"
+        class="font-asmbly text-accent p-8 text-4xl text-center all-under"
     >
         Mentor Series
     </h1>

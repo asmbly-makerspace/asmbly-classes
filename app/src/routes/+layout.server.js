@@ -48,15 +48,18 @@ export async function load() {
 			}
 		});
 		let classInstances = [];
-		for (const instance of instances) {
-			let instanceContext = {};
-			instanceContext.eventId = instance.eventId;
-			instanceContext.attendees = instance.attendeeCount;
-			instanceContext.teacher = instance.teacher.name;
-			instanceContext.startDateTime = instance.startDateTime;
-			instanceContext.endDateTime = instance.endDateTime;
-			classInstances.push(instanceContext);
+		if (instances.length > 0) {
+			for (const instance of instances) {
+				let instanceContext = {};
+				instanceContext.eventId = instance.eventId;
+				instanceContext.attendees = instance.attendeeCount;
+				instanceContext.teacher = instance.teacher.name;
+				instanceContext.startDateTime = instance.startDateTime;
+				instanceContext.endDateTime = instance.endDateTime;
+				classInstances.push(instanceContext);
+			}
 		}
+		
 		classContext.classInstances = classInstances;
 		classContext.name = event.name;
 		classContext.summary = event.summary;

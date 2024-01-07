@@ -6,7 +6,7 @@ import { sendMIMEmessage } from '$lib/server/gmailEmailFactory.js';
 import { DateTime } from 'luxon';
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ params }) {
+export async function load({ params, setHeaders }) {
 	// Server API:
 	const privateRequestForm = await superValidate(privateRequestSchema, {
 		id: 'privateRequestForm'
@@ -22,6 +22,10 @@ export async function load({ params }) {
 	});
 
 	const slug = params.eventTypeId;
+
+	setHeaders({
+        'cache-control': 'max-age=300',
+    })
 
 	// Unless you throw, always return { form } in load and form actions.
 	return { privateRequestForm, notificationForm, onDemandRequestForm, fullClassRequestForm, slug };

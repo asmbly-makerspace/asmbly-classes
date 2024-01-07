@@ -1,12 +1,7 @@
 <script>
-    import { getContext } from 'svelte';
-
-    const isDarkMode = getContext('isDarkMode');
-
-    $: textColor = $isDarkMode ? 'text-base-content' : 'text-asmbly';
 </script>
 
-<h2 class="text-2xl lg:text-3xl font-asmbly {textColor} justify-start all-under w-max">
+<h2 class="text-2xl lg:text-3xl font-asmbly text-accent justify-start all-under w-max">
     <slot />
 </h2>
 
