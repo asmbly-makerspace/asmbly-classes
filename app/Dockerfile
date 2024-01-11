@@ -17,16 +17,16 @@ RUN npm install
 COPY . .
 
 RUN --mount=type=secret,id=POSTGRES_USER \
-  cat /run/secrets/POSTGRES_USER
+  POSTGRES_USER=$(cat /run/secrets/POSTGRES_USER)
 
 RUN --mount=type=secret,id=POSTGRES_PASS \
-  cat /run/secrets/POSTGRES_PASS
+  POSTGRES_PASS=$(cat /run/secrets/POSTGRES_PASS)
 
 RUN --mount=type=secret,id=POSTGRES_DB \
-  cat /run/secrets/POSTGRES_DB
+  POSTGRES_DB=$(cat /run/secrets/POSTGRES_DB)
 
 RUN --mount=type=secret,id=POSTGRES_PORT \
-  cat /run/secrets/POSTGRES_PORT
+  POSTGRES_PORT=$(cat /run/secrets/POSTGRES_PORT)
 
 RUN npx prisma generate
 
