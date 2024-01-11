@@ -214,6 +214,11 @@
 
 	function sortByDate(classList) {
 		classList.sort((a, b) => {
+			if (a.classInstances.length === 0) {
+				return 1;
+			} else if (b.classInstances.length === 0) {
+				return -1;
+			}
 			let sortedClassA = a.classInstances.sort((c1, c2) => {
 				if (c1.startDateTime < c2.startDateTime) {
 					return -1;
@@ -306,7 +311,7 @@
 	$: finalClassList = filterBySearch(filterByCategory(sortedClassList, archCategories), searchTerm);
 </script>
 
-<div class="drawer flex justify-center lg:drawer-open">
+<div class="drawer flex justify-center lg:drawer-open lg:min-h-[calc(100dvh-10rem)] 2xl:min-h-[calc(100dvh-20rem)]">
 	<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content order-2">
 		<!-- Page content here -->

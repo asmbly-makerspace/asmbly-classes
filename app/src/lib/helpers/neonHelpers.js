@@ -1,18 +1,28 @@
-import { apiCall } from './apiCall.js';
-//import { NEON_API_KEY, NEON_API_USER } from '$env/static/private';
+import { apiCall } from '../server/apiCall.js';
+import { readFileSync } from 'node:fs';
+//import { NEON_API_KEY, NEON_API_USER } from '$lib/server/secrets';
+import { NEON_API_KEY, NEON_API_USER } from '$lib/server/secrets';
 
 const dev = process.env.DEVELOPMENT === 'true';
 
-const N_API_KEY = process.env.NEON_API_KEY;
-const N_API_USER = process.env.NEON_API_USER;
+//const NEON_API_KEY = readFileSync(process.env.NEON_APIKEY_FILE, 'utf8');
+//const NEON_API_USER = readFileSync(process.env.NEON_USER_FILE, 'utf8');
 
-const N_AUTH = `${N_API_USER}:${N_API_KEY}`;
+const N_AUTH = `${NEON_API_USER}:${NEON_API_KEY}`;
 const N_BASE_URL = 'https://api.neoncrm.com';
 const N_SIGNATURE = Buffer.from(N_AUTH).toString('base64');
 const N_HEADERS = {
 	'Content-Type': 'application/json',
 	Authorization: `Basic ${N_SIGNATURE}`
 };
+
+async function getIndividualAccount(neonId) {
+	const resourcePath = `/v2/accounts/${neonId}`;
+	const httpVerb = 'GET';
+	const url = N_BASE_URL + resourcePath;
+
+	return await apiCall(httpVerb, url, null, N_HEADERS);
+}
 
 async function* postEventSearch(searchFields, outputFields) {
 	const resourcePath = '/v2/events/search';
@@ -117,4 +127,4 @@ async function getCurrentEvents() {
 	return finalEvents;
 }
 
-export { getCurrentEvents };
+export { getCurrentEvents, getIndividualAccount };

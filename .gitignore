@@ -11,5 +11,8 @@ vite.config.ts.timestamp-*
 secrets/*
 .vscode
 app/src/lib/images
+app/src/lib/server/prismaClient.js
 app/static/images
-.vscode/launch.json
+compose.preview.yaml
+compose.debug.yaml
+Dockerfile.preview

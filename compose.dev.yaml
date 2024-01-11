@@ -12,15 +12,14 @@ services:
       POSTGRES_USER_FILE: /run/secrets/postgres-user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
       POSTGRES_DB: myapp
+    volumes:
+      - postgres:/var/lib/postgresql/data
     secrets:
       - postgres-user
       - postgres-password
-  redis:
-    image: redis:7.2.3
-    restart: unless-stopped
-    networks:
-      - backend
   app:
+    env_file:
+      - .env
     build:
       context: ./app
       dockerfile: Dockerfile.dev
@@ -44,24 +43,31 @@ services:
       - ./app:/usr/src/app
       - /usr/src/app/node_modules
     environment:
-      POSTGRES_USER_FILE: /run/secrets/postgres-user
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
-      POSTGRES_DB: myapp
-      POSTGRES_PORT: "5432"
-      REDIS_URL: redis://redis:6379
       DEVELOPMENT: "true"
-    env_file:
-      - .env
     depends_on:
       - db
-      - redis
     secrets:
       - postgres-user
       - postgres-password
+
+volumes:
+  postgres:
 
 secrets:
   postgres-user: 
     file: ./secrets/postgres-user.txt
   postgres-password: 
     file: ./secrets/postgres-password.txt
+  internal-api:
+    file: ./secrets/internal-api.txt
+  neon-user:
+    file: ./secrets/neon-user.txt
+  neon-api-key:
+    file: ./secrets/neon-api-key.txt
+  gmail-user:
+    file: ./secrets/gmail-user.txt
+  gmail-pass:
+    file: ./secrets/gmail-pass.txt
+  flodesk-key:
+    file: ./secrets/flodesk-key.txt
 

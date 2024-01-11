@@ -1,12 +1,7 @@
 <script>
 	import FAQField from '$lib/components/classFAQField.svelte';
-
-	function scrollIntoView(id) {
-		document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-	}
-
 </script>
-<div class="container prose mx-auto flex flex-col items-center justify-center pb-8">
+<div class="container prose mx-auto flex flex-col items-center justify-center pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
 		class="font-asmbly text-accent pt-8 text-center all-under"
 	>

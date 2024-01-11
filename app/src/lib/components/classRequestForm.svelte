@@ -7,8 +7,8 @@
 	export let dataType;
 	export let invalidateAll;
 	export let validators;
-	export let classTypeId;
-	export let eventId;
+	export let classTypeId = null;
+	export let eventId = null;
 
 	export const _form = superForm(data, {
 		dataType: dataType,

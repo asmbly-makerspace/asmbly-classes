@@ -2,10 +2,9 @@ import { apiCall } from "$lib/server/apiCall.js";
 import { fail } from '@sveltejs/kit';
 import { superValidate, message } from 'sveltekit-superforms/server';
 import { newsletterSchema } from '$lib/zodSchemas/schema.js';
+import { FLO_API_KEY } from '$lib/server/secrets';
 
 const FLO_BASE_URL = "https://api.flodesk.com/v1";
-const FLO_API_KEY = process.env.FLODESK_API_KEY;
-
 const FLO_AUTH = `${FLO_API_KEY}:`;
 const FLO_SIGNATURE = Buffer.from(FLO_AUTH).toString('base64');
 const FLO_HEADERS = {

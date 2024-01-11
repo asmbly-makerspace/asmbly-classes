@@ -16,6 +16,8 @@ RUN npm install
 # Copy source code
 COPY . .
 
+RUN npx prisma generate
+
 # Build the app
 RUN npm run build
 
@@ -34,5 +36,12 @@ RUN npm i --omit dev
 # Copy built assets
 COPY --from=0 /usr/src/app ./
 
+COPY ./entrypoint.sh /entrypoint.sh
+COPY ./wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /entrypoint.sh \
+    && chmod +x /wait-for-it.sh
+
+ENTRYPOINT [ "/wait-for-it.sh", "db:5432", "-t", "10", "-s" , "--", "/entrypoint.sh" ]
+
 # Start Node server
-CMD ["node", "build/index.js"]
+CMD ["node", "-r", "dotenv/config", "build"]

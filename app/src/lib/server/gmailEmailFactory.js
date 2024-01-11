@@ -1,4 +1,4 @@
-import { GMAIL_USER, GMAIL_PASS } from '$env/static/private';
+import { GMAIL_USER, GMAIL_PASS } from './secrets.js';
 import NodeMailer  from 'nodemailer';
 
 /**

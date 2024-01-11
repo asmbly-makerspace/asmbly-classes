@@ -8,79 +8,90 @@ datasource db {
 }
 
 model NeonEventCategory {
-  // auto-incrementing primary key
-  id Int @id @default(autoincrement())
-  name String @unique @db.VarChar(50)
-  archCategories AsmblyArchCategory? @relation(fields: [archCategoriesId], references: [id])
-  archCategoriesId Int? @db.Integer
-  events NeonEventType[]
-  instances NeonEventInstance[]
+  id               Int                 @id @default(autoincrement())
+  name             String              @unique @db.VarChar(50)
+  archCategoriesId Int?
+  archCategories   AsmblyArchCategory? @relation(fields: [archCategoriesId], references: [id])
+  instances        NeonEventInstance[]
+  events           NeonEventType[]     @relation("NeonEventCategoryToNeonEventType")
 }
 
 model AsmblyArchCategory {
-  id Int @id @default(autoincrement())
-  name String @unique @db.VarChar(50)
+  id             Int                 @id @default(autoincrement())
+  name           String              @unique @db.VarChar(50)
   baseCategories NeonEventCategory[]
 }
 
 model NeonEventTeacher {
-  id Int @id @default(autoincrement())
-  name String @unique @db.VarChar(50)
-  events NeonEventType[]
+  id        Int                 @id @default(autoincrement())
+  name      String              @unique @db.VarChar(50)
   instances NeonEventInstance[]
+  events    NeonEventType[]     @relation("NeonEventTeacherToNeonEventType")
 }
 
 model NeonBaseRegLink {
-  id Int @id @default(autoincrement())
+  id  Int    @id @default(autoincrement())
   url String @unique @db.VarChar(255)
 }
 
 model NeonEventType {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(50)
-  capacity Int @db.SmallInt
-  price Float @db.Real
-  summary String @db.Text
-  request NeonEventTypeRequest[]
-  teacher NeonEventTeacher[]
-  category NeonEventCategory[]
+  id        Int                    @id @default(autoincrement())
+  name      String                 @db.VarChar(50)
+  capacity  Int                    @db.SmallInt
+  price     Float                  @db.Real
+  summary   String
   instances NeonEventInstance[]
+  request   NeonEventTypeRequest[]
+  category  NeonEventCategory[]    @relation("NeonEventCategoryToNeonEventType")
+  teacher   NeonEventTeacher[]     @relation("NeonEventTeacherToNeonEventType")
 
-  @@unique(name: "uniqueEvent", [capacity, name, price, summary])
+  @@unique([capacity, name, price, summary], name: "uniqueEvent")
 }
 
 model NeonEventInstance {
-  eventId Int @id 
-  eventType NeonEventType @relation(fields:[eventTypeId], references: [id])
-  eventTypeId Int @db.Integer
-  teacher NeonEventTeacher @relation(fields: [teacherId], references: [id])
-  teacherId Int @db.Integer
-  category NeonEventCategory @relation(fields: [categoryId], references: [id])
-  categoryId Int @db.Integer
-  attendeeCount Int @db.SmallInt
-  startDateTime DateTime 
-  endDateTime DateTime 
-  requester NeonEventRequester[]
+  eventId       Int                        @id
+  eventTypeId   Int
+  teacherId     Int
+  categoryId    Int
+  attendeeCount Int                        @db.SmallInt
+  startDateTime DateTime
+  endDateTime   DateTime
+  category      NeonEventCategory          @relation(fields: [categoryId], references: [id])
+  eventType     NeonEventType              @relation(fields: [eventTypeId], references: [id])
+  teacher       NeonEventTeacher           @relation(fields: [teacherId], references: [id])
+  requests      NeonEventInstanceRequest[]
+}
+
+model NeonEventInstanceRequest {
+  id            Int                @id @default(autoincrement())
+  createdAt     DateTime           @default(now())
+  fulfilled     Boolean            @default(false)
+  eventId       Int
+  requesterId   Int
+  eventInstance NeonEventInstance  @relation(fields: [eventId], references: [eventId])
+  requester     NeonEventRequester @relation(fields: [requesterId], references: [id])
 }
 
 model NeonEventRequester {
-  id Int @id @default(autoincrement())
-  email String @unique
-  firstName String @db.VarChar(30)
-  lastName String @db.VarChar(30)
-  classTypeRequests NeonEventTypeRequest[]
-  classInstanceRequests NeonEventInstance[]
+  id                    Int                        @id @default(autoincrement())
+  email                 String                     @unique
+  firstName             String                     @db.VarChar(30)
+  lastName              String                     @db.VarChar(30)
+  classInstanceRequests NeonEventInstanceRequest[]
+  classTypeRequests     NeonEventTypeRequest[]
 }
 
 model NeonEventTypeRequest {
-  id Int @id @default(autoincrement())
-  requester NeonEventRequester @relation(fields:[requesterId], references: [id])
-  requesterId Int @db.Integer
-  classType NeonEventType @relation(fields:[classTypeId], references: [id])
-  classTypeId Int @db.Integer
+  id          Int                @id @default(autoincrement())
+  requesterId Int
+  classTypeId Int
   requestType RequestType
+  createdAt   DateTime           @default(now())
+  fulfilled   Boolean            @default(false)
+  classType   NeonEventType      @relation(fields: [classTypeId], references: [id])
+  requester   NeonEventRequester @relation(fields: [requesterId], references: [id])
 
-  @@unique(name: "eventTypeRequest", [requestType, classTypeId, requesterId])
+  @@unique([requestType, classTypeId, requesterId], name: "eventTypeRequest")
 }
 
 enum RequestType {

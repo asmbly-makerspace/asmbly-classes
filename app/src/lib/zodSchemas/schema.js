@@ -44,3 +44,7 @@ export const newsletterSchema = z.object({
 		})
 		.email()
 });
+
+export const classCancelSchema = z.object({
+	confirmation: z.enum(['CANCEL'])
+})

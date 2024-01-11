@@ -1,5 +1,6 @@
-import { prisma } from '$lib/postgres';
-import { getCurrentEvents } from '$lib/helpers/neonHelpers';
+import { prisma } from '../src/lib/postgres.js';
+import { getCurrentEvents } from '../src/lib/helpers/neonHelpers.js';
+import { sendMIMEmessage } from '../src/lib/server/gmailEmailFactory.js';
 
 async function connectArchCat(model, archCatName, catId) {
 	const record = await model.update({
@@ -17,56 +18,18 @@ async function connectArchCat(model, archCatName, catId) {
 	return record;
 }
 
-async function getOrCreate(model, where, data) {
-	const record = model.upsert({
-		where: where,
-		update: {},
-		create: data
-	});
-	return record;
-}
-
-const archCategories = [
-	{ name: 'Orientation' },
-	{ name: 'Woodworking' },
-	{ name: 'Metalworking' },
-	{ name: 'Laser Cutting' },
-	{ name: '3D Printing' },
-	{ name: 'Textiles' },
-	{ name: 'Electronics' },
-	{ name: 'Miscellaneous' },
-	{ name: 'Private' }
-];
-
-const BASE_URL = 'https://asmbly.app.neoncrm.com/event.jsp?event=';
-
 async function main() {
 
 	const currentEvents = await getCurrentEvents();
 
 	const remainingPrismaCalls = [];
 
-	const addBaseRegLinkCall = prisma.neonBaseRegLink.upsert({
-		create: {
-			url: BASE_URL
-		},
-		update: {},
-		where: {
-			url: BASE_URL
-		}
-	});
-
-	const addArchCategoriesCall = prisma.asmblyArchCategory.createMany({
-		data: archCategories,
-		skipDuplicates: true
-	});
-
-	await prisma.$transaction([addArchCategoriesCall, addBaseRegLinkCall]);
+	const getArchCategories = await prisma.asmblyArchCategory.findMany();
 
 	const alreadyAddedCats = {};
 
 	for (const event of currentEvents) {
-		const exists = prisma.neonEventInstance.findUnique({
+        const exists = prisma.neonEventInstance.findUnique({
             where: {
                 eventId: parseInt(event['Event ID'])
             }
@@ -75,16 +38,18 @@ async function main() {
         if (exists) {
             continue;
         }
-		
+
 		let category = event['Event Category Name'];
 		let addCategory;
-		if (!alreadyAddedCats.category) {
+		if (category && !alreadyAddedCats.category) {
 			let search = { name: category };
 			addCategory = await prisma.neonEventCategory.upsert({ where: search, create: search, update: {} });
 			alreadyAddedCats.category = addCategory;
-		} else {
+		} else if (category && alreadyAddedCats.category) {
 			addCategory = alreadyAddedCats.category;
-		}
+		} else {
+            continue;
+        }
 		
 
 		switch (category) {
@@ -117,6 +82,8 @@ async function main() {
 			case 'Private':
 				await connectArchCat(prisma.asmblyArchCategory, 'Private', addCategory.id);
 				break;
+            default:
+                break;
 		}
 
 		let teacher = event['Event Topic'];
@@ -177,8 +144,8 @@ async function main() {
 			}
 		});
 
-		const addEventInstance = prisma.neonEventInstance.upsert({
-			create: {
+		const addEventInstance = prisma.neonEventInstance.create({
+			data: {
 				eventId: parseInt(event['Event ID']),
 				attendeeCount: parseInt(event['Actual Registrants']),
 				startDateTime: startDateTime,
@@ -199,41 +166,120 @@ async function main() {
 					}
 				}
 			},
-			update: {
-				attendeeCount: parseInt(event['Actual Registrants']),
-				startDateTime: startDateTime,
-				endDateTime: endDateTime,
-				eventType: {
-					connect: {
-						id: addEventType.id
-					}
-				},
-				teacher: {
-					connect: {
-						id: addTeacher.id
-					}
-				},
-				category: {
-					connect: {
-						id: addCategory.id
-					}
-				}
-			},
-			where: {
-				eventId: parseInt(event['Event ID'])
-			}
+            include: {
+                eventType: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
+            }
 		});
 
 		remainingPrismaCalls.push(updateEventType, addEventInstance);
 
-		console.log('Adding ' + eventName + ' to db transaction queue');
+		console.log('Attempting to add ' + eventName);
 	}
+
+    if (remainingPrismaCalls.length === 0) {
+        console.log(`No events to add today (${new Date().toLocaleDateString()}).`);
+        return;
+    }
 
 	let results = await prisma.$transaction(remainingPrismaCalls);
 
+    const eventTypesAddedToday = new Set();
+
     for (let result of results) {
-        console.log('Successfully added: ' +  result.name);
+        console.log('Successfully added: ' +  result.name + ' on ' + result.startDateTime);
+        eventTypesAddedToday.add(result.eventType.id);
     }
+
+    const eventTypesToEmail = await prisma.neonEventType.findMany({
+        where: {
+            id: {
+                in: [...eventTypesAddedToday]
+            }
+        },
+        include: {
+            request: {
+                where: {
+                    fulfilled: false
+                },
+                id: true,
+                include: {
+                    requester: {
+                        select: {
+                            email: true,
+                            firstName: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    if (eventTypesToEmail.request.length === 0) {
+        console.log(`No events to email today (${new Date().toLocaleDateString()}).`);
+        console.log(`Finished adding events for today (${new Date().toLocaleDateString()}).`);
+        return;
+    }
+
+    const requestersToEmail = [];
+    const requestsToFulfill = [];
+
+    for (const eventType of eventTypesToEmail) {
+        const requesterEmail = eventType.request.requester.email;
+        const requesterFirstName = eventType.request.requester.firstName;
+
+        requestersToEmail.push({
+            email: requesterEmail,
+            firstName: requesterFirstName,
+            eventType: eventType.name,
+            eventTypeId: eventType.id,
+        })
+
+        requestsToFulfill.push(eventType.request.id);
+    }
+
+    const emailsToSend = [];
+
+    for (const requester of requestersToEmail) {
+        emailBody = `
+            <p>Hi ${requester.firstName},</p>
+            <p>You previously requested that we notify you when we add additional sessions of ${requester.eventType} to the schedule.</p>
+            <p>We're happy to let you know that we've added more!</p>
+            <p>You can find the updated schedule for your requested class <a href="https://classes.asmbly.org/event/${requester.eventTypeId}">here</a>.</p>
+            <p>As a reminder, we are removing you from the notification list for this class. If you would like to be added back to the notification list, please resubmit the notification request form.</p>
+            <p>If you have any questions, just reply to this email!</p>
+            <p>Best,<br>Asmbly Education Team</p>
+        `
+
+        const email = sendMIMEmessage({
+			from: 'Asmbly Education Team <notification@asmbly.org>',
+			to: requester.email,
+			replyTo: 'membership@asmbly.org',
+			subject: `${requester.eventType} notification request`,
+			html: emailBody,
+		})
+
+        emailsToSend.push(email);
+    }
+
+    const fulfillRequests = prisma.neonEventTypeRequest.updateMany({
+        where: {
+            id: {
+                in: [...requestsToFulfill]
+            }
+        },
+        data: {
+            fulfilled: true
+        }
+    })
+
+    await Promise.allSettled(emailsToSend, prisma.$transaction(fulfillRequests));
+
+    console.log(`Finished adding events for today (${new Date().toLocaleDateString()}).`);
 }
 
 main()

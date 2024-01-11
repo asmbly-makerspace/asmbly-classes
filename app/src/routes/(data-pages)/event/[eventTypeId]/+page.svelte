@@ -1,6 +1,4 @@
 <script>
-	import { page } from '$app/stores';
-
 	/** @type {import('./$types').PageData} */
 	export let data;
 	import { DateTime } from 'luxon';
@@ -55,7 +53,7 @@
 
 </script>
 
-<div id="main" class="container mx-auto flex flex-col items-center justify-center pb-8">
+<div id="main" class="container mx-auto flex flex-col items-center justify-center pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
 		class="font-asmbly text-accent pb-2 pt-8 text-center text-3xl all-under lg:pb-6"
 	>
@@ -283,12 +281,12 @@
 				<h2 class="pb-4 text-lg font-semibold">No sessions currently scheduled</h2>
 				<div class="flex w-72 justify-between lg:w-96">
 					<div class="border-base-300 pb-4 lg:pb-0">
-						<p class="text-sm font-light leading-3">
+						<p class="text-sm">
 							We do not currently have any sessions of this class scheduled. If you'd like to request this class,
 							please use the form below to let us know. We will schedule a session once we have enough interest in the class.
 						</p>
 						<button
-							class="btn btn-primary rounded-none mt-2"
+							class="btn btn-primary rounded-none mt-4"
 							onclick="onDemandRequest.showModal()"
 							>Request this class</button
 						>

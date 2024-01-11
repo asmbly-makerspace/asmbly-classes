@@ -6,7 +6,7 @@
 
 </script>
 
-<div class="card-body h-full">
+<div class="card-body h-[calc(100dvh-4rem)]">
 	<a
 		class="btn btn-primary rounded-none"
 		href="https://asmbly.app.neoncrm.com/np/oauth/auth?response_type=code&client_id={encodedClientId}&redirect_uri={encodedRedirectUri}"

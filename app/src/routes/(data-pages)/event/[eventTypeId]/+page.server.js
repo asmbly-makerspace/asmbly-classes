@@ -1,7 +1,7 @@
 import { fail, error } from '@sveltejs/kit';
 import { superValidate, message } from 'sveltekit-superforms/server';
 import { schema, privateRequestSchema } from '$lib/zodSchemas/schema.js';
-import { prisma } from '$lib/db.server';
+import { prisma } from '$lib/postgres.js';
 import { sendMIMEmessage } from '$lib/server/gmailEmailFactory.js';
 import { DateTime } from 'luxon';
 
@@ -337,7 +337,7 @@ export const actions = {
 			from: 'Asmbly Education Team <notification@asmbly.org>',
 			to: email,
 			replyTo: 'membership@asmbly.org',
-			subject: `Notification request for ${classType.name}`,
+			subject: `Class request for ${classType.name}`,
 			html: requesterBody,
 		})
 

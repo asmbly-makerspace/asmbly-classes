@@ -11,24 +11,28 @@
 	import NewsletterSignup from '$lib/components/newsletter.svelte';
 	import NewsletterEmail from '$lib/components/newsletterEmail.svelte';
 	import { newsletterSchema } from '$lib/zodSchemas/schema.js';
+	import { browser } from '$app/environment';
 
 	export let data;
 
-	afterNavigate(() => {
+	let navbar;
+
+	afterNavigate((nav) => {
 		// Scroll to top
-		const navbar = document.getElementById('navbar');
-		window.scrollIntoView(navbar, { behavior: 'smooth', block: 'start', inline: 'nearest' });
+		if (navbar && nav.type === 'link') {
+			navbar.scrollIntoView();
+		}
 	});
 
 	let isDarkMode;
 	let themeSelection = 'system';
 
-	onMount(() => {
+	if (browser) {
 		isDarkMode = document.documentElement.getAttribute('data-theme') === 'asmblyDark';
 		if (localStorage.getItem('theme')) {
 			themeSelection = localStorage.getItem('theme');
 		}
-	});
+	}
 
 	function themeControl(currentTheme) {
 		document.getElementById('themeControl').removeAttribute('open');
@@ -59,7 +63,7 @@
 	}
 </script>
 
-<nav id="navbar" class="flex h-16 justify-center shadow-lg bg-base-100">
+<nav id="navbar" class="flex h-16 justify-center shadow-lg bg-base-100" bind:this={navbar}>
 	<div class="navbar w-full max-w-7xl">
 		<div class="navbar-start w-full lg:w-1/2">
 			<a
@@ -205,7 +209,7 @@
 	<div class="pt-[50px] xs:px-12 lg:px-1">
 		<div class="flex flex-wrap justify-start md:justify-center align-top">
 			<div class="px-4 mb-12 xs:w-full md:w-1/4">
-				<Logo fillColor='fill-secondary' strokeColor='stroke-secondary' class="lg:max-w-[300px] w-full"/>
+				<Logo fillColor='fill-secondary' strokeColor='stroke-secondary' height="auto" class="lg:max-w-[300px] w-full"/>
 				<br><br><hr><br>
 				<i class="fa fa-map-marker-alt" aria-hidden="true"></i> <p class="text-secondary">9701 Dessau Rd #304</p> <p class="text-secondary">Austin TX 78754 (<a class="underline text-secondary hover:text-[#fff]" href="https://www.google.com/maps?ll=30.353612,-97.671856&amp;z=10&amp;t=m&amp;hl=en-US&amp;gl=US&amp;mapclient=embed&amp;cid=5479436053178306069" target="_blank" rel="noopener">map</a>)</p><br>
 				<i class="fa fa-envelope" aria-hidden="true"></i> <a class="underline text-secondary hover:text-[#fff]" href="mailto:membership@asmbly.org">membership@asmbly.org</a>
@@ -304,5 +308,4 @@
 			&copy; {new Date().getFullYear()} Asmbly Makerspace. All rights reserved.
 		</p>
 	</div>
-	
 </footer>
