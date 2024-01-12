@@ -4,7 +4,7 @@ networks:
 
 services:
   app:
-    image: "${DOCKER_USER}/asmbly-classes:${TAG}"
+    image: "docker.io/${DOCKER_USER}/asmbly-classes-app:${TAG}"
     env_file:
       - .env
     restart: unless-stopped

@@ -27,6 +27,6 @@ jobs:
             postgres-db=${{ secrets.POSTGRES_DB }}
             postgres-port=${{ secrets.POSTGRES_PORT }}
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/asmbly-classes:latest
-            ${{ secrets.DOCKER_USERNAME }}/asmbly-classes:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/asmbly-classes-app:latest
+            ${{ secrets.DOCKER_USERNAME }}/asmbly-classes-app:${{ github.sha }}
         
