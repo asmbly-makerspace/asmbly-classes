@@ -6,6 +6,11 @@
 
 <svelte:window bind:innerWidth={innerWidth} />
 
+<svelte:head>
+	<title>Mentor Series</title>
+	<meta name="description" content="Private, tailored classes offered by experienced Asmbly instructors on a request basis." />
+    <meta name="keywords" content="private, classes, asmbly, mentor series" />
+</svelte:head>
 
 <div class="flex flex-col items-center justify-center">
     <h1

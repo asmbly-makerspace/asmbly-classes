@@ -6,6 +6,12 @@
 
 </script>
 
+<svelte:head>
+	<title>My Classes</title>
+	<meta name="description" content="View and update your class registrations at Asmbly." />
+	<meta name="keywords" content="classes, asmbly" />
+</svelte:head>
+
 <div class="card-body h-[calc(100dvh-4rem)]">
 	<a
 		class="btn btn-primary rounded-none"

@@ -1,6 +1,13 @@
 <script>
 	import FAQField from '$lib/components/classFAQField.svelte';
 </script>
+
+<svelte:head>
+	<title>Classes FAQ</title>
+	<meta name="description" content="Frequently asked questions related to classes at Asmbly." />
+	<meta name="keywords" content="faq, classes, asmbly" />
+</svelte:head>
+
 <div class="container prose mx-auto flex flex-col items-center justify-center pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
 		class="font-asmbly text-accent pt-8 text-center all-under"

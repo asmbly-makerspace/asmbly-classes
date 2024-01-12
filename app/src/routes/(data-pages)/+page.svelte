@@ -311,6 +311,12 @@
 	$: finalClassList = filterBySearch(filterByCategory(sortedClassList, archCategories), searchTerm);
 </script>
 
+<svelte:head>
+	<title>Asmbly Classes</title>
+	<meta name="description" content="View and sign up for classes at Asmbly." />
+	<meta name="keywords" content="classes, asmbly, woodworking, metalworking, woodshop, CNC, laser, sewing, textiles, electronics, 3d, printing" />
+</svelte:head>
+
 <div class="drawer flex justify-center lg:drawer-open lg:min-h-[calc(100dvh-10rem)] 2xl:min-h-[calc(100dvh-20rem)]">
 	<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content order-2">

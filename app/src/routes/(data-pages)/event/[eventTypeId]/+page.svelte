@@ -53,6 +53,12 @@
 
 </script>
 
+<svelte:head>
+	<title>{classType.name}</title>
+	<meta name="description" content="View the schedule and register for a {classType.name} class at Asmbly." />
+	<meta name="keywords" content="classes, asmbly" />
+</svelte:head>
+
 <div id="main" class="container mx-auto flex flex-col items-center justify-center pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
 		class="font-asmbly text-accent pb-2 pt-8 text-center text-3xl all-under lg:pb-6"
