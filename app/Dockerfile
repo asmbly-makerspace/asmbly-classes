@@ -42,6 +42,7 @@ WORKDIR /usr/src/app
 
 # Copy package.json
 COPY package.json ./
+COPY ./prisma ./
 
 # Copy built assets
 COPY --from=builder /usr/src/app/build ./build
