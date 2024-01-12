@@ -1,5 +1,5 @@
 # Builder image
-FROM node:21.1.0
+FROM node:21.5.0 AS builder
 
 # Set environment variables
 ARG NODE_ENV=development
@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Copy source code
 COPY . .
@@ -32,21 +32,20 @@ RUN npx prisma generate
 
 # Build the app
 RUN npm run build
+RUN npm prune --production
 
 # Running image
-FROM node:21.1.0
+FROM node:21.5.0
 
 # Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm i --omit dev
+# Copy package.json
+COPY package.json ./
 
 # Copy built assets
-COPY --from=0 /usr/src/app ./
+COPY --from=builder /usr/src/app/build ./build
+COPY --from=builder /usr/src/app/node_modules ./node_modules
 
 COPY ./entrypoint.sh /entrypoint.sh
 COPY ./wait-for-it.sh /wait-for-it.sh

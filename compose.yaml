@@ -4,19 +4,9 @@ networks:
 
 services:
   app:
+    image: "${DOCKER_USER}/asmbly-classes:${TAG}"
     env_file:
       - .env
-    build:
-      context: ./app
-      dockerfile: Dockerfile
-      secrets:
-        - postgres-user
-        - postgres-password
-      args:
-        POSTGRES_USER_FILE: /run/secrets/postgres-user
-        POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
-        POSTGRES_DB: myapp
-        POSTGRES_PORT: "5432"
     restart: unless-stopped
     networks:
       - frontend
@@ -36,7 +26,7 @@ services:
     environment:
       POSTGRES_USER_FILE: /run/secrets/postgres-user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
-      POSTGRES_DB: myapp
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres:/var/lib/postgresql/data
     secrets:
