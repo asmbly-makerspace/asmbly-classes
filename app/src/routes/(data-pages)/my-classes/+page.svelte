@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>My Classes</title>
+	<title>Asmbly | My Classes</title>
 	<meta name="description" content="View and update your class registrations at Asmbly." />
 	<meta name="keywords" content="classes, asmbly" />
 </svelte:head>

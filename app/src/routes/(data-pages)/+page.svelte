@@ -312,7 +312,7 @@
 </script>
 
 <svelte:head>
-	<title>Asmbly Classes</title>
+	<title>Asmbly | Classes</title>
 	<meta name="description" content="View and sign up for classes at Asmbly." />
 	<meta name="keywords" content="classes, asmbly, woodworking, metalworking, woodshop, CNC, laser, sewing, textiles, electronics, 3d, printing" />
 </svelte:head>
@@ -366,17 +366,17 @@
 								>
 							</summary>
 							<ul
-								class="menu dropdown-content z-[1] w-40 rounded-box rounded-none bg-base-100 p-2 shadow"
+								class="menu dropdown-content z-[1] w-40 rounded-none bg-base-100 p-2 shadow"
 							>
-								<li><a class="rounded-none" on:click={() => sortClickHandler('Date')}>Date</a></li>
-								<li><a class="rounded-none" on:click={() => sortClickHandler('Name')}>Name</a></li>
+								<li><button class="rounded-none" on:click={() => sortClickHandler('Date')}>Date</button></li>
+								<li><button class="rounded-none" on:click={() => sortClickHandler('Name')}>Name</button></li>
 								<li>
-									<a class="rounded-none" on:click={() => sortClickHandler('Price')}>Price</a>
+									<button class="rounded-none" on:click={() => sortClickHandler('Price')}>Price</button>
 								</li>
 							</ul>
 						</details>
 						<div>
-							<a on:click={() => sortOrderHandler()} class="btn btn-ghost rounded-none lg:ml-2"
+							<button on:click={() => sortOrderHandler()} class="btn btn-ghost rounded-none lg:ml-2"
 								>{sortOrderContent}
 								<svg
 									fill="none"
@@ -389,7 +389,7 @@
 										clip-rule="evenodd"
 									/></svg
 								>
-							</a>
+							</button>
 						</div>
 					</div>
 				</div>
@@ -540,6 +540,7 @@
 								type="checkbox"
 								checked=""
 								class="checkbox rounded-none"
+								name={category}
 							/>
 						</label>
 					</div>

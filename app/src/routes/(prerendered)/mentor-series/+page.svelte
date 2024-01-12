@@ -7,7 +7,7 @@
 <svelte:window bind:innerWidth={innerWidth} />
 
 <svelte:head>
-	<title>Mentor Series</title>
+	<title>Asmbly | Mentor Series</title>
 	<meta name="description" content="Private, tailored classes offered by experienced Asmbly instructors on a request basis." />
     <meta name="keywords" content="private, classes, asmbly, mentor series" />
 </svelte:head>
@@ -25,12 +25,16 @@
             Being open-ended classes, Mentor Series classes can be as long or short as needed, with a minimum length of 1 hour. 
             All Mentor Series classes cost $100/hr of instruction time. 
         </p>
+        <p>
+            The following are our most popular Mentor Series classes. If none of these meet your needs, send us an email at <a href="mailto:mentor-series@asmbly.org">mentor-series@asmbly.org</a>
+            with your request, and we'll get back to you.
+        </p>
     </article>
     
     <ResponsiveCard let:Description let:Action let:Title let:Figure class="bg-base-200 w-full mt-16">
         <Figure>
             <enhanced:img src="$lib/images/DavidDiskoNew.jpg" 
-            alt="Woodshop Mentor Series Instructor" 
+            alt="Woodshop Mentor Series Instructor Charles Leininger" 
             class="w-full"/>
         </Figure>
         <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-8 lg:justify-center lg:w-full">
@@ -38,11 +42,12 @@
                 Woodshop Mentor Series
             </Title>
             <Description>
-                The Woodshop Mentor Series is taught by professional woodworker Charles Leininger. 
-                Learn more and sign up for a session by clicking below.
+                The Woodshop Mentor Series is taught by professional woodworker Charles Leininger and Asmbly Lead Instructor David Disko. 
+                To request a session with David, please email him at <a href="mailto:woodshop-mentor-series@asmbly.org">woodshop-mentor-series@asmbly.org</a>.
+                To request a session with Charles, please use the scheduler link below.
             </Description>
             <Action>
-                Sign up Here
+                <a href="https://elementalwoodworks.as.me/woodshopmentorseries" target="_blank">Sign up Here</a>
             </Action>
         </div>
     </ResponsiveCard>   
@@ -50,7 +55,7 @@
         {#if innerWidth < 720}
         <Figure>
             <enhanced:img src="$lib/images/CNCMentorPlaceholder.jpg" 
-            alt="CNC Mentor Series Instructor" 
+            alt="CNC routing a 3D design" 
             class="w-full h-full"/>
         </Figure>
         {/if}
@@ -60,25 +65,25 @@
             </Title>
             <Description>
                 The CNC Mentor Series is taught by James Freeman (VCarve) and Charles Leininger (Fusion 360). 
-                To request a session with James, please email him at cnc-mentor@asmbly.org. 
-                To request a session with Charles, please go to this scheduler link.
+                To request a session with James, please email him at <a href="mailto:cnc-mentor@asmbly.org">cnc-mentor@asmbly.org</a>. 
+                To request a session with Charles, please use the scheduler link below.
             </Description>
             <Action>
-                Sign up Here
+                <a href="https://elementalwoodworks.as.me/?appointmentType=51622907" target="_blank">Sign up Here</a>
             </Action>
         </div>
         {#if innerWidth >= 720}
         <Figure>
             <enhanced:img src="$lib/images/CNCMentorPlaceholder.jpg" 
-            alt="CNC Mentor Series Instructor" 
+            alt="CNC routing a 3D design" 
             class="w-full h-full"/>
         </Figure>
         {/if}
     </ResponsiveCard>   
-    <ResponsiveCard let:Description let:Action let:Title let:Figure class="bg-base-200 w-full">
+    <ResponsiveCard let:Description let:Title let:Figure class="bg-base-200 w-full">
         <Figure>
             <enhanced:img src="$lib/images/GabriellePierce.jpg" 
-            alt="Textiles Mentor Series Instructor" 
+            alt="Textiles Mentor Series Instructor Gabrielle Pierce" 
             class="w-full"/>
         </Figure>
         <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-8 lg:justify-center lg:w-full">
@@ -86,18 +91,16 @@
                 Textiles Mentor Series
             </Title>
             <Description>
-                The Textiles Mentor Series is taught by textile designer and stylist Gabrielle Pierce.
+                The Textiles Mentor Series is taught by designer and maker Gabrielle Pierce. 
+                To learn more or request a session, please send an email to <a href="mailto:textiles-mentor-series@asmbly.org">textiles-mentor-series@asmbly.org</a>.
             </Description>
-            <Action>
-                Sign up Here
-            </Action>
         </div>
     </ResponsiveCard>   
-    <ResponsiveCard let:Description let:Action let:Title let:Figure class="bg-base-100 w-full">
+    <ResponsiveCard let:Description let:Title let:Figure class="bg-base-100 w-full">
         {#if innerWidth < 720}
         <Figure>
             <enhanced:img src="$lib/images/SavannaHarvey.jpg" 
-            alt="Metal Shop Mentor Series Instructor" 
+            alt="Metal Shop Mentor Series Instructor Savanna Harvey" 
             class="w-full"/>
         </Figure>
         {/if}
@@ -107,19 +110,17 @@
             </Title>
             <Description>
                 The Metal Shop Mentor Series is taught by professional metalworker and maker Savanna Harvey.
+                To learn more or request a session, please send an email to <a href="mailto:metal-shop-mentor-series@asmbly.org">metal-shop-mentor-series@asmbly.org</a>.
             </Description>
-            <Action>
-                Sign up Here
-            </Action>
         </div>
         {#if innerWidth >= 720}
         <Figure>
             <enhanced:img src="$lib/images/SavannaHarvey.jpg" 
-            alt="Metal Shop Mentor Series Instructor" 
+            alt="Metal Shop Mentor Series Instructor Savanna Harvey" 
             class="w-full"/>
         </Figure>
         {/if}
-    </ResponsiveCard>   
+    </ResponsiveCard>  
 </div>
 
 <style>

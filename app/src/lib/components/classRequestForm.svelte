@@ -1,7 +1,6 @@
 <script>
-	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
+	//import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
-	import autoAnimate from '@formkit/auto-animate';
 
 	export let data;
 	export let dataType;

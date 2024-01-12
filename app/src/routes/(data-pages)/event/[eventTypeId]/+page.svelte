@@ -54,18 +54,18 @@
 </script>
 
 <svelte:head>
-	<title>{classType.name}</title>
-	<meta name="description" content="View the schedule and register for a {classType.name} class at Asmbly." />
+	<title>Asmbly | {classType.name}</title>
+	<meta name="description" content="View the schedule and register for a {classType.name}{classType.name.split(' ').pop() === 'Class' ? '' : ' class'} at Asmbly." />
 	<meta name="keywords" content="classes, asmbly" />
 </svelte:head>
 
 <div id="main" class="container mx-auto flex flex-col items-center justify-center pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
-		class="font-asmbly text-accent pb-2 pt-8 text-center text-3xl all-under lg:pb-6"
+		class="font-asmbly text-accent pb-2 pt-8 text-center text-2xl lg:text-3xl all-under lg:pb-6"
 	>
 		{classType.name}
 	</h1>
-	<div class="card mt-2 flex w-full max-w-6xl justify-center rounded-none shadow-lg lg:card-side">
+	<div class="card mt-2 flex lg:w-full max-w-6xl justify-center rounded-none shadow-lg lg:card-side">
 		<div class="rounded p-5 md:p-8">
 			<div class="flex items-center justify-between px-4">
 				<button
@@ -89,7 +89,7 @@
 						<polyline points="15 6 9 12 15 18" />
 					</svg>
 				</button>
-				<span tabindex="0" class="font-bold text-base-content focus:outline-none"
+				<span class="font-bold text-base-content focus:outline-none text-lg"
 					>{new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(
 						currentDate
 					)}</span
@@ -136,7 +136,7 @@
 								<div
 									class="flex aspect-square h-full w-full cursor-pointer items-center justify-center rounded-full"
 								>
-									<a
+									<button
 										on:click={() => {
 											date = DateTime.local(currentDate.year, currentDate.month, day + 1);
 										}}
@@ -146,7 +146,7 @@
 										)
 											? 'bg-primary text-primary-content hover:bg-primary'
 											: 'bg-base-200 text-base-content hover:bg-base-300'} flex h-full w-full items-center justify-center rounded-full font-medium"
-										>{day + 1}</a
+										>{day + 1}</button
 									>
 								</div>
 							</div>
@@ -166,7 +166,7 @@
 				<h2 class="pb-4 text-lg font-semibold">{date.toFormat("cccc', 'LLLL d")}</h2>
 				<div class="flex w-72 justify-between lg:w-96">
 					<div class="border-base-300 pb-4 lg:pb-0">
-						<p class="text-sm font-light leading-3">
+						<p class="text-md font-light leading-3">
 							{DateTime.fromJSDate(classOnDate.startDateTime)
 								.setZone('utc')
 								.toLocaleString(DateTime.TIME_SIMPLE)} - {DateTime.fromJSDate(
@@ -175,22 +175,28 @@
 								.setZone('utc')
 								.toLocaleString(DateTime.TIME_SIMPLE)}
 						</p>
-						<p class="pt-2 text-sm leading-4 leading-none">Teacher: {classOnDate.teacher}</p>
-						<p class="pt-2 text-sm leading-4 leading-none">
+						<p class="pt-2 text-md leading-none">Teacher: {classOnDate.teacher}</p>
+						<p class="pt-2 text-md leading-none">
 							Capacity: {classType.capacity}
 						</p>
-						<p class="pt-2 text-sm leading-4 leading-none">Attendees: {classOnDate.attendees}</p>
-						<p class="pt-2 text-sm leading-4 leading-none">
+						<p class="pt-2 text-md leading-none">Attendees: <span class:text-error={classOnDate.attendees === classType.capacity}>{classOnDate.attendees}</span></p>
+						<p class="pt-2 text-md leading-none">
 							Price: {classType.price === 0 ? 'Free' : '$' + classType.price + '.00'}
 						</p>
-						{#if classOnDate.attendees === classType.capacity}
-							<p class="mb-2 w-36 py-2 text-sm leading-4 leading-none lg:w-52">
-								<span class="text-error">Note:</span> Class is full.
-							</p>
+					</div>
+					<div class="flex items-center justify-end pb-4 lg:pb-0">
+						{#if classOnDate.attendees < classType.capacity}
+							<a
+								class="btn btn-primary rounded-none"
+								href={data.baseRegLink.url + classOnDate.eventId}
+								target="_blank">Register</a
+							>
+						{:else if classOnDate.attendees === classType.capacity}
+						<div class="flex flex-col items-center justify-center">
 							<button
 								class="btn btn-primary rounded-none"
-								onclick="fullClassNotification.showModal()"
-								>Notify me if a seat becomes available</button
+								on:click={() => document.getElementById('fullClassNotification').showModal()}
+								>Join the Waitlist</button
 							>
 							<dialog id="fullClassNotification" class="modal">
 								<div class="modal-box rounded-none">
@@ -251,6 +257,7 @@
 											field="email"
 											label="Email"
 											class="mb-4 w-full"
+											autocomplete="email"
 										/>
 
 										<p class="flex">
@@ -269,15 +276,7 @@
 									<button>close</button>
 								</form>
 							</dialog>
-						{/if}
-					</div>
-					<div class="flex items-center justify-end pb-4 lg:pb-0">
-						{#if classOnDate.attendees < classType.capacity}
-							<a
-								class="btn btn-primary rounded-none"
-								href={data.baseRegLink.url + classOnDate.eventId}
-								target="_blank">Register</a
-							>
+						</div>
 						{/if}
 					</div>
 				</div>
@@ -293,7 +292,7 @@
 						</p>
 						<button
 							class="btn btn-primary rounded-none mt-4"
-							onclick="onDemandRequest.showModal()"
+							on:click={() => document.getElementById('onDemandRequest').showModal()}
 							>Request this class</button
 						>
 						<dialog id="onDemandRequest" class="modal">
@@ -354,6 +353,7 @@
 										field="email"
 										label="Email"
 										class="mb-4 w-full"
+										autocomplete="email"
 									/>
 
 									<p class="flex">
@@ -380,12 +380,12 @@
 			<div class="ml-4 divider" />
 			<div class="max-w-md px-4">
 				<h2 class="pb-4 text-lg font-semibold">Description</h2>
-				<p class="text-sm">{classType.summary}</p>
+				<p class="xs:prose-sm lg:prose-md">{classType.summary}</p>
 			</div>
 			{#if classType.category !== 'Orientation' && classInstances.length > 0}
 				<div class="flex max-w-md justify-between px-4 pt-4">
-					<button class="btn btn-primary rounded-none" onclick="privateAndCheckout.showModal()"
-						>Request a Private or Checkout Session</button
+					<button class="btn btn-primary rounded-none" on:click={() => document.getElementById('privateAndCheckout').showModal()}>
+						Request a Private or Checkout Session</button
 					>
 					<dialog id="privateAndCheckout" class="modal">
 						<div class="modal-box rounded-none">
@@ -430,7 +430,7 @@
 								{/if}
 								<TextField type="text" {form} field="firstName" label="First Name" class="w-full" />
 								<TextField type="text" {form} field="lastName" label="Last Name" class="w-full" />
-								<TextField type="email" {form} field="email" label="Email" class="mb-4 w-full" />
+								<TextField type="email" {form} field="email" label="Email" class="mb-4 w-full" autocomplete="email" />
 
 								<RadioField
 									{form}
@@ -463,7 +463,7 @@
 			<div class="flex max-w-md justify-between p-4">
 				<button
 					class="btn btn-ghost btn-sm rounded-none text-sm font-light"
-					onclick="classNotify.showModal()">Notify me when additional sessions are added</button
+					on:click={() => document.getElementById('classNotify').showModal()}>Notify me when additional sessions are added</button
 				>
 				<dialog id="classNotify" class="modal">
 					<div class="modal-box rounded-none">
@@ -505,7 +505,7 @@
 							{/if}
 							<TextField type="text" {form} field="firstName" label="First Name" class="w-full" />
 							<TextField type="text" {form} field="lastName" label="Last Name" class="w-full" />
-							<TextField type="email" {form} field="email" label="Email" class="mb-4 w-full" />
+							<TextField type="email" {form} field="email" label="Email" class="mb-4 w-full" autocomplete="email" />
 
 							<p class="flex">
 								<button class="btn btn-primary mb-2 mt-4 rounded-none mr-2" type="submit"

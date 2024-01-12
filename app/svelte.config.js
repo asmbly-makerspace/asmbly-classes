@@ -11,13 +11,19 @@ const config = {
 		csp: {
 			mode: 'auto',
 			directives: {
-				'img-src': ['self'],
+
+				'img-src': ['self', 'data:'],
+				'media-src': ['self', 'data:'],
+				'frame-ancestors': ['self'],
+				'form-action': ['self'],
 				'connect-src': ['self'],
 				'worker-src': ['self'],
 				'script-src': ['self'],
 				'object-src': ['none'],
 				'frame-src': ['self'],
-				'font-src': ['self', 'fonts.gstatic.com', 'fonts.googleapis.com'],
+				'font-src': ['self', 'fonts.gstatic.com', 'fonts.googleapis.com', 'data:'],
+				'style-src': ['self', 'unsafe-inline', 'fonts.googleapis.com', 'fonts.gstatic.com'],
+				'default-src': ['self']
 			}
 		}
 	},

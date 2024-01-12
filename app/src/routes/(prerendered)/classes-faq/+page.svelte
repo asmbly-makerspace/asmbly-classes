@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Classes FAQ</title>
+	<title>Asmbly | Classes FAQ</title>
 	<meta name="description" content="Frequently asked questions related to classes at Asmbly." />
 	<meta name="keywords" content="faq, classes, asmbly" />
 </svelte:head>

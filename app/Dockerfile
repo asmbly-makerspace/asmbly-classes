@@ -59,9 +59,6 @@ COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY ./wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 
-ENTRYPOINT [ "/wait-for-it.sh", "db:5432", "-t", "10", "-s" , "--", "echo", "db is up"]
-
 USER node
 
-# Start Node server
-CMD ["node", "build"]
+ENTRYPOINT [ "/wait-for-it.sh", "db:${POSTGRES_PORT}", "-t", "10", "-s" , "--", "node", "build" ]

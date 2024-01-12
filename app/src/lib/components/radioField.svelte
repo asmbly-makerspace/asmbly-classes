@@ -21,6 +21,7 @@
 			type="radio"
 			name={field}
 			value={option}
+			id={field + option}
 			bind:group={$value}
 			disabled={noCheckouts.includes(className) && option === 'Checkout'}
 			{...$constraints}
@@ -29,7 +30,7 @@
 		{#if options !== undefined}
 			<label
 				class="label mx-2"
-				for={field}
+				for={field + option}
 				disabled={noCheckouts.includes(className) && option === 'Checkout'}>{option}</label
 			>
 		{/if}

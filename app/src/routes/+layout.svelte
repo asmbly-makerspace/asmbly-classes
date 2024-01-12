@@ -5,8 +5,6 @@
 	import SystemThemeSVG from '$lib/components/systemThemeSVG.svelte';
 	import '../app.css';
 	import { page } from '$app/stores';
-	import { writable } from 'svelte/store';
-	import { setContext, onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
 	import NewsletterSignup from '$lib/components/newsletter.svelte';
 	import NewsletterEmail from '$lib/components/newsletterEmail.svelte';
@@ -85,7 +83,7 @@
 				>
 			</a>
 			<details class="dropdown">
-				<summary tabindex="0" role="button" class="btn btn-ghost rounded-none lg:hidden">
+				<summary class="btn btn-ghost rounded-none lg:hidden">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-5 w-5"
@@ -101,7 +99,6 @@
 					>
 				</summary>
 				<ul
-					tabindex="0"
 					class="menu dropdown-content menu-md z-[1] mt-3 w-52 rounded-none bg-base-100 p-2 text-base-content shadow"
 				>
 					<li><a class="font-asmbly font-light uppercase" href="/">Search for Classes</a></li>
@@ -146,9 +143,9 @@
 				</li>
 			</ul>
 		</div>
-		<div class="navbar-end m-2.5">
+		<div id="themeController" class="navbar-end m-2.5">
 			<details id="themeControl" class="dropdown rounded-none">
-				<summary tabindex="0" class="btn btn-ghost m-1 rounded-none">
+				<summary class="btn btn-ghost m-1 rounded-none">
 					{#if isDarkMode}
 					<DarkThemeSVG strokeColor="stroke-current" />
 					{:else}
@@ -205,15 +202,14 @@
 <slot />
 
 
-<div class="bg-primary p-12 text-primary-content">
-	<div class="pt-[50px] xs:px-12 lg:px-1">
+<div class="bg-primary p-5 lg:px-10 text-primary-content">
+	<div class="pt-4 lg:pt-[50px] xs:px-12 lg:px-1">
 		<div class="flex flex-wrap justify-start md:justify-center align-top">
 			<div class="px-4 mb-12 xs:w-full md:w-1/4">
 				<Logo fillColor='fill-secondary' strokeColor='stroke-secondary' height="auto" class="lg:max-w-[300px] w-full"/>
 				<br><br><hr><br>
-				<i class="fa fa-map-marker-alt" aria-hidden="true"></i> <p class="text-secondary">9701 Dessau Rd #304</p> <p class="text-secondary">Austin TX 78754 (<a class="underline text-secondary hover:text-[#fff]" href="https://www.google.com/maps?ll=30.353612,-97.671856&amp;z=10&amp;t=m&amp;hl=en-US&amp;gl=US&amp;mapclient=embed&amp;cid=5479436053178306069" target="_blank" rel="noopener">map</a>)</p><br>
-				<i class="fa fa-envelope" aria-hidden="true"></i> <a class="underline text-secondary hover:text-[#fff]" href="mailto:membership@asmbly.org">membership@asmbly.org</a>
-
+				<p class="text-secondary flex items-center"><span class="material-symbols-outlined pr-1">pin_drop</span>9701 Dessau Rd #304</p> <p class="text-secondary">Austin TX 78754 (<a class="underline text-secondary hover:text-[#fff]" href="https://www.google.com/maps?ll=30.353612,-97.671856&amp;z=10&amp;t=m&amp;hl=en-US&amp;gl=US&amp;mapclient=embed&amp;cid=5479436053178306069" target="_blank" rel="noopener">map</a>)</p><br>
+				<div class="flex items-center justify-start"><span class="material-symbols-outlined pr-1">mail</span><a class="underline text-secondary hover:text-[#fff]" href="mailto:membership@asmbly.org">membership@asmbly.org</a></div>
 			</div>
 			<div class="px-4 mb-12 xs:w-full md:w-1/2">
 				<div class="md:px-12">

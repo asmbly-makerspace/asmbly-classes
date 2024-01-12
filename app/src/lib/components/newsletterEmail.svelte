@@ -19,6 +19,7 @@
 	<input
 		class={'peer transition-all input h-20 placeholder-shown:h-14 bg-secondary text-secondary-content rounded-none placeholder-transparent focus:outline-none focus:h-20 ' +
 			_class}
+		autocomplete="email"
 		name={field}
 		aria-invalid={$errors ? 'true' : undefined}
 		id={field + randomId}
