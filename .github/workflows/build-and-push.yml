@@ -20,6 +20,7 @@ jobs:
         uses: docker/build-push-action@v5.1.0
         with:
           context: ./app
+          platforms: linux/amd64,linux/arm64
           push: true
           secret-envs: |
             postgres-user=${{ secrets.POSTGRES_USER }}
