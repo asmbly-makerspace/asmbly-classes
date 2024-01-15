@@ -1,5 +1,7 @@
-import { apiCall } from '../server/apiCall.js';
-import { NEON_API_KEY, NEON_API_USER } from '$lib/server/secrets';
+import { apiCall } from './apiCall.js';
+
+const NEON_API_KEY = process.env.NEON_API_KEY;
+const NEON_API_USER = process.env.NEON_API_USER;
 
 const N_AUTH = `${NEON_API_USER}:${NEON_API_KEY}`;
 const N_BASE_URL = 'https://api.neoncrm.com';

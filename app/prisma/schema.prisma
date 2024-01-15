@@ -70,6 +70,8 @@ model NeonEventInstanceRequest {
   requesterId   Int
   eventInstance NeonEventInstance  @relation(fields: [eventId], references: [eventId])
   requester     NeonEventRequester @relation(fields: [requesterId], references: [id])
+
+  @@unique([eventId, requesterId], name: "eventInstanceRequest")
 }
 
 model NeonEventRequester {

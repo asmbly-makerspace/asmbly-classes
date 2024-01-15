@@ -12,17 +12,17 @@ export async function POST({ request }) {
     try {
         apiKey = result.customParameters.apiKey;
     } catch (e) {
-        return new Response(error(400));
+        return error(400, 'API key not found');
     }
 
     if (apiKey !== INTERNAL_API_KEY) {
-        return new Response(error(401, 'Unauthorized'));
+        return error(401, 'Unauthorized');
     }
 
     const eventId = parseInt(result.data.eventId);
     const registrantId = parseInt(result.data.registrantAccountId);
 
-    const eventInstanceIncrementCall = prisma.NeonEventInstance.update({
+    const eventInstanceIncrement = await prisma.neonEventInstance.update({
         where: {
             eventId: eventId
         },
@@ -37,36 +37,41 @@ export async function POST({ request }) {
                     name: true
                 }
             },
-            requester: true
+            requests: {
+                where: {
+                    fulfilled: false
+                },
+                select: {
+                    requester: true
+                }
+            }
         }
     })
 
+    if (eventInstanceIncrement.requests.length === 0) {
+        return json({ success: true}, { status: 200 });
+    }
 
-    const registrantCall = getIndividualAccount(registrantId);
-
-    let [_, registrant] = await Promise.all([prisma.$transaction([eventInstanceIncrementCall]), registrantCall]);
+    const registrant = await getIndividualAccount(registrantId);
 
     const email = registrant.individualAccount.primaryContact.email1;
-    
-    const eventRequester = await prisma.NeonEventRequester.findUnique({
-        where: {
-            email: email
-        }
+
+    const eventRequester = eventInstanceIncrement.requests.find((request) => {
+        return request.requester.email === email
     })
 
-    if (eventRequester) {
-        await prisma.NeonEventInstance.update({
+    if (typeof eventRequester !== 'undefined') {
+        await prisma.neonEventInstanceRequest.update({
             where: {
-                eventId: eventId
+                eventInstanceRequest: {
+                    eventId: eventId,
+                    requesterId: eventRequester.id
+                }
             },
             data: {
-                requester: {
-                    disconnect: [{
-                        id: eventRequester.id
-                    }]
-                }
+                fulfilled: true
             }
         })
     }
-    return new Response(json({ success: true}));
+    return json({ success: true}, { status: 200 });
 }

@@ -41,43 +41,6 @@ export default {
 			fontFamily: {
 				asmbly: ['asmbly', 'sans-serif'],
 				sans: ['Roboto', 'sans-serif']
-			},
-			animation: {
-				'gradient-x': 'gradient-x 60s ease-in-out infinite',
-				'gradient-y': 'gradient-y 60s ease-in-out infinite',
-				'gradient-xy': 'gradient-xy 60s ease-in-out infinite'
-			},
-			keyframes: {
-				'gradient-y': {
-					'0%, 100%': {
-						'background-size': '400% 400%',
-						'background-position': 'center top'
-					},
-					'50%': {
-						'background-size': '200% 200%',
-						'background-position': 'center center'
-					}
-				},
-				'gradient-x': {
-					'0%, 100%': {
-						'background-size': '400% 400%',
-						'background-position': 'left center'
-					},
-					'50%': {
-						'background-size': '400% 400%',
-						'background-position': 'right center'
-					}
-				},
-				'gradient-xy': {
-					'0%, 100%': {
-						'background-size': '400% 400%',
-						'background-position': 'left center'
-					},
-					'50%': {
-						'background-size': '200% 200%',
-						'background-position': 'right center'
-					}
-				}
 			}
 		}
 	},

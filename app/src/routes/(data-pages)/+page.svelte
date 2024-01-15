@@ -18,7 +18,7 @@
 	function getClassImage(className, category) {
 		const result = classImages['/src/lib/images/' + className.replace(/\s+/g, '_') + '.jpg'];
 
-		if (result === undefined) {
+		if (typeof result === 'undefined' || result === null) {
 			switch (category) {
 				case 'Orientation':
 				case 'Miscellaneous':

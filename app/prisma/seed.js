@@ -1,5 +1,5 @@
-import { prisma } from '$lib/postgres';
-import { getCurrentEvents } from '$lib/helpers/neonHelpers';
+import { prisma } from '../src/lib/postgres.js';
+import { getCurrentEvents } from '../src/lib/helpers/neonHelpers.js';
 
 async function connectArchCat(model, archCatName, catId) {
 	const record = await model.update({

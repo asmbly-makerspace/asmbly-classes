@@ -1,6 +1,7 @@
 import { prisma } from '../src/lib/postgres.js';
-import { getCurrentEvents } from '../src/lib/helpers/neonHelpers.js';
-import { sendMIMEmessage } from '../src/lib/server/gmailEmailFactory.js';
+import { getCurrentEvents } from './neonHelpers.js';
+import { sendMIMEmessage } from './gmailEmailFactory.js';
+import { DateTime } from 'luxon';
 
 async function connectArchCat(model, archCatName, catId) {
 	const record = await model.update({
@@ -20,38 +21,57 @@ async function connectArchCat(model, archCatName, catId) {
 
 async function main() {
 
+	console.log('');
+	console.log(`Running daily class maintenance for ${DateTime.now().toLocaleString()}...`);
+	console.log('------------------------------------------------------');
+	console.log('');
+
 	const currentEvents = await getCurrentEvents();
 
 	const remainingPrismaCalls = [];
 
-	const getArchCategories = await prisma.asmblyArchCategory.findMany();
-
 	const alreadyAddedCats = {};
 
 	for (const event of currentEvents) {
-        const exists = prisma.neonEventInstance.findUnique({
+        const exists = await prisma.neonEventInstance.findUnique({
             where: {
                 eventId: parseInt(event['Event ID'])
-            }
+            },
+			include: {
+				teacher: {
+					select: {
+						name: true
+					}
+				}
+			}
         })
 
-        if (exists) {
+		const startDateTime = event['Event Start Date'] + 'T' + event['Event Start Time'] + 'Z';
+		const endDateTime = event['Event End Date'] + 'T' + event['Event End Time'] + 'Z';
+
+		const compareStart = DateTime.fromISO(startDateTime);
+		const compareEnd = DateTime.fromISO(endDateTime);
+
+        if (typeof exists !== 'undefined' && exists !== null && compareStart.equals(DateTime.fromJSDate(exists.startDateTime)) && compareEnd.equals(DateTime.fromJSDate(exists.endDateTime)) && parseInt(event['Actual Registrants']) === exists.attendeeCount && event['Event Topic'] === exists.teacher.name) {
+			console.log(`Skipping ${event['Event Name']} (same date, time, teacher, students)`);
             continue;
         }
 
 		let category = event['Event Category Name'];
 		let addCategory;
-		if (category && !alreadyAddedCats.category) {
+		if (typeof category !== 'undefined' && category != null && (typeof alreadyAddedCats[category] === 'undefined' || alreadyAddedCats[category] == null)) {
 			let search = { name: category };
 			addCategory = await prisma.neonEventCategory.upsert({ where: search, create: search, update: {} });
-			alreadyAddedCats.category = addCategory;
-		} else if (category && alreadyAddedCats.category) {
-			addCategory = alreadyAddedCats.category;
+			alreadyAddedCats[category] = addCategory;
+			console.log(`Adding category ${addCategory.name}`);
+		} else if (typeof category !== 'undefined' && category != null && (typeof alreadyAddedCats[category] !== 'undefined' && alreadyAddedCats[category] != null)) {
+			addCategory = alreadyAddedCats[category];
+			console.log(`Using existing category ${addCategory.name}`);
 		} else {
-            continue;
-        }
+			addCategory = await prisma.neonEventCategory.findUnique({ where: { name: 'Miscellaneous' } });
+			console.log(`No category found for ${event['Event Name']}, defaulting to Miscellaneous`);
+		}
 		
-
 		switch (category) {
 			case 'Woodworking':
 			case 'CNC Router':
@@ -101,6 +121,7 @@ async function main() {
 					name: 'TBD'
 				}
 			})
+			console.log(`No teacher found for ${event['Event Name']}, defaulting to TBD`);
 		}
 		
 
@@ -108,8 +129,7 @@ async function main() {
 		const eventPrice = parseFloat(event['Event Admission Fee']);
 		const summary = event['Event Summary'];
 		const eventName = event['Event Name'].split(' w/ ')[0];
-		const startDateTime = event['Event Start Date'] + 'T' + event['Event Start Time'] + 'Z';
-		const endDateTime = event['Event End Date'] + 'T' + event['Event End Time'] + 'Z';
+		
 
 		let data = {
 			capacity: eventCapacity,
@@ -144,8 +164,11 @@ async function main() {
 			}
 		});
 
-		const addEventInstance = prisma.neonEventInstance.create({
-			data: {
+		const addEventInstance = prisma.neonEventInstance.upsert({
+			where: {
+				eventId: parseInt(event['Event ID'])
+			},
+			create: {
 				eventId: parseInt(event['Event ID']),
 				attendeeCount: parseInt(event['Actual Registrants']),
 				startDateTime: startDateTime,
@@ -166,19 +189,33 @@ async function main() {
 					}
 				}
 			},
-            include: {
-                eventType: {
-                    select: {
-                        id: true,
-                        name: true
-                    }
-                }
-            }
+			update: {
+				attendeeCount: parseInt(event['Actual Registrants']),
+				startDateTime: startDateTime,
+				endDateTime: endDateTime,
+				teacher: {
+					connect: {
+						id: addTeacher.id
+					}
+				},
+				category: {
+					connect: {
+						id: addCategory.id
+					}
+				}
+			},
+			include: {
+				eventType: {
+					select: {
+						name: true
+					}
+				}
+			}
 		});
 
 		remainingPrismaCalls.push(updateEventType, addEventInstance);
 
-		console.log('Attempting to add ' + eventName);
+		console.log('Adding ' + eventName + ' to the queue...');
 	}
 
     if (remainingPrismaCalls.length === 0) {
@@ -186,13 +223,22 @@ async function main() {
         return;
     }
 
-	let results = await prisma.$transaction(remainingPrismaCalls);
+	let results;
+	try {
+		results = await prisma.$transaction(remainingPrismaCalls);
+	} catch (e) {
+		console.log(`Error adding events to the database:`);
+		console.error(e);
+		return
+	}
 
     const eventTypesAddedToday = new Set();
 
     for (let result of results) {
-        console.log('Successfully added: ' +  result.name + ' on ' + result.startDateTime);
-        eventTypesAddedToday.add(result.eventType.id);
+		if (result.eventId != null) {
+			console.log('Successfully added/updated: ' +  result.eventType.name + ' on ' + result.startDateTime);
+        	eventTypesAddedToday.add(result.eventTypeId);
+		}
     }
 
     const eventTypesToEmail = await prisma.neonEventType.findMany({
@@ -206,20 +252,20 @@ async function main() {
                 where: {
                     fulfilled: false
                 },
-                id: true,
-                include: {
-                    requester: {
-                        select: {
-                            email: true,
-                            firstName: true
-                        }
-                    }
-                }
+                select: {
+					id: true,
+					requester: {
+						select: {
+							email: true,
+							firstName: true
+						}
+					}
+				}
             }
         }
     })
 
-    if (eventTypesToEmail.request.length === 0) {
+    if (eventTypesToEmail.length === 0) {
         console.log(`No events to email today (${new Date().toLocaleDateString()}).`);
         console.log(`Finished adding events for today (${new Date().toLocaleDateString()}).`);
         return;
@@ -229,23 +275,26 @@ async function main() {
     const requestsToFulfill = [];
 
     for (const eventType of eventTypesToEmail) {
-        const requesterEmail = eventType.request.requester.email;
-        const requesterFirstName = eventType.request.requester.firstName;
+		for (const request of eventType.request) {
+			const requesterEmail = request.requester.email;
+			const requesterFirstName = request.requester.firstName;
 
-        requestersToEmail.push({
-            email: requesterEmail,
-            firstName: requesterFirstName,
-            eventType: eventType.name,
-            eventTypeId: eventType.id,
-        })
+			requestersToEmail.push({
+				email: requesterEmail,
+				firstName: requesterFirstName,
+				eventType: eventType.name,
+				eventTypeId: eventType.id,
+			})
 
-        requestsToFulfill.push(eventType.request.id);
+			requestsToFulfill.push(request.id);
+		}
+        
     }
 
     const emailsToSend = [];
 
     for (const requester of requestersToEmail) {
-        emailBody = `
+        const emailBody = `
             <p>Hi ${requester.firstName},</p>
             <p>You previously requested that we notify you when we add additional sessions of ${requester.eventType} to the schedule.</p>
             <p>We're happy to let you know that we've added more!</p>
@@ -277,7 +326,12 @@ async function main() {
         }
     })
 
-    await Promise.allSettled(emailsToSend, prisma.$transaction(fulfillRequests));
+	try {
+    	await Promise.all(emailsToSend, prisma.$transaction([fulfillRequests]));
+	} catch (e) {
+		console.log(`Error sending emails:`);
+		console.error(e);
+	}
 
     console.log(`Finished adding events for today (${new Date().toLocaleDateString()}).`);
 }

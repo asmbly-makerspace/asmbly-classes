@@ -5,22 +5,12 @@
 	import SystemThemeSVG from '$lib/components/systemThemeSVG.svelte';
 	import '../app.css';
 	import { page } from '$app/stores';
-	import { afterNavigate } from '$app/navigation';
 	import NewsletterSignup from '$lib/components/newsletter.svelte';
 	import NewsletterEmail from '$lib/components/newsletterEmail.svelte';
 	import { newsletterSchema } from '$lib/zodSchemas/schema.js';
 	import { browser } from '$app/environment';
 
 	export let data;
-
-	let navbar;
-
-	afterNavigate((nav) => {
-		// Scroll to top
-		if (navbar && nav.type === 'link') {
-			navbar.scrollIntoView();
-		}
-	});
 
 	let isDarkMode;
 	let themeSelection = 'system';
@@ -61,7 +51,7 @@
 	}
 </script>
 
-<nav id="navbar" class="flex h-16 justify-center shadow-lg bg-base-100" bind:this={navbar}>
+<nav id="navbar" class="flex h-16 justify-center shadow-lg bg-base-100">
 	<div class="navbar w-full max-w-7xl">
 		<div class="navbar-start w-full lg:w-1/2">
 			<a
@@ -258,7 +248,7 @@
 									type="submit"
 									class="btn group flex w-full flex-col justify-center rounded-none bg-[#78CBC3] py-7 border-none"
 								>
-									<span class="font-asmbly text-2xl text-[#000]"
+									<span class="font-asmbly text-2xl text-[#000] group-hover:text-[#fff] transition-all"
 										>Subscribe Now</span
 									>
 								</button>

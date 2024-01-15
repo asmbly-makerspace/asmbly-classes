@@ -1,2 +1,8 @@
+<script>
+</script>
 
-<slot />
+<main id="main">
+    <slot />
+</main>
+
+

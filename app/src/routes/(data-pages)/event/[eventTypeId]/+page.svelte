@@ -1,35 +1,49 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
+
 	import { DateTime } from 'luxon';
+	import { page } from '$app/stores';
 
 	import SuperForm from '$lib/components/classRequestForm.svelte';
 	import TextField from '$lib/components/textField.svelte';
 	import RadioField from '$lib/components/radioField.svelte';
 	import { schema, privateRequestSchema } from '$lib/zodSchemas/schema.js';
+	import { afterNavigate } from '$app/navigation';
+	import { tick } from 'svelte';
+
+	afterNavigate(async (nav) => {
+		if (nav.type === 'link') {
+			await tick();
+			window.scrollTo(0, 0);
+		}}
+	);
 
 	const noCheckouts = ['Beginner CNC Router', 'Big Lasers Class', 'Small Lasers Class', 'Woodshop Safety', 'Metal Shop Safety'];
 
-	const { classJson } = data;
-	const classType = classJson.filter((i) => i.typeId == data.slug)[0];
+	$: classType = data.classJson;
 
-	const classInstances = classType.classInstances;
+	$: classInstances = classType.classInstances;
 
-	let classDates = [];
-	if (classInstances.length > 0) {
-		classDates = classInstances.map((i) => DateTime.fromJSDate(i.startDateTime));
-	} 
+	$: classDates = [];	
+	$: {
+		if (classInstances.length > 0) {
+			classDates = classInstances.map((i) => DateTime.fromJSDate(i.startDateTime));
+		}
+	}
 	
 	let currentDate = DateTime.now();
 
 	let date;
-	if (classDates.length > 0) {
-		date = classDates.sort((a, b) => a - b)[0];
+	$: {
+		if (classDates.length > 0) {
+			date = classDates.sort((a, b) => a - b)[0];
+		}
 	}
 
-	$: classOnDate = classInstances.filter((i) =>
+	$: classOnDate = classInstances.find((i) =>
 		DateTime.fromJSDate(i.startDateTime).hasSame(date, 'day')
-	)[0];
+	);
 
 	function getDaysInMonth(year, month) {
 		return new Date(year, month + 1, 0).getDate();
@@ -58,6 +72,8 @@
 	<meta name="description" content="View the schedule and register for a {classType.name}{classType.name.split(' ').pop() === 'Class' ? '' : ' class'} at Asmbly." />
 	<meta name="keywords" content="classes, asmbly" />
 </svelte:head>
+
+<svelte:window on:load={window.scrollTo(0, 0)} />
 
 <div id="main" class="container mx-auto flex flex-col items-center justify-center pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
@@ -530,15 +546,4 @@
 </div>
 
 <style>
-    .all-under:after {
-        content: " ";
-        background: linear-gradient(300deg, #292d6a, #568ac8, #00916e, #78cbc3, #f2b51b, #ed6e24, #d33e42);
-        background-size: 480% 480%;
-        animation: gradient-x 64s ease infinite;
-        height: 5px;
-        display: block;
-        width: 100%;
-        margin-top: 0.5rem;
-		box-sizing: border-box;
-        }
 </style>

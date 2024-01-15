@@ -13,22 +13,22 @@ export async function POST({ request }) {
     try {
         apiKey = result.customParameters.apiKey;
     } catch (e) {
-        return new Response(error(400));
+        return error(400, 'API key not found');
     }
 
     if (apiKey !== INTERNAL_API_KEY) {
-        return new Response(error(401, 'Unauthorized'));
+        return error(401, 'Unauthorized');
     }
 
     const status = result.data.tickets[0].attendees[0].registrationStatus;
 
     if (status !== 'CANCELED' && status !== 'REFUNDED') {
-        return new Response(json({ success: true, updated: false }));
+        return json({ updated: false }, { status: 200 });
     }
 
     const eventId = parseInt(result.data.eventId);
 
-    const eventInstanceDecrementCall = prisma.NeonEventInstance.update({
+    const eventInstanceDecrementCall = prisma.neonEventInstance.update({
         where: {
             eventId: eventId
         },
@@ -43,30 +43,43 @@ export async function POST({ request }) {
                     name: true
                 }
             },
-            requester: true
+            requests: {
+                where: {
+                    fulfilled: false
+                },
+                select: {
+                    requester: true
+                }
+            }
         }
     })
 
-    const baseRegLinkCall = prisma.NeonBaseRegLink.findFirst({
+    const baseRegLinkCall = prisma.neonBaseRegLink.findFirst({
         select: {
             url: true
         }
     });
 
-    let [eventInstanceDecrement, baseRegLink] = await prisma.$transaction([eventInstanceDecrementCall, baseRegLinkCall]);
+    let eventInstanceDecrement, baseRegLink;
+    try {
+        [eventInstanceDecrement, baseRegLink] = await prisma.$transaction([eventInstanceDecrementCall, baseRegLinkCall]);
+    } catch (e) {
+        return error(500, 'Database error');
+    }
 
-    if (eventInstanceDecrement.requester.length > 0) {
+    if (eventInstanceDecrement.requests.length > 0) {
 
         const startDateTime = DateTime.fromJSDate(eventInstanceDecrement.startDateTime).setZone('utc').toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
 
         const emailList = [];
+        const requestsFulfilled = [];
 
-        for (const requester of eventInstanceDecrement.requester) {
-            const email = requester.email;
+        for (const request of eventInstanceDecrement.requests) {
+            const email = request.requester.email;
 
             const emailBody = `
             <div>
-            <p>Hi ${requester.firstName},</p>
+            <p>Hi ${request.requester.firstName},</p>
             <p>A seat has opened up in ${eventInstanceDecrement.eventType.name} on ${startDateTime}.</p>
             <p>If you are interested in attending, please use <a href="${baseRegLink.url}${eventId}">this link</a> to register through Neon.</p>
             <p>As a reminder, seats are first come first served.</p>
@@ -87,11 +100,30 @@ export async function POST({ request }) {
             })
 
             emailList.push(response);
+
+            requestsFulfilled.push(request.id);
         }
 
-        await Promise.all(emailList);
+        const sentEmails = await Promise.allSettled(emailList);
+
+        if (sentEmails.some(email => email.status === 'rejected')) {
+            console.error(`Error sending email: ${email.reason}`);
+        }
+
+        if (sentEmails.some(email => email.status === 'fulfilled')) {
+            await prisma.neonEventInstanceRequest.updateMany({
+                where: {
+                    id: {
+                        in: [...requestsFulfilled]
+                    }
+                },
+                data: {
+                    fulfilled: true
+                }
+            })
+        }
     }
 
-	return new Response(json({ success: true }));
+	return json({ updated: true }, { status: 200 });
 
 }

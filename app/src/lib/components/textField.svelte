@@ -29,7 +29,7 @@
 	/>
 	{#if label !== undefined}
 		<label
-			class="label cursor-text absolute -top-7 left-3 text-sm text-base-content/90 transition-all peer-placeholder-shown:top-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-base-content/75 peer-focus:-top-7 peer-focus:text-sm peer-focus:text-sm peer-focus:text-base-content/90"
+			class="label cursor-text absolute -top-7 left-3 text-sm text-base-content/90 transition-all peer-placeholder-shown:top-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-base-content/75 peer-focus:-top-7 peer-focus:text-sm peer-focus:text-base-content/90"
 			for={field + randomId}>{label}</label
 		>
 	{/if}

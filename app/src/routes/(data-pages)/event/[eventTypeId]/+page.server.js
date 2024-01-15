@@ -21,14 +21,65 @@ export async function load({ params, setHeaders }) {
 		id: 'fullClassRequestForm'
 	});
 
-	const slug = params.eventTypeId;
-
 	setHeaders({
         'cache-control': 'max-age=300',
     })
 
+	// Retrieve class data from the database
+	const eventTypeCall = prisma.neonEventType.findUnique({
+		where: {
+			id: parseInt(params.eventTypeId)
+		},
+		include: {
+			category: {
+				include: {
+					archCategories: true
+				}
+			},
+			instances: {
+				where: {
+					startDateTime: {
+						gte: new Date()
+					}
+				},
+				include: {
+					teacher: {
+						select: {
+							name: true
+						}
+					}
+				}
+			}
+		}
+	});
+
+	const baseRegLinkCall = prisma.NeonBaseRegLink.findFirst();
+
+	const [eventType, baseRegLink] = await prisma.$transaction([eventTypeCall, baseRegLinkCall]);
+
+	const classJson = {};
+
+	let classInstances = [];
+	for (const instance of eventType.instances) {
+		const instanceContext = {};
+		instanceContext.eventId = instance.eventId;
+		instanceContext.attendees = instance.attendeeCount;
+		instanceContext.teacher = instance.teacher.name;
+		instanceContext.startDateTime = instance.startDateTime;
+		instanceContext.endDateTime = instance.endDateTime;
+		classInstances.push(instanceContext);
+	}
+
+	classJson.classInstances = classInstances;
+	classJson.name = eventType.name;
+	classJson.summary = eventType.summary;
+	classJson.price = eventType.price;
+	classJson.capacity = eventType.capacity;
+	classJson.category = eventType.category[0].archCategories.name;
+	classJson.typeId = eventType.id;
+
 	// Unless you throw, always return { form } in load and form actions.
-	return { privateRequestForm, notificationForm, onDemandRequestForm, fullClassRequestForm, slug };
+	return { privateRequestForm, notificationForm, onDemandRequestForm, fullClassRequestForm, classJson, baseRegLink };
 }
 
 /** @type {import('./$types').Actions} */
@@ -264,7 +315,10 @@ export const actions = {
 					}
 				}
 			},
-			update: {},
+			update: {
+				fulfilled: false,
+				createdAt: new Date()
+			},
 			where: {
 				eventTypeRequest: {
 					requestType: 'NOTIFICATION',
@@ -355,7 +409,10 @@ export const actions = {
 					}
 				}
 			},
-			update: {},
+			update: {
+				fulfilled: false,
+				createdAt: new Date()
+			},
 			where: {
 				eventTypeRequest: {
 					requestType: 'ONDEMAND',
