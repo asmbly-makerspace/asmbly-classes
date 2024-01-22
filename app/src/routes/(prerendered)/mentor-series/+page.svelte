@@ -18,7 +18,7 @@
     >
         Mentor Series
     </h1>
-    <article class="prose lg:prose-lg xl:prose-xl text-wrap mx-8">
+    <article class="prose lg:prose-lg text-wrap mx-8">
         <p>
             In addition to our other class offerings, Asmbly offers open-ended classes we call Mentor Series classes. 
             These classes are taught by highly experienced instructors and are tailored to the individual needs of the student. 
@@ -46,9 +46,7 @@
                 To request a session with David, please email him at <a href="mailto:woodshop-mentor-series@asmbly.org">woodshop-mentor-series@asmbly.org</a>.
                 To request a session with Charles, please use the scheduler link below.
             </Description>
-            <Action>
-                <a href="https://elementalwoodworks.as.me/woodshopmentorseries" target="_blank">Sign up Here</a>
-            </Action>
+            <a class="btn btn-primary rounded-none w-max" href="https://elementalwoodworks.as.me/woodshopmentorseries" target="_blank">Sign up Here</a>
         </div>
     </ResponsiveCard>   
     <ResponsiveCard let:Description let:Action let:Title let:Figure class="bg-base-100 w-full">
@@ -68,9 +66,7 @@
                 To request a session with James, please email him at <a href="mailto:cnc-mentor@asmbly.org">cnc-mentor@asmbly.org</a>. 
                 To request a session with Charles, please use the scheduler link below.
             </Description>
-            <Action>
-                <a href="https://elementalwoodworks.as.me/?appointmentType=51622907" target="_blank">Sign up Here</a>
-            </Action>
+            <a class="btn btn-primary rounded-none w-max" href="https://elementalwoodworks.as.me/?appointmentType=51622907" target="_blank">Sign up Here</a>
         </div>
         {#if innerWidth >= 720}
         <Figure>

@@ -191,6 +191,20 @@
 					</p>
 				</div>
 			</FAQField>
+			<FAQField>
+				<div slot="collpase-title" class="collapse-title text-xl font-medium italic">
+					I'm interested in offering a mentor series class. Who should I contact?
+				</div>
+				<div slot="content" class="collapse-content">
+					<p>Send us an email at <a href="mailto:classes@asmbly.org">classes@asmbly.org</a> with your 
+                        background, teaching experience, and the class(es) you'd like to teach, and we will get back to you.
+					</p>
+					<p> 
+						Please note that we will expect a higher level of experience in the subject matter than we would normally expect
+						for a regular class.
+					</p>
+				</div>
+			</FAQField>
 		</div>
 	</div>
 </div>
