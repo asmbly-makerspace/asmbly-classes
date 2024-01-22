@@ -26,7 +26,7 @@
             All Mentor Series classes cost $100/hr of instruction time. 
         </p>
         <p>
-            The following are our most popular Mentor Series classes. If none of these meet your needs, send us an email at <a href="mailto:mentor-series@asmbly.org">mentor-series@asmbly.org</a>
+            The following are our most popular Mentor Series classes. To request a session, use the links under each section below. If none of these meet your needs, send us an email at <a href="mailto:mentor-series@asmbly.org">mentor-series@asmbly.org</a>
             with your request, and we'll get back to you.
         </p>
     </article>
@@ -42,11 +42,11 @@
                 Woodshop Mentor Series
             </Title>
             <Description>
-                The Woodshop Mentor Series is taught by professional woodworker Charles Leininger and Asmbly Lead Instructor David Disko. 
-                To request a session with David, please email him at <a href="mailto:woodshop-mentor-series@asmbly.org">woodshop-mentor-series@asmbly.org</a>.
-                To request a session with Charles, please use the scheduler link below.
+                The Woodshop Mentor Series is taught by Asmbly Lead Instructor David Disko and professional woodworker Charles Leininger.
+                To learn more or request a session, use one of the links below.
             </Description>
-            <a class="btn btn-primary rounded-none w-max" href="https://elementalwoodworks.as.me/woodshopmentorseries" target="_blank">Sign up Here</a>
+            <div class="flex items-center justify-start prose lg:prose-lg"><span class="material-symbols-outlined pr-2">mail</span><a class="underline" href="mailto:woodshop-mentor-series@asmbly.org">Request a session with David</a></div>
+            <div class="flex items-center justify-start prose lg:prose-lg mt-2"><span class="material-symbols-outlined pr-2">content_paste</span><a class="underline" href="https://elementalwoodworks.as.me/woodshopmentorseries" target="_blank">Request a session with Charles</a></div>
         </div>
     </ResponsiveCard>   
     <ResponsiveCard let:Description let:Action let:Title let:Figure class="bg-base-100 w-full">
@@ -62,11 +62,11 @@
                 CNC Mentor Series
             </Title>
             <Description>
-                The CNC Mentor Series is taught by James Freeman (VCarve) and Charles Leininger (Fusion 360). 
-                To request a session with James, please email him at <a href="mailto:cnc-mentor@asmbly.org">cnc-mentor@asmbly.org</a>. 
-                To request a session with Charles, please use the scheduler link below.
+                The CNC Mentor Series is taught by James Freeman (VCarve) and Charles Leininger (Fusion 360). To learn more or request a session,
+                use one of the links below.
             </Description>
-            <a class="btn btn-primary rounded-none w-max" href="https://elementalwoodworks.as.me/?appointmentType=51622907" target="_blank">Sign up Here</a>
+            <div class="flex items-center justify-start prose lg:prose-lg"><span class="material-symbols-outlined pr-2">mail</span><a class="underline" href="mailto:cnc-mentor@asmbly.org">Request a session with James</a></div>
+            <div class="flex items-center justify-start prose lg:prose-lg mt-2"><span class="material-symbols-outlined pr-2">content_paste</span><a class="underline" href="https://elementalwoodworks.as.me/?appointmentType=51622907" target="_blank">Request a session with Charles</a></div>
         </div>
         {#if innerWidth >= 720}
         <Figure>
@@ -88,8 +88,9 @@
             </Title>
             <Description>
                 The Textiles Mentor Series is taught by designer and maker Gabrielle Pierce. 
-                To learn more or request a session, please send an email to <a href="mailto:textiles-mentor-series@asmbly.org">textiles-mentor-series@asmbly.org</a>.
+                To learn more or request a session, use the link below. 
             </Description>
+            <div class="flex items-center justify-start prose lg:prose-lg"><span class="material-symbols-outlined pr-2">mail</span><a href="mailto:textiles-mentor-series@asmbly.org">Request a session with Gabrielle</a></div>
         </div>
     </ResponsiveCard>   
     <ResponsiveCard let:Description let:Title let:Figure class="bg-base-100 w-full">
@@ -106,8 +107,9 @@
             </Title>
             <Description>
                 The Metal Shop Mentor Series is taught by professional metalworker and maker Savanna Harvey.
-                To learn more or request a session, please send an email to <a href="mailto:metal-shop-mentor-series@asmbly.org">metal-shop-mentor-series@asmbly.org</a>.
+                To learn more or request a session, use the link below. 
             </Description>
+            <div class="flex items-center justify-start prose lg:prose-lg"><span class="material-symbols-outlined pr-2">mail</span><a href="mailto:metal-shop-mentor-series@asmbly.org">Request a session with Savanna</a></div>
         </div>
         {#if innerWidth >= 720}
         <Figure>

@@ -63,7 +63,9 @@ export async function POST({ request }) {
     let eventInstanceDecrement, baseRegLink;
     try {
         [eventInstanceDecrement, baseRegLink] = await prisma.$transaction([eventInstanceDecrementCall, baseRegLinkCall]);
+        console.log(`Decrementing seat count for ${eventInstanceDecrement.eventType.name} on ${eventInstanceDecrement.startDateTime}`);
     } catch (e) {
+        console.error(e);
         return error(500, 'Database error');
     }
 
@@ -102,6 +104,8 @@ export async function POST({ request }) {
             emailList.push(response);
 
             requestsFulfilled.push(request.id);
+
+            console.log(`Sending waitlist seat opening email to ${email} for ${eventInstanceDecrement.eventType.name} on ${startDateTime}`);
         }
 
         const sentEmails = await Promise.allSettled(emailList);

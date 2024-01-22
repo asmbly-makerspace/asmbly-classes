@@ -48,6 +48,8 @@ export async function POST({ request }) {
         }
     })
 
+    console.log(`Incremented attendee count for ${eventInstanceIncrement.eventType.name} on ${eventInstanceIncrement.startDateTime}`)
+
     if (eventInstanceIncrement.requests.length === 0) {
         return json({ success: true}, { status: 200 });
     }

@@ -174,7 +174,7 @@ export const actions = {
 		const lastName = fullClassRequestForm.data.lastName;
 		const eventId = parseInt(formData.get('eventId'));
 
-		const classInstance = await prisma.NeonEventInstance.findUnique({
+		const classInstanceCall = prisma.NeonEventInstance.findUnique({
 			where: {
 				eventId: eventId
 			},
@@ -182,6 +182,23 @@ export const actions = {
 				eventType: true
 			}
 		})
+
+		const requesterPrismaCall = prisma.NeonEventRequester.upsert({
+			where: {
+				email: email
+			},
+			create: {
+				email: email,
+				firstName: firstName,
+				lastName: lastName
+			},
+			update: {
+				firstName: firstName,
+				lastName: lastName
+			}
+		})
+
+		let [requester, classInstance] = await prisma.$transaction([requesterPrismaCall, classInstanceCall]);
 
 		const startDateTime = DateTime.fromJSDate(classInstance.startDateTime).setZone('utc').toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
 
@@ -207,31 +224,28 @@ export const actions = {
 			html: requesterBody,
 		})
 
-		const waitlistCall = prisma.NeonEventInstance.update({
+		const waitlistCall = prisma.NeonEventInstanceRequest.upsert({
 			where: {
-				eventId: eventId
+				eventInstanceRequest: {
+					eventId: eventId,
+					requesterId: requester.id
+				}
 			},
-			data: {
+			create: {
+				eventInstance: {
+					connect: {
+						eventId: eventId
+					}
+				},
 				requester: {
-					connectOrCreate: {
-						where: {
-							email: email
-						},
-						create: {
-							email: email,
-							firstName: firstName,
-							lastName: lastName
-						}
+					connect: {
+						id: requester.id
 					}
 				}
 			},
-			include: {
-				requester: {
-					select: {
-						email: true,
-						firstName: true
-					}
-				}
+			update: {
+				fulfilled: false,
+				createdAt: new Date(),
 			}
 		})
 
