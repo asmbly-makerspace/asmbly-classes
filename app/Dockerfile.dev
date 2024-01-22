@@ -1,5 +1,5 @@
 # Base image
-FROM node:21.1.0
+FROM node:21.5.0
 
 # Set environment variables
 ENV NODE_ENV=development
@@ -28,11 +28,6 @@ COPY ./entrypoint.sh /entrypoint.sh
 COPY ./wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /entrypoint.sh \
     && chmod +x /wait-for-it.sh
-
-ARG POSTGRES_DB
-ARG POSTGRES_PORT
-ENV POSTGRES_DB=$POSTGRES_DB \
-    POSTGRES_PORT=$POSTGRES_PORT
 
 ENTRYPOINT [ "/wait-for-it.sh", "db:5432", "-t", "10", "-s" , "--", "/entrypoint.sh" ]
 

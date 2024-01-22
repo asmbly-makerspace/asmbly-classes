@@ -55,4 +55,4 @@ RUN chmod +x /wait-for-it.sh
 
 USER node
 
-ENTRYPOINT [ "/wait-for-it.sh", "db:${POSTGRES_PORT}", "-t", "10", "-s" , "--", "node", "build" ]
+ENTRYPOINT /wait-for-it.sh db:${POSTGRES_PORT} -t 10 -s -- node build
