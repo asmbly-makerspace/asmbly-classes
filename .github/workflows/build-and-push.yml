@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Push, and Deploy Docker Image
 
 on:
   push:
@@ -30,4 +30,26 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/asmbly-classes-app:latest
             ${{ secrets.DOCKER_USERNAME }}/asmbly-classes-app:${{ github.sha }}
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy latest image
+        uses: appleboy/ssh-action@master
+        env:
+          APPTOKEN: ${{ secrets.DOCKER_TOKEN }}
+          USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          envs: APPTOKEN,USERNAME
+          script: |
+            echo $APPTOKEN | docker login -u $USERNAME --password-stdin
+            export TAG="${{ github.sha }}"
+            cd ~/app
+            docker compose pull
+            docker compose up -d
+            
         
