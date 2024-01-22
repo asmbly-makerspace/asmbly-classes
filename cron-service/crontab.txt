@@ -1,0 +1,2 @@
+30 3 * * * node /prisma/dailyClassMaintenance.js > /proc/1/fd/1 2>&1
+0 7 * * SUN node /prisma/weeklyReportingMetrics.js > /proc/1/fd/1 2>&1

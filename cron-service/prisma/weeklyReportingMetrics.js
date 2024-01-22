@@ -3,7 +3,7 @@ Generate weekly reporting metrics for class requests - on demand, event type not
 and waitlist requests. Sends an email to classes@ with the results.
 */
 
-import { prisma } from '../src/lib/postgres.js';
+import { prisma } from './prismaClient.js';
 import { sendMIMEmessage } from './gmailEmailFactory.js';
 import { DateTime } from 'luxon';
 
@@ -241,7 +241,9 @@ async function main() {
 
 try {
     main();
+    await prisma.$disconnect();
 } catch (e) {
     console.error(e);
+    await prisma.$disconnect();
     process.exit(1);
 }

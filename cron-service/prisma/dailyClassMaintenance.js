@@ -1,4 +1,4 @@
-import { prisma } from '../src/lib/postgres.js';
+import { prisma } from './prismaClient.js';
 import { getCurrentEvents } from './neonHelpers.js';
 import { sendMIMEmessage } from './gmailEmailFactory.js';
 import { DateTime } from 'luxon';

@@ -33,11 +33,11 @@
     
     <ResponsiveCard let:Description let:Action let:Title let:Figure class="bg-base-200 w-full mt-16">
         <Figure>
-            <enhanced:img src="$lib/images/DavidDiskoNew.jpg" 
+            <enhanced:img src="$lib/images/DavidDiskoNew.jpg?aspect=0.8" 
             alt="Woodshop Mentor Series Instructor Charles Leininger" 
-            class="w-full"/>
+            class="w-full h-auto"/>
         </Figure>
-        <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-8 lg:justify-center lg:w-full">
+        <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-32 lg:justify-center lg:w-full">
             <Title>
                 Woodshop Mentor Series
             </Title>
@@ -56,10 +56,10 @@
         <Figure>
             <enhanced:img src="$lib/images/CNCMentorPlaceholder.jpg" 
             alt="CNC routing a 3D design" 
-            class="w-full h-full"/>
+            class="h-full w-auto"/>
         </Figure>
         {/if}
-        <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-8 lg:justify-center lg:w-full left-padding">
+        <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-32 lg:justify-center lg:w-full left-padding">
             <Title>
                 CNC Mentor Series
             </Title>
@@ -76,7 +76,7 @@
         <Figure>
             <enhanced:img src="$lib/images/CNCMentorPlaceholder.jpg" 
             alt="CNC routing a 3D design" 
-            class="w-full h-full"/>
+            class="h-full w-auto"/>
         </Figure>
         {/if}
     </ResponsiveCard>   
@@ -84,9 +84,9 @@
         <Figure>
             <enhanced:img src="$lib/images/GabriellePierce.jpg" 
             alt="Textiles Mentor Series Instructor Gabrielle Pierce" 
-            class="w-full"/>
+            class="w-full h-auto"/>
         </Figure>
-        <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-8 lg:justify-center lg:w-full">
+        <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-32 lg:justify-center lg:w-full">
             <Title>
                 Textiles Mentor Series
             </Title>
@@ -101,10 +101,10 @@
         <Figure>
             <enhanced:img src="$lib/images/SavannaHarvey.jpg" 
             alt="Metal Shop Mentor Series Instructor Savanna Harvey" 
-            class="w-full"/>
+            class="h-full w-auto"/>
         </Figure>
         {/if}
-        <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-8 lg:justify-center lg:w-full left-padding">
+        <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-32 lg:justify-center lg:w-full left-padding">
             <Title>
                 Metal Shop Mentor Series
             </Title>
@@ -117,7 +117,7 @@
         <Figure>
             <enhanced:img src="$lib/images/SavannaHarvey.jpg" 
             alt="Metal Shop Mentor Series Instructor Savanna Harvey" 
-            class="w-full"/>
+            class="h-full w-auto"/>
         </Figure>
         {/if}
     </ResponsiveCard>  

@@ -366,7 +366,7 @@
 								>
 							</summary>
 							<ul
-								class="menu dropdown-content z-[1] w-40 rounded-none bg-base-100 p-2 shadow"
+								class="menu dropdown-content z-[1] w-40 rounded-none bg-base-100 p-2 shadow-xl"
 							>
 								<li><button class="rounded-none" on:click={() => sortClickHandler('Date')}>Date</button></li>
 								<li><button class="rounded-none" on:click={() => sortClickHandler('Name')}>Name</button></li>
@@ -495,7 +495,7 @@
 	<div class="drawer-side order-1 h-full md:max-h-max lg:ml-2 lg:mt-2 lg:pl-2 lg:pt-2">
 		<label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay" />
 		<ul
-			class="xs:min-h-full md:min-h-max w-64 overflow-y-auto bg-base-200 p-4 text-base-content lg:bg-transparent xl:w-80"
+			class="min-h-full md:min-h-max w-64 overflow-y-auto bg-base-200 p-4 text-base-content lg:bg-transparent xl:w-80"
 		>
 			<!-- Sidebar content here -->
 			<h2 class="pl-2 font-asmbly font-light">Filter by Category</h2>

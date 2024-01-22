@@ -11,7 +11,6 @@ services:
     environment:
       POSTGRES_USER_FILE: /run/secrets/postgres-user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
-      POSTGRES_DB: myapp
     volumes:
       - postgres:/var/lib/postgresql/data
     secrets:
@@ -29,8 +28,8 @@ services:
       args:
         POSTGRES_USER_FILE: /run/secrets/postgres-user
         POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
-        POSTGRES_DB: myapp
-        POSTGRES_PORT: "5432"
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_PORT: ${POSTGRES_PORT}
     restart: unless-stopped
     networks:
       - frontend
@@ -49,6 +48,15 @@ services:
     secrets:
       - postgres-user
       - postgres-password
+  cron:
+    env_file:
+      - .env
+    build: ./cron-service
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - backend
 
 volumes:
   postgres:

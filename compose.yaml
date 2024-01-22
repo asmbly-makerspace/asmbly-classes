@@ -18,6 +18,12 @@ services:
     secrets:
       - postgres-user
       - postgres-password
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: ${AWS_LOG_GROUP}
+        awslogs-region: ${AWS_REGION}
+        awslogs-stream: node-server
   db:
     image: postgres:16
     restart: unless-stopped
@@ -32,6 +38,21 @@ services:
     secrets:
       - postgres-user
       - postgres-password
+  cron:
+    env_file:
+      - .env
+    build: ./cron-service
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - backend
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: ${AWS_LOG_GROUP}
+        awslogs-region: ${AWS_REGION}
+        awslogs-stream: cron
   caddy:
     image: caddy:2.7.5
     restart: unless-stopped

@@ -81,7 +81,7 @@
 	>
 		{classType.name}
 	</h1>
-	<div class="card mt-2 flex lg:w-full max-w-6xl justify-center rounded-none shadow-lg lg:card-side">
+	<div class="card mt-2 flex lg:w-full max-w-6xl justify-center rounded-none shadow-lg lg:card-side lg:min-h-[540px]">
 		<div class="rounded p-5 md:p-8">
 			<div class="flex items-center justify-between px-4">
 				<button

@@ -14,12 +14,22 @@
 
 	let isDarkMode;
 	let themeSelection = 'system';
+	let details;
 
 	if (browser) {
 		isDarkMode = document.documentElement.getAttribute('data-theme') === 'asmblyDark';
 		if (localStorage.getItem('theme')) {
 			themeSelection = localStorage.getItem('theme');
 		}
+
+		details = [...document.querySelectorAll('details')];
+		document.addEventListener('click', function(e) {
+			if (!details.some(f => f.contains(e.target))) {
+				details.forEach(f => f.removeAttribute('open'));
+			} else {
+				details.forEach(f => !f.contains(e.target) ? f.removeAttribute('open') : '');
+			}
+		})
 	}
 
 	function themeControl(currentTheme) {
@@ -49,6 +59,10 @@
 				break;
 		}
 	}
+
+	const closer = () => {
+		document.getElementById('navDropdown').removeAttribute('open');
+	}
 </script>
 
 <nav id="navbar" class="flex h-16 justify-center shadow-lg bg-base-100">
@@ -72,7 +86,7 @@
 					/></svg
 				>
 			</a>
-			<details class="dropdown">
+			<details id="navDropdown" class="dropdown">
 				<summary class="btn btn-ghost rounded-none lg:hidden">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -91,12 +105,12 @@
 				<ul
 					class="menu dropdown-content menu-md z-[1] mt-3 w-52 rounded-none bg-base-100 p-2 text-base-content shadow"
 				>
-					<li><a class="font-asmbly font-light uppercase" href="/">Search for Classes</a></li>
-					<li><a class="font-asmbly font-light uppercase" href="/my-classes">My Classes</a></li>
+					<li><a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/">Search for Classes</a></li>
+					<li><a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/my-classes">My Classes</a></li>
 					<li>
-						<a class="font-asmbly font-light uppercase" href="/mentor-series">Mentor Series</a>
+						<a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/mentor-series">Mentor Series</a>
 					</li>
-					<li><a class="font-asmbly font-light uppercase" href="/classes-faq">Classes FAQ</a></li>
+					<li><a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/classes-faq">Classes FAQ</a></li>
 					<li>
 						<a class="font-asmbly font-light uppercase" href="https://asmbly.org"
 							>Return to Main Site</a

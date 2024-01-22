@@ -10,6 +10,6 @@
 
 </script>
 
-<div class={"flex flex-col md:flex-row md:max-h-content " + _class }>
+<div class={"flex flex-col md:flex-row overflow-hidden lg:max-h-[500px] " + _class }>
         <slot {Figure} {Action} {Title} {Description}/>
 </div>
