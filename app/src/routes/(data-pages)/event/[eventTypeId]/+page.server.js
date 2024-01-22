@@ -67,14 +67,14 @@ export async function load({ params, setHeaders }) {
 		instanceContext.teacher = instance.teacher.name;
 		instanceContext.startDateTime = instance.startDateTime;
 		instanceContext.endDateTime = instance.endDateTime;
+		instanceContext.summary = instance.summary;
+		instanceContext.price = instance.price;
+		instanceContext.capacity = instance.capacity;
 		classInstances.push(instanceContext);
 	}
 
 	classJson.classInstances = classInstances;
 	classJson.name = eventType.name;
-	classJson.summary = eventType.summary;
-	classJson.price = eventType.price;
-	classJson.capacity = eventType.capacity;
 	classJson.category = eventType.category[0].archCategories.name;
 	classJson.typeId = eventType.id;
 

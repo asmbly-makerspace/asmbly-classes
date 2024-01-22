@@ -250,9 +250,9 @@
 
 	function sortByPrice(classList) {
 		classList.sort((a, b) => {
-			if (a.price < b.price) {
+			if (a.classInstances[0].price < b.classInstances[0].price) {
 				return -1;
-			} else if (a.price > b.price) {
+			} else if (a.classInstances[0].price > b.classInstances[0].price) {
 				return 1;
 			} else {
 				return 0;
@@ -450,12 +450,12 @@
 								</div>
 							</div>
 							<p class="text-md">
-								{event.summary.length > 200
-									? event.summary.substring(0, 200) + '...'
-									: event.summary}
+								{event.classInstances[0].summary.length > 200
+									? event.classInstances[0].summary.substring(0, 200) + '...'
+									: event.classInstances[0].summary}
 							</p>
 							<div class="card-actions content-center justify-end">
-								<p>Price: {event.price === 0 ? 'Free' : '$' + event.price + '.00'}</p>
+								<p>Price: {event.classInstances[0].price === 0 ? 'Free' : '$' + event.classInstances[0].price + '.00'}</p>
 								<a class="btn btn-primary rounded-none" href="/event/{event.typeId}">Learn More</a>
 							</div>
 						</div>

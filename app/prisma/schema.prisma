@@ -36,16 +36,11 @@ model NeonBaseRegLink {
 
 model NeonEventType {
   id        Int                    @id @default(autoincrement())
-  name      String                 @db.VarChar(50)
-  capacity  Int                    @db.SmallInt
-  price     Float                  @db.Real
-  summary   String
+  name      String                 @unique @db.VarChar(50)
   instances NeonEventInstance[]
   request   NeonEventTypeRequest[]
   category  NeonEventCategory[]    @relation("NeonEventCategoryToNeonEventType")
   teacher   NeonEventTeacher[]     @relation("NeonEventTeacherToNeonEventType")
-
-  @@unique([capacity, name, price, summary], name: "uniqueEvent")
 }
 
 model NeonEventInstance {
@@ -56,6 +51,9 @@ model NeonEventInstance {
   attendeeCount Int                        @db.SmallInt
   startDateTime DateTime
   endDateTime   DateTime
+  summary       String?
+  price         Float                      @db.Real
+  capacity      Int                        @db.SmallInt
   category      NeonEventCategory          @relation(fields: [categoryId], references: [id])
   eventType     NeonEventType              @relation(fields: [eventTypeId], references: [id])
   teacher       NeonEventTeacher           @relation(fields: [teacherId], references: [id])
@@ -96,16 +94,11 @@ model NeonEventTypeRequest {
   @@unique([requestType, classTypeId, requesterId], name: "eventTypeRequest")
 }
 
-enum RequestType {
-  ONDEMAND
-  NOTIFICATION
-}
-
 model User {
   id           String    @id @unique
   neon_id      Int       @unique
-  auth_session Session[]
   key          Key[]
+  auth_session Session[]
 }
 
 model Session {
@@ -113,7 +106,7 @@ model Session {
   user_id        String
   active_expires BigInt
   idle_expires   BigInt
-  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user           User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
 }
@@ -122,7 +115,12 @@ model Key {
   id              String  @id @unique
   hashed_password String?
   user_id         String
-  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user            User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
+}
+
+enum RequestType {
+  ONDEMAND
+  NOTIFICATION
 }

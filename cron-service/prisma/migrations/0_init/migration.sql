@@ -38,9 +38,6 @@ CREATE TABLE "NeonBaseRegLink" (
 CREATE TABLE "NeonEventType" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(50) NOT NULL,
-    "capacity" SMALLINT NOT NULL,
-    "price" REAL NOT NULL,
-    "summary" TEXT NOT NULL,
 
     CONSTRAINT "NeonEventType_pkey" PRIMARY KEY ("id")
 );
@@ -54,6 +51,9 @@ CREATE TABLE "NeonEventInstance" (
     "attendeeCount" SMALLINT NOT NULL,
     "startDateTime" TIMESTAMP(3) NOT NULL,
     "endDateTime" TIMESTAMP(3) NOT NULL,
+    "summary" TEXT,
+    "price" REAL NOT NULL,
+    "capacity" SMALLINT NOT NULL,
 
     CONSTRAINT "NeonEventInstance_pkey" PRIMARY KEY ("eventId")
 );
@@ -62,6 +62,7 @@ CREATE TABLE "NeonEventInstance" (
 CREATE TABLE "NeonEventInstanceRequest" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "fulfilled" BOOLEAN NOT NULL DEFAULT false,
     "eventId" INTEGER NOT NULL,
     "requesterId" INTEGER NOT NULL,
 
@@ -85,8 +86,36 @@ CREATE TABLE "NeonEventTypeRequest" (
     "classTypeId" INTEGER NOT NULL,
     "requestType" "RequestType" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "fulfilled" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "NeonEventTypeRequest_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "neon_id" INTEGER NOT NULL,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Session" (
+    "id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "active_expires" BIGINT NOT NULL,
+    "idle_expires" BIGINT NOT NULL,
+
+    CONSTRAINT "Session_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Key" (
+    "id" TEXT NOT NULL,
+    "hashed_password" TEXT,
+    "user_id" TEXT NOT NULL,
+
+    CONSTRAINT "Key_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -114,13 +143,34 @@ CREATE UNIQUE INDEX "NeonEventTeacher_name_key" ON "NeonEventTeacher"("name");
 CREATE UNIQUE INDEX "NeonBaseRegLink_url_key" ON "NeonBaseRegLink"("url");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "NeonEventType_capacity_name_price_summary_key" ON "NeonEventType"("capacity", "name", "price", "summary");
+CREATE UNIQUE INDEX "NeonEventType_name_key" ON "NeonEventType"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "NeonEventInstanceRequest_eventId_requesterId_key" ON "NeonEventInstanceRequest"("eventId", "requesterId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "NeonEventRequester_email_key" ON "NeonEventRequester"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "NeonEventTypeRequest_requestType_classTypeId_requesterId_key" ON "NeonEventTypeRequest"("requestType", "classTypeId", "requesterId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_neon_id_key" ON "User"("neon_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Session_id_key" ON "Session"("id");
+
+-- CreateIndex
+CREATE INDEX "Session_user_id_idx" ON "Session"("user_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Key_id_key" ON "Key"("id");
+
+-- CreateIndex
+CREATE INDEX "Key_user_id_idx" ON "Key"("user_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_NeonEventCategoryToNeonEventType_AB_unique" ON "_NeonEventCategoryToNeonEventType"("A", "B");
@@ -157,6 +207,12 @@ ALTER TABLE "NeonEventTypeRequest" ADD CONSTRAINT "NeonEventTypeRequest_classTyp
 
 -- AddForeignKey
 ALTER TABLE "NeonEventTypeRequest" ADD CONSTRAINT "NeonEventTypeRequest_requesterId_fkey" FOREIGN KEY ("requesterId") REFERENCES "NeonEventRequester"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Session" ADD CONSTRAINT "Session_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Key" ADD CONSTRAINT "Key_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_NeonEventCategoryToNeonEventType" ADD CONSTRAINT "_NeonEventCategoryToNeonEventType_A_fkey" FOREIGN KEY ("A") REFERENCES "NeonEventCategory"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -129,20 +129,12 @@ async function main() {
 		const eventPrice = parseFloat(event['Event Admission Fee']);
 		const summary = event['Event Summary'];
 		const eventName = event['Event Name'].split(' w/ ')[0];
-		
 
-		let data = {
-			capacity: eventCapacity,
-			price: eventPrice,
-			summary: summary,
+		const search = {
 			name: eventName
 		};
 
-		const search = {
-			uniqueEvent: data
-		};
-
-		let addEventTypeCall = prisma.neonEventType.upsert({ where: search, create: data, update: {} });
+		let addEventTypeCall = prisma.neonEventType.upsert({ where: search, create: search, update: {} });
 
 		const [addTeacher, addEventType] = await prisma.$transaction([addTeacherCall, addEventTypeCall]);
 
@@ -173,6 +165,9 @@ async function main() {
 				attendeeCount: parseInt(event['Actual Registrants']),
 				startDateTime: startDateTime,
 				endDateTime: endDateTime,
+				price: eventPrice,
+				capacity: eventCapacity,
+				summary: summary,
 				eventType: {
 					connect: {
 						id: addEventType.id
@@ -193,6 +188,9 @@ async function main() {
 				attendeeCount: parseInt(event['Actual Registrants']),
 				startDateTime: startDateTime,
 				endDateTime: endDateTime,
+				price: eventPrice,
+				capacity: eventCapacity,
+				summary: summary,
 				teacher: {
 					connect: {
 						id: addTeacher.id

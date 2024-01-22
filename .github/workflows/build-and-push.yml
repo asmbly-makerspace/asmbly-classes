@@ -50,6 +50,6 @@ jobs:
             export TAG="${{ github.sha }}"
             cd ~/app
             docker compose pull
-            docker compose up -d
+            docker compose up --build -d
             
         

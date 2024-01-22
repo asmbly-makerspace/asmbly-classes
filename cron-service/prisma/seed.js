@@ -1,5 +1,6 @@
-import { prisma } from '../src/lib/postgres.js';
-import { getCurrentEvents } from '../src/lib/helpers/neonHelpers.js';
+import { prisma } from './prismaClient.js';
+import { getCurrentEvents } from './neonHelpers.js';
+import { DateTime } from 'luxon';
 
 async function connectArchCat(model, archCatName, catId) {
 	const record = await model.update({
@@ -13,15 +14,6 @@ async function connectArchCat(model, archCatName, catId) {
 				}
 			}
 		}
-	});
-	return record;
-}
-
-async function getOrCreate(model, where, data) {
-	const record = model.upsert({
-		where: where,
-		update: {},
-		create: data
 	});
 	return record;
 }
@@ -42,11 +34,17 @@ const BASE_URL = 'https://asmbly.app.neoncrm.com/event.jsp?event=';
 
 async function main() {
 
-	const currentEvents = await getCurrentEvents();
+	console.log('');
+	console.log(`Seeding database on ${DateTime.now().toLocaleString()}...`);
+	console.log('------------------------------------------------------');
+	console.log('');
 
-	const remainingPrismaCalls = [];
+	await prisma.asmblyArchCategory.createMany({
+		data: archCategories,
+		skipDuplicates: true
+	});
 
-	const addBaseRegLinkCall = prisma.neonBaseRegLink.upsert({
+	await prisma.neonBaseRegLink.upsert({
 		create: {
 			url: BASE_URL
 		},
@@ -56,37 +54,52 @@ async function main() {
 		}
 	});
 
-	const addArchCategoriesCall = prisma.asmblyArchCategory.createMany({
-		data: archCategories,
-		skipDuplicates: true
-	});
+	const currentEvents = await getCurrentEvents();
 
-	await prisma.$transaction([addArchCategoriesCall, addBaseRegLinkCall]);
+	const remainingPrismaCalls = [];
 
 	const alreadyAddedCats = {};
 
 	for (const event of currentEvents) {
-		const exists = prisma.neonEventInstance.findUnique({
+        const exists = await prisma.neonEventInstance.findUnique({
             where: {
                 eventId: parseInt(event['Event ID'])
-            }
+            },
+			include: {
+				teacher: {
+					select: {
+						name: true
+					}
+				}
+			}
         })
 
-        if (exists) {
+		const startDateTime = event['Event Start Date'] + 'T' + event['Event Start Time'] + 'Z';
+		const endDateTime = event['Event End Date'] + 'T' + event['Event End Time'] + 'Z';
+
+		const compareStart = DateTime.fromISO(startDateTime);
+		const compareEnd = DateTime.fromISO(endDateTime);
+
+        if (typeof exists !== 'undefined' && exists !== null && compareStart.equals(DateTime.fromJSDate(exists.startDateTime)) && compareEnd.equals(DateTime.fromJSDate(exists.endDateTime)) && parseInt(event['Actual Registrants']) === exists.attendeeCount && event['Event Topic'] === exists.teacher.name) {
+			console.log(`Skipping ${event['Event Name']} (same date, time, teacher, students)`);
             continue;
         }
-		
+
 		let category = event['Event Category Name'];
 		let addCategory;
-		if (!alreadyAddedCats.category) {
+		if (typeof category !== 'undefined' && category != null && (typeof alreadyAddedCats[category] === 'undefined' || alreadyAddedCats[category] == null)) {
 			let search = { name: category };
 			addCategory = await prisma.neonEventCategory.upsert({ where: search, create: search, update: {} });
-			alreadyAddedCats.category = addCategory;
+			alreadyAddedCats[category] = addCategory;
+			console.log(`Adding category ${addCategory.name}`);
+		} else if (typeof category !== 'undefined' && category != null && (typeof alreadyAddedCats[category] !== 'undefined' && alreadyAddedCats[category] != null)) {
+			addCategory = alreadyAddedCats[category];
+			console.log(`Using existing category ${addCategory.name}`);
 		} else {
-			addCategory = alreadyAddedCats.category;
+			addCategory = await prisma.neonEventCategory.findUnique({ where: { name: 'Miscellaneous' } });
+			console.log(`No category found for ${event['Event Name']}, defaulting to Miscellaneous`);
 		}
 		
-
 		switch (category) {
 			case 'Woodworking':
 			case 'CNC Router':
@@ -117,6 +130,8 @@ async function main() {
 			case 'Private':
 				await connectArchCat(prisma.asmblyArchCategory, 'Private', addCategory.id);
 				break;
+            default:
+                break;
 		}
 
 		let teacher = event['Event Topic'];
@@ -134,6 +149,7 @@ async function main() {
 					name: 'TBD'
 				}
 			})
+			console.log(`No teacher found for ${event['Event Name']}, defaulting to TBD`);
 		}
 		
 
@@ -141,21 +157,12 @@ async function main() {
 		const eventPrice = parseFloat(event['Event Admission Fee']);
 		const summary = event['Event Summary'];
 		const eventName = event['Event Name'].split(' w/ ')[0];
-		const startDateTime = event['Event Start Date'] + 'T' + event['Event Start Time'] + 'Z';
-		const endDateTime = event['Event End Date'] + 'T' + event['Event End Time'] + 'Z';
 
-		let data = {
-			capacity: eventCapacity,
-			price: eventPrice,
-			summary: summary,
+		const search = {
 			name: eventName
 		};
 
-		const search = {
-			uniqueEvent: data
-		};
-
-		let addEventTypeCall = prisma.neonEventType.upsert({ where: search, create: data, update: {} });
+		let addEventTypeCall = prisma.neonEventType.upsert({ where: search, create: search, update: {} });
 
 		const [addTeacher, addEventType] = await prisma.$transaction([addTeacherCall, addEventTypeCall]);
 
@@ -178,11 +185,17 @@ async function main() {
 		});
 
 		const addEventInstance = prisma.neonEventInstance.upsert({
+			where: {
+				eventId: parseInt(event['Event ID'])
+			},
 			create: {
 				eventId: parseInt(event['Event ID']),
 				attendeeCount: parseInt(event['Actual Registrants']),
 				startDateTime: startDateTime,
 				endDateTime: endDateTime,
+				price: eventPrice,
+				capacity: eventCapacity,
+				summary: summary,
 				eventType: {
 					connect: {
 						id: addEventType.id
@@ -203,11 +216,9 @@ async function main() {
 				attendeeCount: parseInt(event['Actual Registrants']),
 				startDateTime: startDateTime,
 				endDateTime: endDateTime,
-				eventType: {
-					connect: {
-						id: addEventType.id
-					}
-				},
+				price: eventPrice,
+				capacity: eventCapacity,
+				summary: summary,
 				teacher: {
 					connect: {
 						id: addTeacher.id
@@ -219,21 +230,44 @@ async function main() {
 					}
 				}
 			},
-			where: {
-				eventId: parseInt(event['Event ID'])
+			include: {
+				eventType: {
+					select: {
+						name: true
+					}
+				}
 			}
 		});
 
 		remainingPrismaCalls.push(updateEventType, addEventInstance);
 
-		console.log('Adding ' + eventName + ' to db transaction queue');
+		console.log('Adding ' + eventName + ' to the queue...');
 	}
 
-	let results = await prisma.$transaction(remainingPrismaCalls);
+    if (remainingPrismaCalls.length === 0) {
+        console.log(`No events to add today (${new Date().toLocaleDateString()}).`);
+        return;
+    }
+
+	let results;
+	try {
+		results = await prisma.$transaction(remainingPrismaCalls);
+	} catch (e) {
+		console.log(`Error adding events to the database:`);
+		console.error(e);
+		return
+	}
+
+    const eventTypesAddedToday = new Set();
 
     for (let result of results) {
-        console.log('Successfully added: ' +  result.name);
+		if (result.eventId != null) {
+			console.log('Successfully added/updated: ' +  result.eventType.name + ' on ' + result.startDateTime);
+        	eventTypesAddedToday.add(result.eventTypeId);
+		}
     }
+
+	console.log(`Finished seeding database (${new Date().toLocaleDateString()}).`);
 }
 
 main()

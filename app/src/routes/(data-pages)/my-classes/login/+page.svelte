@@ -12,9 +12,9 @@
 	>
 		My Classes
 	</h1>
-	<div class="card max-w-max lg:w-96 m-4 max-h-max bg-base-100 shadow-xl mt-16 rounded-none">
-		<figure class="px-10 pt-10">
-			<enhanced:img src="$lib/images/NeonLogo.png" alt="Neon One Logo" class="h-32 w-auto"/>
+	<div class="card max-w-max lg:w-96 m-4 max-h-max bg-base-100 shadow-xl mt-10 rounded-none">
+		<figure class="px-16 pt-16">
+			<enhanced:img src="$lib/images/NeonLogo.png" alt="Neon One Logo" class="h-auto w-full"/>
 		  </figure>
 		<div class="card-body items-center text-center">
 		  <p>Click the button below to login to your Neon account. You will be redirected back here after login.</p>

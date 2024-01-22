@@ -55,15 +55,14 @@ export async function load() {
 				instanceContext.teacher = instance.teacher.name;
 				instanceContext.startDateTime = instance.startDateTime;
 				instanceContext.endDateTime = instance.endDateTime;
+				instanceContext.price = instance.price;
+				instanceContext.summary = instance.summary;
 				classInstances.push(instanceContext);
 			}
 		}
 		
 		classContext.classInstances = classInstances;
 		classContext.name = event.name;
-		classContext.summary = event.summary;
-		classContext.price = event.price;
-		classContext.capacity = event.capacity;
 		classContext.category = event.category[0].archCategories.name;
 		classContext.typeId = event.id;
 		classJson.push(classContext);

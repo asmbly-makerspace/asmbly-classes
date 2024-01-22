@@ -26,13 +26,15 @@
 	$: classInstances = classType.classInstances;
 
 	$: classDates = [];	
+	let currentDate;
 	$: {
 		if (classInstances.length > 0) {
 			classDates = classInstances.map((i) => DateTime.fromJSDate(i.startDateTime));
+			currentDate = classDates.sort((a, b) => a - b)[0];
+		} else {
+			currentDate = DateTime.now();
 		}
 	}
-	
-	let currentDate = DateTime.now();
 
 	let date;
 	$: {
@@ -193,21 +195,21 @@
 						</p>
 						<p class="pt-2 text-md leading-none">Teacher: {classOnDate.teacher}</p>
 						<p class="pt-2 text-md leading-none">
-							Capacity: {classType.capacity}
+							Capacity: {classOnDate.capacity}
 						</p>
-						<p class="pt-2 text-md leading-none">Attendees: <span class:text-error={classOnDate.attendees === classType.capacity}>{classOnDate.attendees}</span></p>
+						<p class="pt-2 text-md leading-none">Attendees: <span class:text-error={classOnDate.attendees === classOnDate.capacity}>{classOnDate.attendees}</span></p>
 						<p class="pt-2 text-md leading-none">
-							Price: {classType.price === 0 ? 'Free' : '$' + classType.price + '.00'}
+							Price: {classOnDate.price === 0 ? 'Free' : '$' + classOnDate.price + '.00'}
 						</p>
 					</div>
 					<div class="flex items-center justify-end pb-4 lg:pb-0">
-						{#if classOnDate.attendees < classType.capacity}
+						{#if classOnDate.attendees < classOnDate.capacity}
 							<a
 								class="btn btn-primary rounded-none"
 								href={data.baseRegLink.url + classOnDate.eventId}
 								target="_blank">Register</a
 							>
-						{:else if classOnDate.attendees === classType.capacity}
+						{:else if classOnDate.attendees === classOnDate.capacity}
 						<div class="flex flex-col items-center justify-center">
 							<button
 								class="btn btn-primary rounded-none"
@@ -396,7 +398,7 @@
 			<div class="ml-4 divider" />
 			<div class="max-w-md px-4">
 				<h2 class="pb-4 text-lg font-semibold">Description</h2>
-				<p class="xs:prose-sm lg:prose-md">{classType.summary}</p>
+				<p class="xs:prose-sm lg:prose-md">{classOnDate.summary}</p>
 			</div>
 			{#if classType.category !== 'Orientation' && classInstances.length > 0}
 				<div class="flex max-w-md justify-between px-4 pt-4">
