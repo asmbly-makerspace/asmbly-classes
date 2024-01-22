@@ -1,5 +1,6 @@
 import { auth } from "$lib/server/lucia.js";
 import { OAuthRequestError, validateOAuth2AuthorizationCode } from "@lucia-auth/oauth";
+import { CLIENT_SECRET as clientSecret, CLIENT_ID as clientId } from "$lib/server/secrets";
 
 async function getExistingUser(userId) {
     const key = await auth.useKey("neon", userId, null);
@@ -23,9 +24,9 @@ export const GET = async ({ url, cookies, locals }) => {
             code,
             "https://app.neoncrm.com/np/oauth/token",
             {
-                clientId,
+                clientId: clientId,
                 clientPassword: {
-                    clientSecret,
+                    clientSecret: clientSecret,
                     authenticateWith: "client_secret"
                 }
             }

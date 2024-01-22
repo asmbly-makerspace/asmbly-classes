@@ -1,14 +1,14 @@
 import { dev } from "$app/environment";
 import { createOAuth2AuthorizationUrl } from "@lucia-auth/oauth";
-import { CLIENT_ID as clientId, REDIRECT_URI as redirectUri } from "$env/static/private";
+import { CLIENT_ID as clientId, REDIRECT_URI as redirectUri } from "$lib/server/secrets";
 
 export const GET = async ({ cookies }) => {
     const [url, state] = await createOAuth2AuthorizationUrl(
         "https://asmbly.app.neoncrm.com/np/oauth/auth",
         {
-            clientId,
+            clientId: clientId,
             scope: [],
-            redirectUri
+            redirectUri: redirectUri
         }
     );
 	// store state

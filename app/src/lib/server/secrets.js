@@ -12,3 +12,6 @@ export const FLO_API_KEY = env.FLO_API_KEY;
 export const INTERNAL_API_KEY = env.INTERNAL_API_KEY;
 export const POSTGRES_DB = env.POSTGRES_DB;
 export const POSTGRES_PORT = env.POSTGRES_PORT;
+export const CLIENT_ID = env.CLIENT_ID;
+export const CLIENT_SECRET = env.CLIENT_SECRET;
+export const REDIRECT_URI = env.REDIRECT_URI;
