@@ -23,12 +23,6 @@ RUN --mount=type=secret,id=postgres-user \
 RUN --mount=type=secret,id=postgres-pass \
   POSTGRES_PASS=$(cat /run/secrets/postgres-pass)
 
-RUN --mount=type=secret,id=postgres-db \
-  POSTGRES_DB=$(cat /run/secrets/postgres-db)
-
-RUN --mount=type=secret,id=postgres-port \
-  POSTGRES_PORT=$(cat /run/secrets/postgres-port)
-
 # Generate Prisma Client for build
 RUN npx prisma generate
 
