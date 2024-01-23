@@ -1,9 +1,13 @@
 import { prisma } from '$lib/postgres.js';
+import { DateTime } from 'luxon';
 
 export const prerender = false;
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load() {
+	const currentTimeLocal = DateTime.local();
+	const currentTimeUTC = DateTime.utc();
+	const diff = currentTimeLocal.diff(currentTimeUTC, ['hours']).toObject().hours;
 	const eventTypesCall = prisma.neonEventType.findMany({
 		where: {
 			category: {
@@ -21,7 +25,7 @@ export async function load() {
 			instances: {
 				where: {
 					startDateTime: {
-						gte: new Date()
+						gte: currentTimeUTC.minus({ hours: diff}).toJSDate()
 					}
 				},
 				include: {

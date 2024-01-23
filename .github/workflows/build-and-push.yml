@@ -33,16 +33,24 @@ jobs:
 
   copy-latest:
     runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Copy latest image
+      - name: Run a multi-line script
+        run: |
+          mkdir ../holder
+          cp -TR ./compose.yaml ../holder
+          cp -TR ./cron-service ../holder
+          cp -TR ./caddy ../holder
+          tar -cvf deploy.tar ../holder/
+
+      - name: Copy latest files
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          source: "./compose.yaml,./cron-service,./caddy"
-          target: ~/app
+          source: "deploy.tar"
+          target: "~/app"
+          overwrite: true
 
   
   deploy:

@@ -25,6 +25,10 @@ export async function load({ params, setHeaders }) {
         'cache-control': 'max-age=300',
     })
 
+	const currentTimeLocal = DateTime.local();
+	const currentTimeUTC = DateTime.utc();
+	const diff = currentTimeLocal.diff(currentTimeUTC, ['hours']).toObject().hours;
+
 	// Retrieve class data from the database
 	const eventTypeCall = prisma.neonEventType.findUnique({
 		where: {
@@ -39,7 +43,7 @@ export async function load({ params, setHeaders }) {
 			instances: {
 				where: {
 					startDateTime: {
-						gte: new Date()
+						gte: currentTimeUTC.minus({ hours: diff}).toJSDate()
 					}
 				},
 				include: {
