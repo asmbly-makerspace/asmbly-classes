@@ -336,7 +336,7 @@
 									dataType="form"
 									invalidateAll={false}
 									validators={schema}
-									classTypeId={data.slug}
+									classTypeId={$page.params.eventTypeId}
 									let:form
 									let:message
 									let:delayed
@@ -431,7 +431,7 @@
 								dataType="form"
 								invalidateAll={false}
 								validators={privateRequestSchema}
-								classTypeId={data.slug}
+								classTypeId={$page.params.eventTypeId}
 								let:form
 								let:message
 								let:delayed
@@ -506,7 +506,7 @@
 							dataType="form"
 							invalidateAll={false}
 							validators={schema}
-							classTypeId={data.slug}
+							classTypeId={$page.params.eventTypeId}
 							let:form
 							let:message
 							let:delayed
