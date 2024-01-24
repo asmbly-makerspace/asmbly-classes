@@ -54,7 +54,7 @@
         <Figure>
             <enhanced:img src="$lib/images/CNCMentorPlaceholder.jpg" 
             alt="CNC routing a 3D design" 
-            class="h-full w-auto"/>
+            class="h-auto w-full"/>
         </Figure>
         {/if}
         <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-32 lg:justify-center lg:w-full left-padding">
@@ -98,7 +98,7 @@
         <Figure>
             <enhanced:img src="$lib/images/SavannaHarvey.jpg" 
             alt="Metal Shop Mentor Series Instructor Savanna Harvey" 
-            class="h-full w-auto"/>
+            class="w-full h-auto"/>
         </Figure>
         {/if}
         <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-32 lg:justify-center lg:w-full left-padding">

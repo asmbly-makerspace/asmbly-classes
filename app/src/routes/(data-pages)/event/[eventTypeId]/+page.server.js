@@ -25,9 +25,10 @@ export async function load({ params, setHeaders }) {
         'cache-control': 'max-age=300',
     })
 
-	const currentTimeLocal = DateTime.local();
-	const currentTimeUTC = DateTime.utc();
-	const diff = currentTimeLocal.diff(currentTimeUTC, ['hours']).toObject().hours;
+
+	const offset = DateTime.local({
+		zone: 'America/Chicago'
+	}).offset;
 
 	// Retrieve class data from the database
 	const eventTypeCall = prisma.neonEventType.findUnique({
@@ -43,7 +44,7 @@ export async function load({ params, setHeaders }) {
 			instances: {
 				where: {
 					startDateTime: {
-						gte: currentTimeUTC.minus({ hours: diff}).toJSDate()
+						gte: DateTime.utc().plus({ minutes: offset}).toJSDate()
 					}
 				},
 				include: {

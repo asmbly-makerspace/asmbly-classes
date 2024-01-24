@@ -5,9 +5,10 @@ export const prerender = false;
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load() {
-	const currentTimeLocal = DateTime.local();
-	const currentTimeUTC = DateTime.utc();
-	const diff = currentTimeLocal.diff(currentTimeUTC, ['hours']).toObject().hours;
+	const offset = DateTime.local({
+		zone: 'America/Chicago'
+	}).offset;
+
 	const eventTypesCall = prisma.neonEventType.findMany({
 		where: {
 			category: {
@@ -25,7 +26,7 @@ export async function load() {
 			instances: {
 				where: {
 					startDateTime: {
-						gte: currentTimeUTC.minus({ hours: diff}).toJSDate()
+						gte: DateTime.utc().plus({ minutes: offset }).toJSDate()
 					}
 				},
 				include: {

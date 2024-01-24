@@ -77,9 +77,9 @@
 
 <svelte:window on:load={window.scrollTo(0, 0)} />
 
-<div id="main" class="container mx-auto flex flex-col items-center justify-center pb-8 lg:min-h-[calc(100dvh-4rem)]">
+<div id="main" class="flex flex-col items-center justify-start pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
-		class="font-asmbly text-accent pb-2 pt-8 text-center text-2xl lg:text-3xl all-under lg:pb-6"
+		class="font-asmbly text-accent pb-2 pt-8 text-center text-2xl lg:text-4xl all-under lg:pb-6"
 	>
 		{classType.name}
 	</h1>
@@ -304,7 +304,7 @@
 				<h2 class="pb-4 text-lg font-semibold">No sessions currently scheduled</h2>
 				<div class="flex w-72 justify-between lg:w-96">
 					<div class="border-base-300 pb-4 lg:pb-0">
-						<p class="text-sm">
+						<p class="xs:prose-sm lg:prose-md">
 							We do not currently have any sessions of this class scheduled. If you'd like to request this class,
 							please use the form below to let us know. We will schedule a session once we have enough interest in the class.
 						</p>
