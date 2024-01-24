@@ -25,11 +25,6 @@ export async function load({ params, setHeaders }) {
         'cache-control': 'max-age=300',
     })
 
-
-	const offset = DateTime.local({
-		zone: 'America/Chicago'
-	}).offset;
-
 	// Retrieve class data from the database
 	const eventTypeCall = prisma.neonEventType.findUnique({
 		where: {
@@ -44,8 +39,18 @@ export async function load({ params, setHeaders }) {
 			instances: {
 				where: {
 					startDateTime: {
-						gte: DateTime.utc().plus({ minutes: offset}).toJSDate()
+						gte: DateTime.local({zone: "America/Chicago"}).toJSDate()
+					},
+					category: {
+						archCategories: {
+							isNot: {
+								name: 'Private'
+							}
+						}
 					}
+				},
+				orderBy: {
+					startDateTime: 'asc'
 				},
 				include: {
 					teacher: {
@@ -60,7 +65,39 @@ export async function load({ params, setHeaders }) {
 
 	const baseRegLinkCall = prisma.NeonBaseRegLink.findFirst();
 
-	const [eventType, baseRegLink] = await prisma.$transaction([eventTypeCall, baseRegLinkCall]);
+	let [eventType, baseRegLink] = await prisma.$transaction([eventTypeCall, baseRegLinkCall]);
+
+	if (!eventType) {
+		throw error(404, 'Event not found');
+	}
+
+	if (!eventType.instances.length) {
+		eventType = await prisma.neonEventType.findUnique({
+			where: {
+				id: parseInt(params.eventTypeId)
+			},
+			include: {
+				category: {
+					include: {
+						archCategories: true
+					}
+				},
+				instances: {
+					orderBy: {
+						startDateTime: 'desc'
+					},
+					take: 1,
+					include: {
+						teacher: {
+							select: {
+								name: true
+							}
+						}
+					}
+				}
+			}
+		})
+	}
 
 	const classJson = {};
 
@@ -205,7 +242,7 @@ export const actions = {
 
 		let [requester, classInstance] = await prisma.$transaction([requesterPrismaCall, classInstanceCall]);
 
-		const startDateTime = DateTime.fromJSDate(classInstance.startDateTime).setZone('utc').toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
+		const startDateTime = DateTime.fromJSDate(classInstance.startDateTime).setZone('America/Chicago').toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
 
 		const requesterBody = `
 		<div>

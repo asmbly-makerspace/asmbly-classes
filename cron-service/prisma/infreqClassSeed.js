@@ -1,6 +1,5 @@
 import { prisma } from './prismaClient.js';
-import { getCurrentEvents } from './neonHelpers.js';
-import { DateTime } from 'luxon';
+import { getInfreqEvents } from './neonHelpers.js';
 
 async function connectArchCat(model, archCatName, catId) {
 	const record = await model.update({
@@ -18,43 +17,11 @@ async function connectArchCat(model, archCatName, catId) {
 	return record;
 }
 
-const archCategories = [
-	{ name: 'Orientation' },
-	{ name: 'Woodworking' },
-	{ name: 'Metalworking' },
-	{ name: 'Laser Cutting' },
-	{ name: '3D Printing' },
-	{ name: 'Textiles' },
-	{ name: 'Electronics' },
-	{ name: 'Miscellaneous' },
-	{ name: 'Private' }
-];
-
-const BASE_URL = 'https://asmbly.app.neoncrm.com/event.jsp?event=';
-
 async function main() {
 
-	console.log('');
-	console.log(`Seeding database on ${DateTime.now().toLocaleString()}...`);
-	console.log('------------------------------------------------------');
-	console.log('');
+	console.log(`Seeding database with infrequent classes...`);
 
-	await prisma.asmblyArchCategory.createMany({
-		data: archCategories,
-		skipDuplicates: true
-	});
-
-	await prisma.neonBaseRegLink.upsert({
-		create: {
-			url: BASE_URL
-		},
-		update: {},
-		where: {
-			url: BASE_URL
-		}
-	});
-
-	const currentEvents = await getCurrentEvents();
+	const currentEvents = await getInfreqEvents();
 
 	const remainingPrismaCalls = [];
 
@@ -63,7 +30,7 @@ async function main() {
 	for (const event of currentEvents) {
         const exists = await prisma.neonEventInstance.findUnique({
             where: {
-                eventId: parseInt(event['Event ID'])
+                eventId: parseInt(event['id'])
             },
 			include: {
 				teacher: {
@@ -74,18 +41,7 @@ async function main() {
 			}
         })
 
-		const startDateTimeString = event['Event Start Date'] + 'T' + event['Event Start Time'];
-		const endDateTimeString = event['Event End Date'] + 'T' + event['Event End Time'];
-
-		const startDateTime = DateTime.fromISO(startDateTimeString, { zone: 'America/Chicago' }).toJSDate();
-		const endDateTime = DateTime.fromISO(endDateTimeString, { zone: 'America/Chicago' }).toJSDate();
-
-        if (typeof exists !== 'undefined' && exists !== null && DateTime.fromJSDate(startDateTime).equals(DateTime.fromJSDate(exists.startDateTime)) && DateTime.fromJSDate(endDateTime).equals(DateTime.fromJSDate(exists.endDateTime)) && parseInt(event['Actual Registrants']) === exists.attendeeCount && event['Event Topic'] === exists.teacher.name) {
-			console.log(`Skipping ${event['Event Name']} (same date, time, teacher, students)`);
-            continue;
-        }
-
-		let category = event['Event Category Name'];
+		let category = event.category.name;
 		let addCategory;
 		if (typeof category !== 'undefined' && category != null && (typeof alreadyAddedCats[category] === 'undefined' || alreadyAddedCats[category] == null)) {
 			let search = { name: category };
@@ -134,7 +90,7 @@ async function main() {
                 break;
 		}
 
-		let teacher = event['Event Topic'];
+		let teacher = event.topic.name;
 		let addTeacherCall;
 		if (teacher !== null) {
 			const search = { name: teacher };
@@ -153,10 +109,10 @@ async function main() {
 		}
 		
 
-		const eventCapacity = parseInt(event['Event Capacity']);
-		const eventPrice = parseFloat(event['Event Admission Fee']);
-		const summary = event['Event Summary'];
-		const eventName = event['Event Name'].split(' w/ ')[0];
+		const eventCapacity = parseInt(event.maximumAttendees);
+		const eventPrice = event.financialSettings.admissionFee.fee;
+		const summary = event.summary;
+		const eventName = event.name.split(' w/ ')[0];
 
 		const search = {
 			name: eventName
@@ -184,15 +140,16 @@ async function main() {
 			}
 		});
 
-		const addEventInstance = prisma.neonEventInstance.upsert({
+        console.log(event.eventDates.startDate + 'T' + event.eventDates.startTime + 'Z');
+        const addEventInstance = prisma.neonEventInstance.upsert({
 			where: {
-				eventId: parseInt(event['Event ID'])
+				eventId: parseInt(event.id)
 			},
 			create: {
-				eventId: parseInt(event['Event ID']),
-				attendeeCount: parseInt(event['Actual Registrants']),
-				startDateTime: startDateTime,
-				endDateTime: endDateTime,
+				eventId: parseInt(event.id),
+				attendeeCount: 0,
+				startDateTime: event.eventDates.startDate + 'T00:00:00Z',
+				endDateTime: event.eventDates.endDate + 'T00:10:00Z',
 				price: eventPrice,
 				capacity: eventCapacity,
 				summary: summary,
@@ -213,9 +170,9 @@ async function main() {
 				}
 			},
 			update: {
-				attendeeCount: parseInt(event['Actual Registrants']),
-				startDateTime: startDateTime,
-				endDateTime: endDateTime,
+				attendeeCount: 0,
+				startDateTime: event.eventDates.startDate + 'T00:00:00Z',
+				endDateTime: event.eventDates.endDate + 'T00:10:00Z',
 				price: eventPrice,
 				capacity: eventCapacity,
 				summary: summary,
@@ -267,7 +224,7 @@ async function main() {
 		}
     }
 
-	console.log(`Finished seeding database (${new Date().toLocaleDateString()}).`);
+    console.log(`Finished seeding infrequent events.`);
 }
 
 main()

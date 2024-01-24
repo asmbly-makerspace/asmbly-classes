@@ -29,8 +29,12 @@
 	let currentDate;
 	$: {
 		if (classInstances.length > 0) {
-			classDates = classInstances.map((i) => DateTime.fromJSDate(i.startDateTime));
-			currentDate = classDates.sort((a, b) => a - b)[0];
+			if (DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})) {
+				classDates = classInstances.map((i) => DateTime.fromJSDate(i.startDateTime));
+				currentDate = classDates.sort((a, b) => a - b)[0];
+			} else {
+				currentDate = DateTime.now();
+			}
 		} else {
 			currentDate = DateTime.now();
 		}
@@ -40,6 +44,8 @@
 	$: {
 		if (classDates.length > 0) {
 			date = classDates.sort((a, b) => a - b)[0];
+		} else {
+			date = DateTime.now();
 		}
 	}
 
@@ -179,18 +185,16 @@
 		</div>
 		<div class="divider mx-6 lg:divider-horizontal lg:mx-0 lg:my-8" />
 		<div class="flex flex-col px-5 py-5 md:px-8 md:py-8">
-			{#if classInstances.length > 0}
+			{#if DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
 			<div class="px-4">
 				<h2 class="pb-4 text-lg font-semibold">{date.toFormat("cccc', 'LLLL d")}</h2>
 				<div class="flex w-72 justify-between lg:w-96">
 					<div class="border-base-300 pb-4 lg:pb-0">
 						<p class="text-md font-light leading-3">
 							{DateTime.fromJSDate(classOnDate.startDateTime)
-								.setZone('utc')
 								.toLocaleString(DateTime.TIME_SIMPLE)} - {DateTime.fromJSDate(
 								classOnDate.endDateTime
 							)
-								.setZone('utc')
 								.toLocaleString(DateTime.TIME_SIMPLE)}
 						</p>
 						<p class="pt-2 text-md leading-none">Teacher: {classOnDate.teacher}</p>
@@ -398,9 +402,13 @@
 			<div class="ml-4 divider" />
 			<div class="max-w-md px-4">
 				<h2 class="pb-4 text-lg font-semibold">Description</h2>
-				<p class="xs:prose-sm lg:prose-md">{classOnDate.summary}</p>
+				{#if classOnDate}
+				<p class="xs:prose-sm lg:prose-md">{classOnDate.summary ? classOnDate.summary : 'No description available.'}</p>
+				{:else}
+				<p class="xs:prose-sm lg:prose-md">{classInstances[0].summary}</p>
+				{/if}
 			</div>
-			{#if classType.category !== 'Orientation' && classInstances.length > 0}
+			{#if classType.category !== 'Orientation' && DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
 				<div class="flex max-w-md justify-between px-4 pt-4">
 					<button class="btn btn-primary rounded-none" on:click={() => document.getElementById('privateAndCheckout').showModal()}>
 						Request a Private or Checkout Session</button
@@ -477,7 +485,7 @@
 					</dialog>
 				</div>
 			{/if}
-			{#if classInstances.length > 0}
+			{#if DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
 			<div class="flex max-w-md justify-between p-4">
 				<button
 					class="btn btn-ghost btn-sm rounded-none text-sm font-light"

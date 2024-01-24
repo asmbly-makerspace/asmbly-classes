@@ -2,6 +2,7 @@ import { prisma } from '$lib/postgres.js';
 import { json, error } from '@sveltejs/kit';
 import { getIndividualAccount } from '$lib/helpers/neonHelpers.js'
 import { INTERNAL_API_KEY} from '$lib/server/secrets';
+import { DateTime } from 'luxon';
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {
@@ -48,7 +49,7 @@ export async function POST({ request }) {
         }
     })
 
-    console.log(`Incremented attendee count for ${eventInstanceIncrement.eventType.name} on ${eventInstanceIncrement.startDateTime}`)
+    console.log(`Incremented attendee count for ${eventInstanceIncrement.eventType.name} on ${DateTime.fromJSDate(eventInstanceIncrement.startDateTime).setZone('America/Chicago').toLocaleString(DateTime.DATETIME_MED)}`);
 
     if (eventInstanceIncrement.requests.length === 0) {
         return json({ success: true}, { status: 200 });

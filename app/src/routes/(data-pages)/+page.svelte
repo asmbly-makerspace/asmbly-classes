@@ -1,6 +1,7 @@
 <script>
 	import Fuse from 'fuse.js';
 	import autoAnimate from '@formkit/auto-animate';
+	import { DateTime } from 'luxon';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -42,7 +43,7 @@
 		return result.default;
 	}
 
-	let archCategories = new Map([
+	$: archCategories = new Map([
 		['Orientation', false],
 		['Woodworking', false],
 		['Metalworking', false],
@@ -214,9 +215,9 @@
 
 	function sortByDate(classList) {
 		classList.sort((a, b) => {
-			if (a.classInstances.length === 0) {
+			if (DateTime.fromJSDate(a.classInstances[0].startDateTime) < DateTime.local({zone: 'America/Chicago'})) {
 				return 1;
-			} else if (b.classInstances.length === 0) {
+			} else if (DateTime.fromJSDate(b.classInstances[0].startDateTime) < DateTime.local({zone: 'America/Chicago'})) {
 				return -1;
 			}
 			let sortedClassA = a.classInstances.sort((c1, c2) => {
@@ -449,11 +450,15 @@
 									</svg>
 								</div>
 							</div>
+							{#if event.classInstances[0].summary}
 							<p class="text-md">
 								{event.classInstances[0].summary.length > 200
 									? event.classInstances[0].summary.substring(0, 200) + '...'
 									: event.classInstances[0].summary}
 							</p>
+							{:else}
+							<p class="text-md">No summary available</p>
+							{/if}
 							<div class="card-actions content-center justify-end">
 								<p>Price: {event.classInstances[0].price === 0 ? 'Free' : '$' + event.classInstances[0].price + '.00'}</p>
 								<a class="btn btn-primary rounded-none" href="/event/{event.typeId}">Learn More</a>

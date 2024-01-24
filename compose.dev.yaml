@@ -11,6 +11,8 @@ services:
     environment:
       POSTGRES_USER_FILE: /run/secrets/postgres-user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      TZ: "America/Chicago"
+      PGTZ: "America/Chicago"
     volumes:
       - postgres:/var/lib/postgresql/data
     secrets:
@@ -41,6 +43,7 @@ services:
       - /usr/src/app/node_modules
     environment:
       DEVELOPMENT: "true"
+      TZ: "America/Chicago"
     depends_on:
       - db
     secrets:
@@ -53,6 +56,9 @@ services:
     depends_on:
       - db
     restart: unless-stopped
+    volumes:
+      - ./cron-service:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - backend
 

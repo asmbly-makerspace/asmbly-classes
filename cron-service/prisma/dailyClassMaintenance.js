@@ -46,13 +46,13 @@ async function main() {
 			}
         })
 
-		const startDateTime = event['Event Start Date'] + 'T' + event['Event Start Time'] + 'Z';
-		const endDateTime = event['Event End Date'] + 'T' + event['Event End Time'] + 'Z';
+		const startDateTimeString = event['Event Start Date'] + 'T' + event['Event Start Time'];
+		const endDateTimeString = event['Event End Date'] + 'T' + event['Event End Time'];
 
-		const compareStart = DateTime.fromISO(startDateTime);
-		const compareEnd = DateTime.fromISO(endDateTime);
+		const startDateTime = DateTime.fromISO(startDateTimeString, { zone: 'America/Chicago' }).toJSDate();
+		const endDateTime = DateTime.fromISO(endDateTimeString, { zone: 'America/Chicago' }).toJSDate();
 
-        if (typeof exists !== 'undefined' && exists !== null && compareStart.equals(DateTime.fromJSDate(exists.startDateTime)) && compareEnd.equals(DateTime.fromJSDate(exists.endDateTime)) && parseInt(event['Actual Registrants']) === exists.attendeeCount && event['Event Topic'] === exists.teacher.name) {
+        if (typeof exists !== 'undefined' && exists !== null && DateTime.fromJSDate(startDateTime).equals(DateTime.fromJSDate(exists.startDateTime)) && DateTime.fromJSDate(endDateTime).equals(DateTime.fromJSDate(exists.endDateTime)) && parseInt(event['Actual Registrants']) === exists.attendeeCount && event['Event Topic'] === exists.teacher.name) {
 			console.log(`Skipping ${event['Event Name']} (same date, time, teacher, students)`);
             continue;
         }

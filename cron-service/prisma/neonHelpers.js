@@ -41,6 +41,14 @@ async function* postEventSearch(searchFields, outputFields) {
 	}
 }
 
+async function getEvent(eventId) {
+	const resourcePath = `/v2/events/${eventId}`;
+	const httpVerb = 'GET';
+	const url = N_BASE_URL + resourcePath;
+
+	return await apiCall(httpVerb, url, null, N_HEADERS);
+}
+
 async function getActualAttendees(eventId) {
 	const resourcePath = `/v2/events/${eventId}/eventRegistrations`;
 	const httpVerb = 'GET';
@@ -122,4 +130,18 @@ async function getCurrentEvents() {
 	return finalEvents;
 }
 
-export { getCurrentEvents, getIndividualAccount };
+async function getInfreqEvents() {
+	const eventIds = [44732, 52117, 27206, 34411, 51547, 46262, 54842];
+
+	const eventInfo = [];
+
+	for (const eventId of eventIds) {
+		const event = await getEvent(eventId);
+
+		eventInfo.push(event);
+	}
+
+	return eventInfo;
+}
+
+export { getCurrentEvents, getIndividualAccount, getInfreqEvents };

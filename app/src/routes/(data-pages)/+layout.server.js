@@ -5,18 +5,7 @@ export const prerender = false;
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load() {
-	const offset = DateTime.local({
-		zone: 'America/Chicago'
-	}).offset;
-
 	const eventTypesCall = prisma.neonEventType.findMany({
-		where: {
-			category: {
-				none: {
-					name: 'Private'
-				}
-			}
-		},
 		include: {
 			category: {
 				include: {
@@ -26,9 +15,22 @@ export async function load() {
 			instances: {
 				where: {
 					startDateTime: {
-						gte: DateTime.utc().plus({ minutes: offset }).toJSDate()
+						gte: DateTime.local({
+							zone: 'America/Chicago'
+						})
+					},
+					category: {
+						archCategories: {
+							isNot: {
+								name: 'Private'
+							}
+						}
 					}
 				},
+				orderBy: {
+					startDateTime: 'asc'
+				},
+				take: 1,
 				include: {
 					teacher: {
 						select: {
@@ -64,13 +66,47 @@ export async function load() {
 				instanceContext.summary = instance.summary;
 				classInstances.push(instanceContext);
 			}
+		} else {
+			const noCurrentInstances = await prisma.neonEventInstance.findMany({
+				where: {
+					eventTypeId: event.id
+				},
+				orderBy: {
+					startDateTime: 'desc'
+				},
+				take: 1,
+				include: {
+					teacher: {
+						select: {
+							name: true
+						}
+					}
+				}
+			});
+
+			if (noCurrentInstances.length > 0) {
+				for (const instance of noCurrentInstances) {
+					let instanceContext = {};
+					instanceContext.eventId = instance.eventId;
+					instanceContext.attendees = instance.attendeeCount;
+					instanceContext.teacher = instance.teacher.name;
+					instanceContext.startDateTime = instance.startDateTime;
+					instanceContext.endDateTime = instance.endDateTime;
+					instanceContext.price = instance.price;
+					instanceContext.summary = instance.summary;
+					classInstances.push(instanceContext);
+				}
+			}
 		}
 		
 		classContext.classInstances = classInstances;
 		classContext.name = event.name;
 		classContext.category = event.category[0].archCategories.name;
 		classContext.typeId = event.id;
-		classJson.push(classContext);
+
+		if (!classContext.name.split(' ').includes('Private') && !classContext.name.split(' ').includes('Checkout') && classContext.category !== 'Private') {
+			classJson.push(classContext);
+		}
 	}
 
 	return { classJson, classCategories, baseRegLink };

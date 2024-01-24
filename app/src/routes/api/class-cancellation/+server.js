@@ -3,6 +3,7 @@ import { json, error } from '@sveltejs/kit';
 import { sendMIMEmessage } from '$lib/server/gmailEmailFactory';
 import { DateTime } from 'luxon';
 import { INTERNAL_API_KEY } from '$lib/server/secrets';
+import { DateTime } from 'luxon';
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {
@@ -63,7 +64,7 @@ export async function POST({ request }) {
     let eventInstanceDecrement, baseRegLink;
     try {
         [eventInstanceDecrement, baseRegLink] = await prisma.$transaction([eventInstanceDecrementCall, baseRegLinkCall]);
-        console.log(`Decrementing seat count for ${eventInstanceDecrement.eventType.name} on ${eventInstanceDecrement.startDateTime}`);
+        console.log(`Decrementing seat count for ${eventInstanceDecrement.eventType.name} on ${DateTime.fromJSDate(eventInstanceDecrement.startDateTime).setZone('America/Chicago').toLocaleString(DateTime.DATETIME_MED)}`);
     } catch (e) {
         console.error(e);
         return error(500, 'Database error');
@@ -71,7 +72,7 @@ export async function POST({ request }) {
 
     if (eventInstanceDecrement.requests.length > 0) {
 
-        const startDateTime = DateTime.fromJSDate(eventInstanceDecrement.startDateTime).setZone('utc').toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
+        const startDateTime = DateTime.fromJSDate(eventInstanceDecrement.startDateTime).setZone('America/Chicago').toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
 
         const emailList = [];
         const requestsFulfilled = [];
