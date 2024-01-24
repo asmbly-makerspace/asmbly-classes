@@ -3,7 +3,6 @@ import { json, error } from '@sveltejs/kit';
 import { sendMIMEmessage } from '$lib/server/gmailEmailFactory';
 import { DateTime } from 'luxon';
 import { INTERNAL_API_KEY } from '$lib/server/secrets';
-import { DateTime } from 'luxon';
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {

@@ -63,7 +63,7 @@ services:
     depends_on:
       - app
     environment:
-      - TZ: "America/Chicago"
+      TZ: "America/Chicago"
     networks:
       - frontend
     ports:
