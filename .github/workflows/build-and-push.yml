@@ -36,21 +36,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run a multi-line script
-        run: |
-          mkdir ../holder
-          cp ./compose.yaml ../holder
-          cp -r ./cron-service ../holder
-          cp -r ./caddy ../holder
-          tar -cvf deploy.tar ../holder/
-
       - name: Copy latest files
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          source: "deploy.tar"
+          source: "./compose.yaml,./cron-service,./caddy"
           target: "~/app"
           overwrite: true
 
