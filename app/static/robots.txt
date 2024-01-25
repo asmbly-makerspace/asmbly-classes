@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /my-classes/
+
+User-agent: Googlebot-Image
+Disallow: /
