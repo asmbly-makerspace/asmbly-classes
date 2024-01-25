@@ -3,6 +3,10 @@ FROM node:21.6.0-alpine3.19
 # Updating packages and installing cron
 RUN apk add --update apk-cron && rm -rf /var/cache/apk/*
 
+# Setting up timezone
+RUN apk add --no-cache alpine-conf && \
+    setup-timezone -z America/Chicago
+
 # Set environment variables
 ARG NODE_ENV=production
 
