@@ -35,13 +35,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Run a multi-line script
         run: |
           mkdir ../holder
-          cp -TR ./compose.yaml ../holder
-          cp -TR ./cron-service ../holder
-          cp -TR ./caddy ../holder
+          cp ./compose.yaml ../holder
+          cp -r ./cron-service ../holder
+          cp -r ./caddy ../holder
           tar -cvf deploy.tar ../holder/
 
       - name: Copy latest files
