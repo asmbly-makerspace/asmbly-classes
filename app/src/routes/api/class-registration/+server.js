@@ -20,6 +20,12 @@ export async function POST({ request }) {
         return error(401, 'Unauthorized');
     }
 
+    const status = result.data.tickets[0].attendees[0].registrationStatus;
+
+    if (status !== 'SUCCEEDED') {
+        return json({ updated: false }, { status: 200 });
+    }
+
     const eventId = parseInt(result.data.eventId);
     const registrantId = parseInt(result.data.registrantAccountId);
 
