@@ -20,10 +20,8 @@ export async function load() {
 						})
 					},
 					category: {
-						archCategories: {
-							isNot: {
-								name: 'Private'
-							}
+						isNot: {
+							name: 'Private'
 						}
 					}
 				},
@@ -50,7 +48,11 @@ export async function load() {
 	const classCategories = new Set();
 
 	for (const event of eventTypes) {
-		classCategories.add(event.category[0].archCategories.name);
+		const instanceCategory = event.category.find((cat) => cat.archCategories.name !== 'Private');
+		if (!instanceCategory) {
+			continue;
+		}
+		classCategories.add(instanceCategory.archCategories.name);
 		let classContext = {};
 		const instances = event.instances;
 		let classInstances = [];
@@ -101,7 +103,7 @@ export async function load() {
 		
 		classContext.classInstances = classInstances;
 		classContext.name = event.name;
-		classContext.category = event.category[0].archCategories.name;
+		classContext.category = instanceCategory.archCategories.name;
 		classContext.typeId = event.id;
 
 		if (!classContext.name.split(' ').includes('Private') && !classContext.name.split(' ').includes('Checkout') && classContext.category !== 'Private') {

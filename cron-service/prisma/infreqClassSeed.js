@@ -140,7 +140,6 @@ async function main() {
 			}
 		});
 
-        console.log(event.eventDates.startDate + 'T' + event.eventDates.startTime + 'Z');
         const addEventInstance = prisma.neonEventInstance.upsert({
 			where: {
 				eventId: parseInt(event.id)
