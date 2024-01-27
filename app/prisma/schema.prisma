@@ -58,6 +58,12 @@ model NeonEventInstance {
   eventType     NeonEventType              @relation(fields: [eventTypeId], references: [id])
   teacher       NeonEventTeacher           @relation(fields: [teacherId], references: [id])
   requests      NeonEventInstanceRequest[]
+  cancellees    NeonEventInstanceCancellee[]
+}
+
+model NeonEventInstanceCancellee {
+  neonId                      Int                 @id
+  eventInstanceCancellations  NeonEventInstance[]
 }
 
 model NeonEventInstanceRequest {

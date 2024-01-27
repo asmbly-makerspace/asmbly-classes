@@ -27,8 +27,49 @@ export async function POST({ request }) {
     }
 
     const eventId = parseInt(result.data.eventId);
+    const neonId = parseInt(result.data.registrantAccountId);
 
     console.log('Event Cancellation Request:', result);
+
+    const eventToUpdate = await prisma.neonEventInstance.findUnique({
+        where: {
+            eventId: eventId
+        },
+        include: {
+            cancellees: {
+                where: {
+                    neonId: neonId
+                }
+            }
+        }
+    });
+
+    let eventInstanceCancellee;
+    if (eventToUpdate.cancellees.length > 0) {
+        console.log(`Registrant (Neon ID: ${neonId}) has already cancelled. Will not decrement.`);
+        return json({ updated: false }, { status: 200 });
+    } else {
+        eventInstanceCancellee = prisma.neonEventInstanceCancellee.upsert({
+            where: {
+                neonId: neonId
+            },
+            update: {
+                eventInstanceCancellations: {
+                    connect: {
+                        eventId: eventId
+                    }
+                }
+            },
+            create: {
+                neonId: neonId,
+                eventInstanceCancellations: {
+                    connect: {
+                        eventId: eventId
+                    }
+                }
+            }
+        });
+    }
 
     const eventInstanceDecrementCall = prisma.neonEventInstance.update({
         where: {
@@ -64,7 +105,7 @@ export async function POST({ request }) {
 
     let eventInstanceDecrement, baseRegLink;
     try {
-        [eventInstanceDecrement, baseRegLink] = await prisma.$transaction([eventInstanceDecrementCall, baseRegLinkCall]);
+        [eventInstanceDecrement, baseRegLink, eventInstanceCancellee] = await prisma.$transaction([eventInstanceDecrementCall, baseRegLinkCall, eventInstanceCancellee]);
         console.log(`Decrementing seat count for ${eventInstanceDecrement.eventType.name} on ${DateTime.fromJSDate(eventInstanceDecrement.startDateTime).setZone('America/Chicago').toLocaleString(DateTime.DATETIME_MED)}`);
     } catch (e) {
         console.error(e);
