@@ -28,6 +28,8 @@ export async function POST({ request }) {
 
     const eventId = parseInt(result.data.eventId);
 
+    console.log('Event Cancellation Request:', result);
+
     const eventInstanceDecrementCall = prisma.neonEventInstance.update({
         where: {
             eventId: eventId

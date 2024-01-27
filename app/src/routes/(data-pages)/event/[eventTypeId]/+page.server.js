@@ -42,10 +42,8 @@ export async function load({ params, setHeaders }) {
 						gte: DateTime.local({zone: "America/Chicago"}).toJSDate()
 					},
 					category: {
-						archCategories: {
-							isNot: {
-								name: 'Private'
-							}
+						isNot: {
+							name: 'Private'
 						}
 					}
 				},
@@ -83,6 +81,13 @@ export async function load({ params, setHeaders }) {
 					}
 				},
 				instances: {
+					where: {
+						category: {
+							isNot: {
+								name: 'Private'
+							}
+						}
+					},
 					orderBy: {
 						startDateTime: 'desc'
 					},
