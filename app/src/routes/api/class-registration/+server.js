@@ -29,7 +29,7 @@ export async function POST({ request }) {
     const eventId = parseInt(result.data.eventId);
     const registrantId = parseInt(result.data.registrantAccountId);
 
-    console.log('Event Registration Request:', result);
+    console.log(`Event Registration: Event ID: ${eventId} - Neon ID: ${registrantId}`);
 
     const eventInstanceIncrement = await prisma.neonEventInstance.update({
         where: {

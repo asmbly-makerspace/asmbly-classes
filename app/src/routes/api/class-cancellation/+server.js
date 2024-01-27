@@ -29,7 +29,7 @@ export async function POST({ request }) {
     const eventId = parseInt(result.data.eventId);
     const neonId = parseInt(result.data.registrantAccountId);
 
-    console.log('Event Cancellation Request:', result);
+    console.log(`Event registration canceled with status ${status}: Event ID: ${eventId} - Neon ID: ${neonId}`);
 
     const eventToUpdate = await prisma.neonEventInstance.findUnique({
         where: {
