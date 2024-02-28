@@ -1,7 +1,7 @@
 <script>
 </script>
 
-<h2 class="text-2xl lg:text-3xl font-asmbly text-accent justify-start all-under w-max">
+<h2 class="text-2xl lg:text-3xl font-asmbly font-light text-accent justify-start all-under w-max">
     <slot />
 </h2>
 

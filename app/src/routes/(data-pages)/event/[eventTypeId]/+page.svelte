@@ -85,7 +85,7 @@
 
 <div id="main" class="flex flex-col items-center justify-start pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
-		class="font-asmbly text-accent pb-2 pt-8 text-center text-2xl lg:text-4xl all-under lg:pb-6"
+		class="font-asmbly font-light text-accent pb-2 pt-8 text-center text-2xl lg:text-4xl all-under lg:pb-6"
 	>
 		{classType.name}
 	</h1>

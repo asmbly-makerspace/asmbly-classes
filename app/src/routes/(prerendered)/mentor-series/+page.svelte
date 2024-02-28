@@ -14,7 +14,7 @@
 
 <div class="flex flex-col items-center justify-center">
     <h1
-        class="font-asmbly text-accent p-8 text-4xl text-center all-under"
+        class="font-asmbly font-light text-accent p-8 text-4xl text-center all-under"
     >
         Mentor Series
     </h1>

@@ -106,7 +106,7 @@
 					class="menu dropdown-content menu-md z-[1] mt-3 w-52 rounded-none bg-base-100 p-2 text-base-content shadow"
 				>
 					<li><a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/">Search for Classes</a></li>
-					<li><a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/my-classes">My Classes</a></li>
+					<!-- <li><a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/my-classes">My Classes</a></li> -->
 					<li>
 						<a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/mentor-series">Mentor Series</a>
 					</li>
@@ -130,11 +130,11 @@
 						>Search for Classes</a
 					>
 				</li>
-				<li>
+				<!-- <li>
 					<a class="text-md rounded-none font-asmbly font-light uppercase" href="/my-classes"
 						>My Classes</a
 					>
-				</li>
+				</li> -->
 				<li>
 					<a class="text-md rounded-none font-asmbly font-light uppercase" href="/mentor-series"
 						>Mentor Series</a
@@ -227,7 +227,7 @@
 					>
 						<div>
 							<div>
-								<div class="font-asmbly text-secondary mb-6 text-3xl">Share Creativity</div>
+								<div class="font-asmbly font-light text-secondary mb-6 text-3xl">Share Creativity</div>
 							</div>
 						</div>
 						<div>
@@ -262,7 +262,7 @@
 									type="submit"
 									class="btn group flex w-full flex-col justify-center rounded-none bg-[#78CBC3] py-7 border-none"
 								>
-									<span class="font-asmbly text-2xl text-[#000] group-hover:text-[#fff] transition-all"
+									<span class="font-asmbly font-light text-2xl text-[#000] group-hover:text-[#fff] transition-all"
 										>Subscribe Now</span
 									>
 								</button>
@@ -281,16 +281,16 @@
 				
 			</div>
 			<div class="px-4 mb-12 xs:w-full md:w-1/4">
-				<h3 class="font-asmbly text-secondary mb-6 text-3xl">Helpful Links</h3>
-				<p class="font-asmbly text-secondary">Membership & Events</p>
+				<h3 class="font-asmbly font-light text-secondary mb-6 text-3xl">Helpful Links</h3>
+				<p class="font-asmbly font-light text-secondary">Membership & Events</p>
 				<ul>
-					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.org/how-to-join-asmbly" target="_blank" rel="noopener">How to Join</a></li>
+					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.org/join" target="_blank" rel="noopener">How to Join</a></li>
 					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.org/faq" target="_blank" rel="noopener">FAQ</a></li>
 					<li><a class="underline text-secondary hover:text-[#fff]" href="/">Classes</a></li>
-					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.org/calendar" target="_blank" rel="noopener">Event Calendar</a></li>
+					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.org/events" target="_blank" rel="noopener">Event Calendar</a></li>
 				</ul>
 				<br>
-				<p class="font-asmbly">Member Links</p>
+				<p class="font-asmbly font-light text-secondary">Member Links</p>
 				<ul>
 					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.app.neoncrm.com" target="_blank" rel="noopener">Neon Member Portal</a></li>
 					<li><a class="underline text-secondary hover:text-[#fff]" href="https://asmbly.skedda.com" target="_blank" rel="noopener">Skedda</a></li>

@@ -10,7 +10,7 @@
 
 <div class="flex flex-col items-center justify-center mx-4 pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
-		class="font-asmbly text-accent text-4xl pt-8 text-center all-under"
+		class="font-asmbly font-light text-accent text-4xl pt-8 text-center all-under"
 	>
 		Frequently Asked Questions
 	</h1>
@@ -48,14 +48,14 @@
 				<div slot="content" class="collapse-content">
 					<p>Class registrations may be fully refunded at least 48 hours in advance of the class start time.  
 						If it is within 48 hours of the class start time, registrations are nonrefundable. To initiate a refund,
-						go to the <a href="/my-classes">My Classes</a> page, login, then click on the "refund" button for your class. If it is within 48 hours of the 
+						send us an email at <a href="mailto:membership@asmbly.org">membership@asmbly.org</a>. If it is within 48 hours of the 
 						class start time, it will not be possible to initiate a refund.
 					</p>
 					<p>
 						If you intend to reschedule for a future session of the class, we ask that you please email us at
 						<a href="mailto:membership@asmbly.org">membership@asmbly.org</a> with your requested reschedule 
 						instead of requesting a refund. We will take care of the reschedule on your behalf. This method saves us 
-						transaction fees. The same 48 hour policy applies to class reschedules, though in this case we will 
+						transaction fees. The same 48 hour policy applies to class reschedules, and in both cases we will 
 						abide by the time your email was sent.
 					</p>
 				</div>
