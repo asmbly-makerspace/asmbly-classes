@@ -105,14 +105,14 @@
 				<ul
 					class="menu dropdown-content menu-md z-[1] mt-3 w-52 rounded-none bg-base-100 p-2 text-base-content shadow"
 				>
-					<li><a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/">Search for Classes</a></li>
-					<!-- <li><a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/my-classes">My Classes</a></li> -->
+					<li><a on:click={() => closer()} class="font-asmbly uppercase" href="/">Search for Classes</a></li>
+					<!-- <li><a on:click={() => closer()} class="font-asmbly uppercase" href="/my-classes">My Classes</a></li> -->
 					<li>
-						<a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/mentor-series">Mentor Series</a>
+						<a on:click={() => closer()} class="font-asmbly uppercase" href="/mentor-series">Mentor Series</a>
 					</li>
-					<li><a on:click={() => closer()} class="font-asmbly font-light uppercase" href="/classes-faq">Classes FAQ</a></li>
+					<li><a on:click={() => closer()} class="font-asmbly uppercase" href="/classes-faq">Classes FAQ</a></li>
 					<li>
-						<a class="font-asmbly font-light uppercase" href="https://asmbly.org"
+						<a class="font-asmbly uppercase" href="https://asmbly.org"
 							>Return to Main Site</a
 						>
 					</li>
@@ -126,28 +126,28 @@
 		<div class="navbar-center hidden lg:flex">
 			<ul class="menu menu-horizontal px-1">
 				<li>
-					<a class="text-md rounded-none font-asmbly font-light uppercase" href="/"
+					<a class="text-md rounded-none font-asmbly uppercase" href="/"
 						>Search for Classes</a
 					>
 				</li>
 				<!-- <li>
-					<a class="text-md rounded-none font-asmbly font-light uppercase" href="/my-classes"
+					<a class="text-md rounded-none font-asmbly uppercase" href="/my-classes"
 						>My Classes</a
 					>
 				</li> -->
 				<li>
-					<a class="text-md rounded-none font-asmbly font-light uppercase" href="/mentor-series"
+					<a class="text-md rounded-none font-asmbly uppercase" href="/mentor-series"
 						>Mentor Series</a
 					>
 				</li>
 				<li>
-					<a class="text-md rounded-none font-asmbly font-light uppercase" href="/classes-faq"
+					<a class="text-md rounded-none font-asmbly uppercase" href="/classes-faq"
 						>Classes FAQ</a
 					>
 				</li>
 			</ul>
 		</div>
-		<div id="themeController" class="navbar-end m-2.5">
+		<div id="themeController" class="navbar-end">
 			<details id="themeControl" class="dropdown rounded-none">
 				<summary class="btn btn-ghost m-1 rounded-none">
 					{#if isDarkMode}
@@ -262,7 +262,7 @@
 									type="submit"
 									class="btn group flex w-full flex-col justify-center rounded-none bg-[#78CBC3] py-7 border-none"
 								>
-									<span class="font-asmbly font-light text-2xl text-[#000] group-hover:text-[#fff] transition-all"
+									<span class="font-asmbly font-bold text-2xl text-[#000] group-hover:text-[#fff] transition-all"
 										>Subscribe Now</span
 									>
 								</button>
