@@ -76,16 +76,6 @@ export async function load() {
 						isNot: {
 							name: 'Private'
 						}
-					},
-					NOT: {
-						name: {
-							contains: 'Private'
-						}
-					},
-					NOT: {
-						name: {
-							contains: 'Checkout'
-						}
 					}
 				},
 				orderBy: {
