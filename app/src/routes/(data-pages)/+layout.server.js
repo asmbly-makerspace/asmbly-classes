@@ -71,7 +71,12 @@ export async function load() {
 		} else {
 			const noCurrentInstances = await prisma.neonEventInstance.findMany({
 				where: {
-					eventTypeId: event.id
+					eventTypeId: event.id,
+					category: {
+						isNot: {
+							name: 'Private'
+						}
+					}
 				},
 				orderBy: {
 					startDateTime: 'desc'
@@ -106,7 +111,9 @@ export async function load() {
 		classContext.category = instanceCategory.archCategories.name;
 		classContext.typeId = event.id;
 
-		if (!classContext.name.split(' ').includes('Private') && !classContext.name.split(' ').includes('Checkout') && classContext.category !== 'Private') {
+		const name_split = classContext.name.split(' ');
+
+		if (!name_split.includes('Private') && !name_split.includes('(Private)') && !name_split.includes('Checkout') && !name_split.includes('(Checkout)') && classContext.category !== 'Private' ) {
 			classJson.push(classContext);
 		}
 	}
