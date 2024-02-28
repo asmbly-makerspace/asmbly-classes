@@ -2,7 +2,7 @@ import { prisma } from './prismaClient.js';
 
 
 async function main() {
-    prisma.neonEventInstance.update({
+    await prisma.neonEventInstance.update({
         where: {
             eventId: 60442
         },
@@ -14,14 +14,20 @@ async function main() {
         }
     })
 
-    prisma.neonEventInstance.update({
+    private_cat_id = await prisma.neonEventCategory.findUnique({
+        where: {
+            name: 'Private'
+        }
+    })
+
+    await prisma.neonEventInstance.update({
         where: {
             eventId: 60442
         },
         data: {
             category: {
                 connect: {
-                    name: 'Private'
+                    id: private_cat_id.id
                 }
             },
         }
