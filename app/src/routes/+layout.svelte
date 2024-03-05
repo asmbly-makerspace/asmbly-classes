@@ -262,7 +262,7 @@
 									type="submit"
 									class="btn group flex w-full flex-col justify-center rounded-none bg-[#78CBC3] hover:bg-woodwork py-7 border-none"
 								>
-									<span class="font-asmbly font-bold text-2xl text-[#000] transition-all"
+									<span class="font-asmbly font-bold text-xl text-[#000] transition-all uppercase"
 										>Subscribe Now</span
 									>
 								</button>
