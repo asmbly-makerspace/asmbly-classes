@@ -27,7 +27,7 @@
 					<p>
 						No, we don't require an Asmbly membership to take classes. The only requirement is a
 						free Neon account. If you don't already have a Neon account, you can sign up for one <a
-							href="https://asmbly.org/join"
+							href="https://asmbly.org/signup"
 							target="_blank">here</a
 						>.
 					</p>

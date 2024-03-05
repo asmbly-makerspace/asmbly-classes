@@ -8,26 +8,8 @@ async function main() {
         },
         data: {
             category: {
-                disconnect: true
-            },
-
-        }
-    })
-
-    private_cat_id = await prisma.neonEventCategory.findUnique({
-        where: {
-            name: 'Private'
-        }
-    })
-
-    await prisma.neonEventInstance.update({
-        where: {
-            eventId: 60442
-        },
-        data: {
-            category: {
                 connect: {
-                    id: private_cat_id.id
+                    name: 'Private'
                 }
             },
         }

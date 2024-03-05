@@ -130,6 +130,46 @@ async function getCurrentEvents() {
 	return finalEvents;
 }
 
+async function getInactiveEvents() {
+	const today = new Date().toISOString().split('T')[0];
+
+	const searchFields = [
+		{
+			field: 'Event End Date',
+			operator: 'GREATER_AND_EQUAL',
+			value: `${today}`
+		},
+		{
+			field: 'Event Archived',
+			operator: 'EQUAL',
+			value: 'Yes'
+		}
+	];
+
+	const outputFields = [
+		'Event ID'
+	];
+
+	let finalEvents = [];
+	let responseEvents;
+
+	for await (const response of postEventSearch(searchFields, outputFields)) {
+		if (response.pagination.currentPage < response.pagination.totalPages) {
+			responseEvents = response.searchResults;
+		} else {
+			break;
+		}
+
+		for (const event of responseEvents) {
+			let eventId = parseInt(event['Event ID']);
+
+			finalEvents.push(eventId);
+		}
+	}
+
+	return finalEvents;
+}
+
 async function getInfreqEvents() {
 	const eventIds = [44732, 52117, 27206, 34411, 51547, 46262, 54842];
 
@@ -144,4 +184,4 @@ async function getInfreqEvents() {
 	return eventInfo;
 }
 
-export { getCurrentEvents, getIndividualAccount, getInfreqEvents };
+export { getCurrentEvents, getIndividualAccount, getInfreqEvents, getInactiveEvents };

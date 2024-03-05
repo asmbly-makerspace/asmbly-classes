@@ -1,5 +1,5 @@
 import { prisma } from './prismaClient.js';
-import { getCurrentEvents } from './neonHelpers.js';
+import { getCurrentEvents, getInactiveEvents } from './neonHelpers.js';
 import { sendMIMEmessage } from './gmailEmailFactory.js';
 import { DateTime } from 'luxon';
 
@@ -22,15 +22,41 @@ async function connectArchCat(model, archCatName, catId) {
 async function main() {
 
 	console.log('');
-	console.log(`Running daily class maintenance for ${DateTime.now().toLocaleString()}...`);
+	console.log(`Running class maintenance for ${DateTime.now().toLocaleString(DateTime.DATETIME_SHORT)}...`);
 	console.log('------------------------------------------------------');
 	console.log('');
 
 	const currentEvents = await getCurrentEvents();
+	const inactiveEventIds = await getInactiveEvents();
 
 	const remainingPrismaCalls = [];
 
 	const alreadyAddedCats = {};
+
+	const currentInactiveEvents = await prisma.neonEventInstance.findMany({
+		where: {
+			eventId: {
+				in: inactiveEventIds
+			}
+		},
+		select: {
+			eventId: true
+		}
+	});
+
+	if (currentInactiveEvents.length > 0) {
+		const eventsToDelete = [];
+		for (const event of currentInactiveEvents) {
+			eventsToDelete.push(event['eventId']);
+		}
+		await prisma.neonEventInstance.deleteMany({
+			where: {
+				eventId: {
+					in: eventsToDelete
+				}
+			}
+		});
+	}
 
 	for (const event of currentEvents) {
         const exists = await prisma.neonEventInstance.findUnique({
@@ -53,7 +79,6 @@ async function main() {
 		const endDateTime = DateTime.fromISO(endDateTimeString, { zone: 'America/Chicago' }).toJSDate();
 
         if (typeof exists !== 'undefined' && exists !== null && DateTime.fromJSDate(startDateTime).equals(DateTime.fromJSDate(exists.startDateTime)) && DateTime.fromJSDate(endDateTime).equals(DateTime.fromJSDate(exists.endDateTime)) && parseInt(event['Actual Registrants']) === exists.attendeeCount && event['Event Topic'] === exists.teacher.name) {
-			console.log(`Skipping ${event['Event Name']} (same date, time, teacher, students)`);
             continue;
         }
 
@@ -217,7 +242,7 @@ async function main() {
 	}
 
     if (remainingPrismaCalls.length === 0) {
-        console.log(`No events to add today (${new Date().toLocaleDateString()}).`);
+        console.log(`No events to add for (${new Date().toLocaleDateString()}).`);
         return;
     }
 
@@ -264,8 +289,8 @@ async function main() {
     })
 
     if (eventTypesToEmail.length === 0) {
-        console.log(`No events to email today (${new Date().toLocaleDateString()}).`);
-        console.log(`Finished adding events for today (${new Date().toLocaleDateString()}).`);
+        console.log(`No events to email for (${new Date().toLocaleDateString()}).`);
+        console.log(`Finished adding events for (${new Date().toLocaleDateString()}).`);
         return;
     }
 
@@ -331,7 +356,7 @@ async function main() {
 		console.error(e);
 	}
 
-    console.log(`Finished adding events for today (${new Date().toLocaleDateString()}).`);
+    console.log(`Finished adding events for (${new Date().toLocaleDateString()}).`);
 }
 
 main()
