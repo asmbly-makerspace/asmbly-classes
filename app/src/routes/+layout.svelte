@@ -260,9 +260,9 @@
 							<div class="w-full py-1">
 								<button
 									type="submit"
-									class="btn group flex w-full flex-col justify-center rounded-none bg-[#78CBC3] py-7 border-none"
+									class="btn group flex w-full flex-col justify-center rounded-none bg-[#78CBC3] hover:bg-woodwork py-7 border-none"
 								>
-									<span class="font-asmbly font-bold text-2xl text-[#000] group-hover:text-[#fff] transition-all"
+									<span class="font-asmbly font-bold text-2xl text-[#000] transition-all"
 										>Subscribe Now</span
 									>
 								</button>
