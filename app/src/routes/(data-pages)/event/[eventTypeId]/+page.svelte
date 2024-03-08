@@ -222,12 +222,13 @@
 							>
 							<dialog id="fullClassNotification" class="modal">
 								<div class="modal-box rounded-none">
-									<form method="dialog">
+									
 										<button
 											class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 rounded-none"
+											on:click={() => document.getElementById('fullClassNotification').close()}
 											>✕</button
 										>
-									</form>
+									
 									<!-- Modal content -->
 
 									<div class="prose">
@@ -319,12 +320,13 @@
 						>
 						<dialog id="onDemandRequest" class="modal">
 							<div class="modal-box rounded-none">
-								<form method="dialog">
+								
 									<button
 										class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 rounded-none"
+										on:click={() => document.getElementById('onDemandRequest').close()}
 										>✕</button
 									>
-								</form>
+								
 								<!-- Modal content -->
 
 								<div class="prose">
@@ -415,11 +417,12 @@
 					>
 					<dialog id="privateAndCheckout" class="modal">
 						<div class="modal-box rounded-none">
-							<form method="dialog">
+							
 								<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 rounded-none"
+									on:click={() => document.getElementById('privateAndCheckout').close()}
 									>✕</button
 								>
-							</form>
+							
 							<!-- Modal content -->
 
 							<div class="prose">
@@ -493,11 +496,12 @@
 				>
 				<dialog id="classNotify" class="modal">
 					<div class="modal-box rounded-none">
-						<form method="dialog">
-							<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 rounded-none"
-								>✕</button
-							>
-						</form>
+						
+						<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 rounded-none"
+							on:click={() => document.getElementById('classNotify').close()}
+							>✕</button
+						>
+						
 						<!-- Modal content -->
 
 						<div class="prose">

@@ -58,6 +58,14 @@ async function main() {
 		});
 	}
 
+	await prisma.neonEventType.deleteMany({
+		where: {
+			instances: {
+				none: {}
+			}
+		}
+	});
+
 	for (const event of currentEvents) {
         const exists = await prisma.neonEventInstance.findUnique({
             where: {
