@@ -55,7 +55,7 @@ export default {
 				asmbly: {
 					primary: colors.asmbly.DEFAULT,
 					secondary: asmblyWhite,
-					accent: colors.asmbly.hover,
+					accent: colors.asmbly.DEFAULT,
 					neutral: '#3d4451',
 					'base-100': asmblyWhite
 				}
@@ -64,7 +64,7 @@ export default {
 				asmblyDark: {
 					primary: asmblyWhite,
 					secondary: colors.asmbly.DEFAULT,
-					accent: colors.asmbly.hover,
+					accent: asmblyWhite,
 					neutral: '#7c879c',
 					'base-100': '#3d4451'
 				}
