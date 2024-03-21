@@ -416,7 +416,7 @@
 					</label>
 				</div>
 				{#each finalClassList as event}
-					<div class="card mx-2 mb-4 rounded-none bg-base-100 shadow-xl lg:card-side lg:max-h-64">
+					<div class="card mx-2 mb-4 rounded-none bg-base-100 shadow-xl lg:card-side lg:max-h-80">
 						<figure class="w-full lg:w-4/5">
 							<enhanced:img
 								class="h-full"
@@ -450,6 +450,9 @@
 									</svg>
 								</div>
 							</div>
+							<p class="text-lg">Next Class: <b>
+								{event.classInstances[0].startDateTime.toLocaleString('en-US', {dateStyle: "short", timeStyle: "short"})}
+							</b></p>
 							{#if event.classInstances[0].summary}
 							<p class="text-md">
 								{event.classInstances[0].summary.length > 200
