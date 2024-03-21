@@ -168,8 +168,8 @@
 											DateTime.local(currentDate.year, currentDate.month, day + 1),
 											'day'
 										)
-											? 'bg-primary text-primary-content hover:bg-primary'
-											: 'bg-base-200 text-base-content hover:bg-base-300'} flex h-full w-full items-center justify-center rounded-full font-medium"
+											? 'bg-primary text-primary-content hover:bg-secondary hover:text-base-content'
+											: 'border-primary border-solid border-2 text-base-content hover:bg-primary hover:text-primary-content'} flex h-full w-full items-center justify-center rounded-full font-medium"
 										>{day + 1}</button
 									>
 								</div>
