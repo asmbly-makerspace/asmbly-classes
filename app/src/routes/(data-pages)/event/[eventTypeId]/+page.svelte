@@ -8,6 +8,7 @@
 	import SuperForm from '$lib/components/classRequestForm.svelte';
 	import TextField from '$lib/components/textField.svelte';
 	import RadioField from '$lib/components/radioField.svelte';
+	import Calendar from '$lib/components/calendar.svelte'
 	import { schema, privateRequestSchema } from '$lib/zodSchemas/schema.js';
 	import { afterNavigate } from '$app/navigation';
 	import { tick } from 'svelte';
@@ -16,62 +17,35 @@
 		if (nav.type === 'link') {
 			await tick();
 			window.scrollTo(0, 0);
-		}}
-	);
+		}
+	});
 
 	const noCheckouts = ['Beginner CNC Router', 'Big Lasers Class', 'Small Lasers Class', 'Woodshop Safety', 'Metal Shop Safety'];
 
 	$: classType = data.classJson;
 
-	$: classInstances = classType.classInstances;
-
-	$: classDates = [];	
-	let currentDate;
-	$: {
-		if (classInstances.length > 0) {
-			if (DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})) {
-				classDates = classInstances.map((i) => DateTime.fromJSDate(i.startDateTime));
-				currentDate = classDates.sort((a, b) => a - b)[0];
-			} else {
-				currentDate = DateTime.now();
-			}
-		} else {
-			currentDate = DateTime.now();
+	$: classInstances = classType.classInstances.map(i => {
+		return {
+			...i,
+			startDateTime: DateTime.fromJSDate(i.startDateTime),
+			endDateTime: DateTime.fromJSDate(i.endDateTime)
 		}
-	}
+	});
 
-	let date;
-	$: {
-		if (classDates.length > 0) {
-			date = classDates.sort((a, b) => a - b)[0];
-		} else {
-			date = DateTime.now();
-		}
+	$: classDates = classInstances.map(i => i.startDateTime);
+
+	$: classInstanceId = $page.url.searchParams.get('eventId')
+
+	$: date = (classInstanceId && classInstances.find(i => i.eventId == classInstanceId)?.startDateTime) || classDates[0] || DateTime.now()
+
+	function classDateUrl(date) {
+		const classOnDay = classInstances.find(i => i.startDateTime.hasSame(date, 'day'))
+		return `?eventId=${classOnDay.eventId}`
 	}
 
 	$: classOnDate = classInstances.find((i) =>
-		DateTime.fromJSDate(i.startDateTime).hasSame(date, 'day')
+		i.startDateTime.hasSame(date, 'day')
 	);
-
-	function getDaysInMonth(year, month) {
-		return new Date(year, month + 1, 0).getDate();
-	}
-
-	function getFirstDayOfMonth(year, month) {
-		return new Date(year, month, 1).getDay();
-	}
-
-	function isHighlightedDate(date) {
-		return classDates.some((highlightedDate) => highlightedDate.hasSame(date, 'day'));
-	}
-
-	function prevMonth() {
-		currentDate = currentDate.minus({ months: 1 });
-	}
-
-	function nextMonth() {
-		currentDate = currentDate.plus({ months: 1 });
-	}
 
 </script>
 
@@ -91,111 +65,18 @@
 	</h1>
 	<div class="card mt-2 flex lg:w-full max-w-6xl justify-center rounded-none shadow-lg lg:card-side lg:min-h-[540px]">
 		<div class="rounded p-5 md:p-8">
-			<div class="flex items-center justify-between px-4">
-				<button
-					aria-label="calendar backward"
-					class="text-base-content hover:text-base-content focus:text-base-content"
-					on:click={prevMonth}
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="icon icon-tabler icon-tabler-chevron-left"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						fill="none"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-						<polyline points="15 6 9 12 15 18" />
-					</svg>
-				</button>
-				<span class="font-bold text-base-content focus:outline-none text-lg"
-					>{new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(
-						currentDate
-					)}</span
-				>
-				<button
-					aria-label="calendar forward"
-					class="text-base-content hover:text-base-content focus:text-base-content"
-					on:click={nextMonth}
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="icon icon-tabler icon-tabler-chevron-right"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						fill="none"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-						<polyline points="9 6 15 12 9 18" />
-					</svg>
-				</button>
-			</div>
-			<div class="flex items-center justify-between overflow-x-auto pt-12">
-				<div class="grid grid-cols-7 gap-2 p-2 lg:gap-4">
-					<div class="h-10 w-10 text-center font-light">S</div>
-					<div class="h-10 w-10 text-center font-light">M</div>
-					<div class="h-10 w-10 text-center font-light">T</div>
-					<div class="h-10 w-10 text-center font-light">W</div>
-					<div class="h-10 w-10 text-center font-light">T</div>
-					<div class="h-10 w-10 text-center font-light">F</div>
-					<div class="h-10 w-10 text-center font-light">S</div>
-					{#each Array(getDaysInMonth(currentDate.year, currentDate.month - 1)).keys() as day}
-						{#if day === 0}
-							{#each Array(getFirstDayOfMonth(currentDate.year, currentDate.month - 1)).keys() as _}
-								<div class="empty aspect-square h-full w-full bg-base-100" />
-							{/each}
-						{/if}
-						{#if isHighlightedDate(DateTime.local(currentDate.year, currentDate.month, day + 1))}
-							<div class="flex aspect-square h-full w-full flex-row items-center justify-center">
-								<div
-									class="flex aspect-square h-full w-full cursor-pointer items-center justify-center rounded-full"
-								>
-									<button
-										on:click={() => {
-											date = DateTime.local(currentDate.year, currentDate.month, day + 1);
-										}}
-										class="{date.hasSame(
-											DateTime.local(currentDate.year, currentDate.month, day + 1),
-											'day'
-										)
-											? 'bg-primary text-primary-content hover:bg-secondary hover:text-base-content'
-											: 'border-primary border-solid border-2 text-base-content hover:bg-primary hover:text-primary-content'} flex h-full w-full items-center justify-center rounded-full font-medium"
-										>{day + 1}</button
-									>
-								</div>
-							</div>
-						{:else}
-							<div class="aspect-square h-full w-full p-2 text-center">
-								{day + 1}
-							</div>
-						{/if}
-					{/each}
-				</div>
-			</div>
+			<Calendar selectedDate={date} toUrl={classDateUrl} highlightedDates={classDates}/>
 		</div>
 		<div class="divider mx-6 lg:divider-horizontal lg:mx-0 lg:my-8" />
 		<div class="flex flex-col px-5 py-5 md:px-8 md:py-8">
-			{#if DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
+			{#if classInstances.length > 0}
 			<div class="px-4">
 				<h2 class="pb-4 text-lg font-semibold">{date.toFormat("cccc', 'LLLL d")}</h2>
 				<div class="flex w-72 justify-between lg:w-96">
 					<div class="border-base-300 pb-4 lg:pb-0">
 						<p class="text-md font-light leading-3">
-							{DateTime.fromJSDate(classOnDate.startDateTime)
-								.toLocaleString(DateTime.TIME_SIMPLE)} - {DateTime.fromJSDate(
-								classOnDate.endDateTime
-							)
-								.toLocaleString(DateTime.TIME_SIMPLE)}
+							{classOnDate.startDateTime.toLocaleString(DateTime.TIME_SIMPLE)} - {
+								classOnDate.endDateTime.toLocaleString(DateTime.TIME_SIMPLE)}
 						</p>
 						<p class="pt-2 text-md leading-none">Teacher: {classOnDate.teacher}</p>
 						<p class="pt-2 text-md leading-none">
@@ -410,7 +291,7 @@
 				<p class="xs:prose-sm lg:prose-md">{classInstances[0].summary}</p>
 				{/if}
 			</div>
-			{#if classType.category !== 'Orientation' && DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
+			{#if classType.category !== 'Orientation' && classInstances[0].startDateTime > DateTime.local({zone: 'America/Chicago'})}
 				<div class="flex max-w-md justify-between px-4 pt-4">
 					<button class="btn btn-primary rounded-none" on:click={() => document.getElementById('privateAndCheckout').showModal()}>
 						Request a Private or Checkout Session</button
@@ -488,7 +369,7 @@
 					</dialog>
 				</div>
 			{/if}
-			{#if DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
+			{#if classInstances[0].startDateTime > DateTime.local({zone: 'America/Chicago'})}
 			<div class="flex max-w-md justify-between p-4">
 				<button
 					class="btn btn-ghost btn-sm rounded-none text-sm font-light"
