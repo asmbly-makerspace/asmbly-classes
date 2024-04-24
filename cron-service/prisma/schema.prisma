@@ -37,6 +37,7 @@ model NeonBaseRegLink {
 model NeonEventType {
   id        Int                    @id @default(autoincrement())
   name      String                 @unique @db.VarChar(50)
+  visible   Boolean?               @default(true)
   instances NeonEventInstance[]
   request   NeonEventTypeRequest[]
   category  NeonEventCategory[]    @relation("NeonEventCategoryToNeonEventType")
