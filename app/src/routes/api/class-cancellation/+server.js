@@ -91,7 +91,8 @@ export async function POST({ request }) {
                     fulfilled: false
                 },
                 select: {
-                    requester: true
+                    requester: true,
+                    id: true
                 }
             }
         }
