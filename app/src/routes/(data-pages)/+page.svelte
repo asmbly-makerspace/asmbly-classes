@@ -416,14 +416,14 @@
 					</label>
 				</div>
 				{#each finalClassList as event}
-					<div class="card mx-2 mb-4 rounded-none bg-base-100 shadow-xl lg:card-side lg:max-h-80">
-						<figure class="w-full lg:w-4/5">
-							<enhanced:img
-								class="h-full"
-								src={getClassImage(event.name, event.category)}
-								alt="{event.name} image"
-							/>
-						</figure>
+					<div class="card mx-2 mb-4 rounded-none bg-base-100 shadow-xl lg:card-side lg:max-h-72">
+							<figure class="w-full lg:w-4/5 flex">
+								<enhanced:img
+									class="h-full w-auto flex-shrink-0 object-cover object-center"
+									src={getClassImage(event.name, event.category)}
+									alt="{event.name} image"
+								/>
+							</figure>
 						<div class="card-body w-full">
 							<div class="flex justify-between">
 								<h2 class="font-asmbly text-accent card-title font-light">{event.name}</h2>
@@ -450,9 +450,13 @@
 									</svg>
 								</div>
 							</div>
-							<p class="text-lg">Next Class: <b>
-								{event.classInstances[0].startDateTime.toLocaleString('en-US', {dateStyle: "short", timeStyle: "short"})}
-							</b></p>
+							<p class="text-md">Next Class:
+								{#if event.classInstances[0].startDateTime > DateTime.local({zone: 'America/Chicago'})}
+									{event.classInstances[0].startDateTime.toLocaleString('en-US', {dateStyle: "short", timeStyle: "short"})}
+								{:else}
+									TBD
+								{/if}
+							</p>
 							{#if event.classInstances[0].summary}
 							<p class="text-md">
 								{event.classInstances[0].summary.length > 200

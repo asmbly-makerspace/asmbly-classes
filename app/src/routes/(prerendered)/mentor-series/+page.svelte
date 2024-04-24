@@ -34,7 +34,7 @@
     <ResponsiveCard let:Description let:Action let:Title let:Figure class="bg-base-200 w-full mt-16">
         <Figure>
             <enhanced:img src="$lib/images/DavidDiskoNew.jpg?aspect=0.8" 
-            alt="Woodshop Mentor Series Instructor Charles Leininger" 
+            alt="Woodshop Mentor Series Instructor David Disko" 
             class="w-full h-auto"/>
         </Figure>
         <div class="flex flex-col px-8 py-8 lg:pl-16 lg:py-32 lg:justify-center lg:w-full">
