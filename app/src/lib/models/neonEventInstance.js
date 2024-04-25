@@ -1,22 +1,32 @@
-export default class neonEventInstance {
+import { DateTime } from 'luxon';
+
+export default class NeonEventInstance {
 	constructor (instance, eventType) {
 		this.eventId = instance.eventId
-		this.attendees = instance.attendeeCount || instance.attendees
+		this.attendees = instance.attendeeCount || instance.attendees || 0
 		this.teacher = instance.teacher.name || instance.teacher
-		this.startDateTime = instance.startDateTime
-		this.endDateTime = instance.endDateTime
+		this.startDateTime = DateTime.fromJSDate(instance.startDateTime)
+		this.endDateTime = DateTime.fromJSDate(instance.endDateTime)
 		this.price = instance.price
 		this.summary = instance.summary
 		this.capacity = instance.capacity
 		this.category =  eventType.category
 		this.name = eventType.name
 		this.typeId = eventType.typeId
-		this.isPast = instance.startDateTime < Date.now()
+		this.isPast = instance.startDateTime < DateTime.now()
 		this.isFull = this.attendees >= this.capacity
 	}
 
+	get classUrl() {
+		return `?eventId=${this.eventId}`
+	}
+
 	toJson() {
-		return {...this}
+		return {
+			...this,
+			startDateTime: this.startDateTime.toJSDate(),
+			endDateTime: this.endDateTime.toJSDate()
+		}
 	}
 
 	isAvailable(skipCapacityCheck) {

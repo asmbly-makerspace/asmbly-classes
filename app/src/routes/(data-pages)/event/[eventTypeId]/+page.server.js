@@ -3,6 +3,8 @@ import { superValidate, message } from 'sveltekit-superforms/server';
 import { schema, privateRequestSchema } from '$lib/zodSchemas/schema.js';
 import { prisma } from '$lib/postgres.js';
 import { sendMIMEmessage } from '$lib/server/gmailEmailFactory.js';
+import NeonEventType from '$lib/models/neonEventType.js'
+
 import { DateTime } from 'luxon';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -69,61 +71,35 @@ export async function load({ params, setHeaders }) {
 		throw error(404, 'Event not found');
 	}
 
-	if (!eventType.instances.length) {
-		eventType = await prisma.neonEventType.findUnique({
+	const eventModel = NeonEventType.fromPrisma(eventType)
+	if (eventType.instances.length) {
+		eventModel.addInstances(...eventType.instances)
+	} else {
+		const instance = await prisma.neonEventInstance.findFirst({
 			where: {
-				id: parseInt(params.eventTypeId)
-			},
-			include: {
+				eventTypeId: parseInt(params.eventTypeId),
 				category: {
-					include: {
-						archCategories: true
+					isNot: {
+						name: 'Private'
 					}
 				},
-				instances: {
-					where: {
-						category: {
-							isNot: {
-								name: 'Private'
-							}
-						}
-					},
-					orderBy: {
-						startDateTime: 'desc'
-					},
-					take: 1,
-					include: {
-						teacher: {
-							select: {
-								name: true
-							}
-						}
+			},
+			orderBy: {
+				startDateTime: 'asc'
+			},
+			include: {
+				teacher: {
+					select: {
+						name: true
 					}
 				}
 			}
-		})
+		});
+
+		eventModel.addInstances(instance)
 	}
 
-	const classJson = {};
-
-	let classInstances = [];
-	for (const instance of eventType.instances) {
-		const instanceContext = {};
-		instanceContext.eventId = instance.eventId;
-		instanceContext.attendees = instance.attendeeCount;
-		instanceContext.teacher = instance.teacher.name;
-		instanceContext.startDateTime = instance.startDateTime;
-		instanceContext.endDateTime = instance.endDateTime;
-		instanceContext.summary = instance.summary;
-		instanceContext.price = instance.price;
-		instanceContext.capacity = instance.capacity;
-		classInstances.push(instanceContext);
-	}
-
-	classJson.classInstances = classInstances;
-	classJson.name = eventType.name;
-	classJson.category = eventType.category[0].archCategories.name;
-	classJson.typeId = eventType.id;
+	const classJson = eventModel.toJson()
 
 	// Unless you throw, always return { form } in load and form actions.
 	return { privateRequestForm, notificationForm, onDemandRequestForm, fullClassRequestForm, classJson, baseRegLink };

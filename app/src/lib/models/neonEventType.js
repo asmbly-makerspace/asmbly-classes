@@ -1,4 +1,4 @@
-import NeonEventInstance from './neonEventInstance.js';
+import NeonEventInstance from '$lib/models/neonEventInstance.js';
 
 export default class NeonEventType {
 	constructor(event) {
@@ -8,6 +8,7 @@ export default class NeonEventType {
 		this.classInstances = [];
 		this.isPrivate = event.isPrivate;
 		this.sorted = false;
+		this.anyCurrent = false;
 
 		if (this.name.match(/Private|Checkout/)) {
 			this.isPrivate = true
@@ -16,9 +17,15 @@ export default class NeonEventType {
 		if (event.classInstances) this.addInstances(...event.classInstances)
 	}
 
+	get summary() {
+		return classInstances[0].summary
+	}
+
 	addInstances(...instances) {
 		for (const instance of instances) {
-			this.classInstances.push(new NeonEventInstance(instance, this))
+			const instanceModel = new NeonEventInstance(instance, this)
+			this.classInstances.push(instanceModel);
+			if (!instanceModel.isPast) this.anyCurrent = true;
 		}
 		this.sorted = false
 	}
@@ -56,6 +63,7 @@ export default class NeonEventType {
 NeonEventType.fromPrisma = function(prismaNeonEventType) {
 	let isPrivate, category;
 	prismaNeonEventType.category.forEach(cat => {
+		if (!cat.archCategories) return
 		if (cat.archCategories.name === 'Private') {
 			isPrivate = true
 		} else {
