@@ -22,7 +22,7 @@
 		if (nav.to.url.pathname === '/') {
 			prevPage = 'https://asmbly.org'
 		} else if (nav.from) {
-			prevPage = nav.from.url.href
+			if (nav.from.url.pathname !== nav.to.url.pathname) prevPage = nav.from.url.href
 		} else {
 			prevPage = '/'
 		}
