@@ -57,4 +57,4 @@ RUN chmod +x /wait-for-it.sh
 
 USER node
 
-CMD ["/wait-for-it.sh", "db:${POSTGRES_PORT}", "-t", "10", "-s", "--", "npm", "run", "deploy:prod"]
+CMD ["/wait-for-it.sh", "db:5432", "-t", "10", "-s", "--", "npm", "run", "deploy:prod"]
