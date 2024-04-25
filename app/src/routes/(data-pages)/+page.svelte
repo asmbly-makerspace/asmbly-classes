@@ -419,7 +419,7 @@
 					<div class="card mx-2 mb-4 rounded-none bg-base-100 shadow-xl lg:card-side lg:max-h-72">
 							<figure class="w-full lg:w-4/5 lg:flex">
 								<enhanced:img
-									class="h-full w-auto lg:flex-shrink-0 lg:object-cover lg:object-center"
+									class="h-full lg:w-auto lg:flex-shrink-0 lg:object-cover lg:object-center"
 									src={getClassImage(event.name, event.category)}
 									alt="{event.name} image"
 								/>
