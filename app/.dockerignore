@@ -1,3 +1,15 @@
 node_modules
 .svelte-kit
 .env
+.dockerignore
+npm-debug.log
+Dockerfile
+Dockerfile.dev
+Dockerfile.preview
+.gitignore
+.git
+.npmrc
+.prettierignore
+.prettierrc
+.eslintignore
+.eslintrc.cjs
