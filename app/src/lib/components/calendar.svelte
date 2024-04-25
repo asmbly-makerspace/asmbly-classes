@@ -44,8 +44,7 @@
 	}
 
 </script>
-<div>
-</div>
+
 <div class="rounded p-5 md:p-8 flex flex-col items-center">
 	<div class="flex items-center justify-between px-4 w-full">
 		<button
@@ -121,10 +120,10 @@
 								data-sveltekit-replacestate
 								href={day.classUrl}
 								class="{selectedDate.hasSame(day.startDateTime, 'day') ?
-									`${day.isAvailable() ? 'bg-primary text-primary-content' : 'bg-primary/40 text-base-content'} `
-									: `${day.isAvailable() ? 'border-primary' : 'border-primary/40'} border-solid border-4 text-base-content`}
-									hover:bg-primary
-									hover:border-primary hover:text-primary-content
+									`${day.isAvailable() ? 'bg-accent text-accent-content' : 'bg-accent/40 text-base-content'} `
+									: `${day.isAvailable() ? 'border-accent' : 'border-accent/40'} border-solid border-4 text-base-content`}
+									hover:bg-accent
+									hover:border-accent hover:text-accent-content
 									flex h-full w-full items-center justify-center rounded-full font-medium"
 								>{day.startDateTime.day}</a
 							>

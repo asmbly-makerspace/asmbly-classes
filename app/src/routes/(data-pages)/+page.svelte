@@ -79,7 +79,7 @@
 	<div class="drawer-side z-10 lg:p-2 row-start-2">
 		<label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay" />
 		<div class="bg-base-200 w-80 min-h-full p-4">
-			<label class="input input-sm input-primary w-full block flex justify-center">
+			<label class="input input-sm input-accent w-full block flex justify-center">
 			<input
 			type="search"
 			name="q"

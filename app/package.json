@@ -6,6 +6,8 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"deploy:prod": "prisma migrate deploy && node build",
+		"deploy:dev": "prisma migrate deploy && npm run dev -- --host 0.0.0.0",
 		"test": "vitest",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."

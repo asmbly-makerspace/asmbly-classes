@@ -20,9 +20,9 @@
 
 {#if event}
 <div class="card mx-2 mb-4 rounded-none bg-base-100 shadow-xl lg:card-side lg:max-h-80">
-	<figure class="{filters.compact ? ' lg:w-1/3' : 'w-full lg:w-4/5'}">
+	<figure class="{filters.compact ? ' lg:w-1/3' : 'w-full lg:w-4/5 lg:flex'}">
 		<enhanced:img
-			class="object-cover h-full {filters.compact ? 'hidden lg:block' : ''}"
+			class="object-cover h-full {filters.compact ? 'hidden lg:block' : 'lg:w-auto lg-flex-shrink-0 lg:object-center'}"
 			src={event.getClassImage(classImages)}
 			alt="{event.name} image"
 		/>
@@ -34,9 +34,13 @@
 				<AsmblyIcon category={event.category} alwaysChecked={true} />
 			</div>
 		</div>
-		<p class="text-lg">{#if filters.groupByClass} Next Class: {/if} <b>
-			{event.startDateTime.toLocaleString('en-US', {dateStyle: "short", timeStyle: "short"})}</b>&nbsp;at
-						{event.startDateTime.toLocaleString(DateTime.TIME_SIMPLE)}
+		<p class="text-lg">{#if filters.groupByClass} Next Class: {/if}
+			{#if event.isPast}
+				TBD
+			{:else}
+				<b>{event.startDateTime.toLocaleString('en-US', {dateStyle: "short", timeStyle: "short"})}</b>&nbsp;at
+							{event.startDateTime.toLocaleString(DateTime.TIME_SIMPLE)}
+			{/if}
 		</p>
 		<div class="">
 				<p class="text-md">{summary}</p>

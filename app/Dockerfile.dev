@@ -32,6 +32,6 @@ RUN chmod +x /entrypoint.sh \
 ENTRYPOINT [ "/wait-for-it.sh", "db:5432", "-t", "10", "-s" , "--", "/entrypoint.sh" ]
 
 # Start SvelteKit development server
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+CMD ["npm", "run", "deploy:dev"]
 
 #CMD ["npx", "prisma", "studio", "--port", "5555"]

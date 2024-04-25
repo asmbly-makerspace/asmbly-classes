@@ -62,8 +62,8 @@ export default {
 			},
 			{
 				asmblyDark: {
-					primary: asmblyWhite,
-					secondary: colors.asmbly.DEFAULT,
+					primary: colors.asmbly.DEFAULT,
+					secondary: asmblyWhite,
 					accent: asmblyWhite,
 					neutral: '#7c879c',
 					'base-100': '#3d4451'

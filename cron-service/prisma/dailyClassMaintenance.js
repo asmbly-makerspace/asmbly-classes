@@ -123,6 +123,9 @@ async function main() {
 			case 'Metalworking':
 				await connectArchCat(prisma.asmblyArchCategory, 'Metalworking', addCategory.id);
 				break;
+			case 'Machining':
+				await connectArchCat(prisma.asmblyArchCategory, 'Metalworking', addCategory.id);
+				break;
 			case 'Electronics':
 				await connectArchCat(prisma.asmblyArchCategory, 'Electronics', addCategory.id);
 				break;
@@ -136,6 +139,7 @@ async function main() {
 				await connectArchCat(prisma.asmblyArchCategory, 'Private', addCategory.id);
 				break;
             default:
+				await connectArchCat(prisma.asmblyArchCategory, 'Miscellaneous', addCategory.id);
                 break;
 		}
 

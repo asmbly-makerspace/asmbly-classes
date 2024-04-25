@@ -8,6 +8,9 @@ services:
     restart: unless-stopped
     networks:
       - backend
+      - frontend
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER_FILE: /run/secrets/postgres-user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password

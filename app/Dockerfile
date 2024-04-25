@@ -35,24 +35,26 @@ RUN npm prune --production
 # Running image
 FROM node:21.5.0
 
+RUN apt-get update && apt-get upgrade -y
+
 ENV NODE_ENV=production
 
 # Set working directory
 WORKDIR /usr/src/app
 
 # Copy package.json
-COPY package.json ./
+COPY  --chown=node:node package*.json ./
 
 #Copy prisma files
-COPY ./prisma ./prisma
+COPY --chown=node:node ./prisma ./prisma
 
 # Copy built assets
-COPY --from=builder /usr/src/app/build ./build
-COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node --from=builder /usr/src/app/build ./build
+COPY --chown=node:node --from=builder /usr/src/app/node_modules ./node_modules
 
-COPY ./wait-for-it.sh /wait-for-it.sh
+COPY --chown=node:node ./wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 
 USER node
 
-ENTRYPOINT /wait-for-it.sh db:${POSTGRES_PORT} -t 10 -s -- node build
+CMD ["/wait-for-it.sh", "db:5432", "-t", "10", "-s", "--", "npm", "run", "deploy:prod"]

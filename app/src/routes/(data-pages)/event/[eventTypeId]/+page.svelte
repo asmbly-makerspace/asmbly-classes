@@ -97,7 +97,7 @@
 				{#if classType.anyCurrent}
 				<div class="lg:max-h-60 overflow-auto scroll-smooth">
 					{#each classType.classInstances as instance}
-					<div class="{instance.eventId === classInstance.eventId ? 'bg-primary/20 hover:bg-primary/30' : 'hover:bg-primary/10'} p-4" id="{instance.eventId}">
+					<div class="{instance.eventId === classInstance.eventId ? 'bg-accent/20 hover:bg-accent/30' : 'hover:bg-accent/10'} p-4" id="{instance.eventId}">
 						<h2 class="mb-2 text-lg"><span class="font-semibold">{instance.startDateTime.toFormat("cccc', 'LLLL d")}</span><span class="font-light"> &nbsp;at
 							{instance.startDateTime.toLocaleString(DateTime.TIME_SIMPLE)} - {
 											instance.endDateTime.toLocaleString(DateTime.TIME_SIMPLE)}

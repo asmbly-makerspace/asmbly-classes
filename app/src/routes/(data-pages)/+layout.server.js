@@ -7,6 +7,9 @@ export const prerender = false;
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load() {
 	const eventTypesCall = prisma.neonEventType.findMany({
+		where: {
+			visible: true	
+		},
 		include: {
 			category: {
 				include: {
