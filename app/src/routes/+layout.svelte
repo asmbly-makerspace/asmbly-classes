@@ -9,12 +9,24 @@
 	import NewsletterEmail from '$lib/components/newsletterEmail.svelte';
 	import { newsletterSchema } from '$lib/zodSchemas/schema.js';
 	import { browser } from '$app/environment';
+	import { afterNavigate } from '$app/navigation'
 
 	export let data;
 
 	let isDarkMode;
 	let themeSelection = 'system';
 	let details;
+	let prevPage = 'https://asmbly.org'
+
+	afterNavigate(nav => {
+		if (nav.to.url.pathname === '/') {
+			prevPage = 'https://asmbly.org'
+		} else if (nav.from) {
+			prevPage = nav.from.url.href
+		} else {
+			prevPage = '/'
+		}
+	})
 
 	if (browser) {
 		isDarkMode = document.documentElement.getAttribute('data-theme') === 'asmblyDark';
@@ -70,7 +82,7 @@
 		<div class="navbar-start w-full lg:w-1/2">
 			<a
 				class="btn btn-ghost hidden rounded-none lg:flex"
-				href={$page.url.pathname === '/' ? 'https://asmbly.org' : '/'}
+				href={prevPage}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

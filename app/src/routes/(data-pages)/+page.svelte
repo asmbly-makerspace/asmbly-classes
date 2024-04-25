@@ -2,13 +2,45 @@
 	import autoAnimate from '@formkit/auto-animate';
 	import AsmblyIcon from '$lib/components/asmblyIcon.svelte'
 	import ClassList from '$lib/components/classList.svelte'
+	import { page } from '$app/stores';
+	import { afterNavigate, goto } from '$app/navigation'
 
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	let archCategories = new Map(
-		[...data.classCategories].map(c => [c, false])
-	);
+	let archCategoriesBase = [...data.classCategories].map(c => [c, false])
+	const defaultFilters = {
+		sortBy: 'Date',
+		sortAsc: true,
+		groupByClass: false,
+		showAll: false,
+		searchTerm: '',
+		compact: false,
+	}
+
+	let filters = {...defaultFilters}
+	let archCategories = new Map(archCategoriesBase);
+	afterNavigate(async (nav) => {
+		filters = {...defaultFilters}
+		for(const key in filters) {
+			const val = nav.to.url.searchParams.get(key)
+			if (val === null) continue;
+			if (key === 'sortBy') {
+				if (val.match(/^(Date|Price|Name)$/)) filters[key] = val
+			} else {
+				filters[key] = val === 'true'
+			}
+		}
+
+		let newCategories = new Map(archCategoriesBase)
+		for (const cat of nav.to.url.searchParams.getAll('archCategories')) {
+			if (newCategories.get(cat) !== undefined) {
+				newCategories.set(cat, true)
+			}
+		}
+
+		archCategories = newCategories
+	})
 
 	const hoverColorVariants = {
 		Orientation: 'group-hover:bg-asmbly',
@@ -44,29 +76,32 @@
 	}
 
 	function toggleArchCategory(category) {
-		archCategories.set(category, !archCategories.get(category));
-		archCategories = archCategories;
+		const newVal = !archCategories.get(category)
+
+		let query = new URLSearchParams($page.url.searchParams.toString());
+
+		if (newVal) {
+			query.append('archCategories', category)
+		} else {
+			query.delete('archCategories', category)
+		}
+
+		goto(`?${query.toString()}`);
 	}
 
-	function sortClickHandler(keyword) {
-		filters.sortBy = keyword;
-		document.getElementById('sortDropdown').removeAttribute('open');
+	function updateSearchParams(key, value) {
+		let query = new URLSearchParams($page.url.searchParams.toString());
+    if (defaultFilters[key] === value) {
+    	query.delete(key)
+    } else {
+			query.set(key, value);
+    }
+
+		goto(`?${query.toString()}`);
 	}
 
-	function sortOrderHandler() {
-		filters.sortAsc = !filters.sortAsc
-	}
 
-	let filters = {
-		sortBy: 'Date',
-		sortAsc: true,
-		groupByClass: false,
-		showAll: false,
-		searchTerm: '',
-		compact: false
-	}
 
-	let sortDropdownOpen = false
 </script>
 
 <svelte:head>
@@ -97,7 +132,7 @@
 			<div class="px-4">
 				<label class="label" >
 					Sort By
-						<select class="select select-sm z-10 bg-base-200 px-4 font-bold text-base hover:bg-base-300 focus:bg-base-300 border-none" bind:value={filters.sortBy}>
+						<select class="select select-sm z-10 bg-base-200 font-bold text-base hover:bg-base-300 focus:bg-base-300 border-none" value={filters.sortBy} on:change={evt => updateSearchParams('sortBy', evt.target.value)}>
 							<option value="Date"> Date</option>
 							<option value="Name"> Name</option>
 							<option value="Price"> Price</option>
@@ -106,7 +141,7 @@
 				<label class="label cursor-pointer group">
 					Sort Order
 				  <div class="swap">
-				  	<input type="checkbox" class="peer" bind:checked={filters.sortAsc}/>
+				  	<input type="checkbox" class="peer" checked={filters.sortAsc} on:change={updateSearchParams('sortAsc', !filters.sortAsc)}/>
 				  	<div class="swap-on group-hover:bg-base-300 peer-focus:bg-base-300 btn btn-sm shadow-none px-2 text-base">Low to High</div>
 			  	  <div class="swap-off group-hover:bg-base-300 peer-focus:bg-base-300 btn btn-sm shadow-none px-2 text-base">High to Low</div>
 		  	 	</div>
@@ -116,17 +151,17 @@
 			<div class="px-4">
 				<label class="label cursor-pointer">
 					Group By Class Type
-				  <input type="checkbox" bind:checked={filters.groupByClass} class="checkbox rounded-none"/>
+				  <input type="checkbox" checked={filters.groupByClass} on:change={updateSearchParams('groupByClass', !filters.groupByClass)} class="checkbox rounded-none"/>
 				</label>
 
 				<label class="label cursor-pointer">
 					Show Unavailable Classes
-					<input type="checkbox" bind:checked={filters.showAll} class="checkbox rounded-none"/>
+					<input type="checkbox" checked={filters.showAll} on:change={updateSearchParams('showAll', !filters.showAll)} class="checkbox rounded-none"/>
 				</label>
 				<label class="label cursor-pointer group">
 					Spacing
 				  <div class="swap ">
-				  	<input type="checkbox" bind:checked={filters.compact} class="peer"/>
+				  	<input type="checkbox" checked={filters.compact} on:change={updateSearchParams('compact', !filters.compact)} class="peer"/>
 				  	<div class="swap-on text-right group-hover:bg-base-300 peer-focus:bg-base-300 btn btn-sm shadow-none px-2 text-base">Compact</div>
 			  	  <div class="swap-off text-right group-hover:bg-base-300 peer-focus:bg-base-300 btn btn-sm shadow-none px-2 text-base">Comfy</div>
 		  	 	</div>
@@ -154,7 +189,7 @@
 								<input
 									on:change={() => toggleArchCategory(category)}
 									type="checkbox"
-									checked=""
+									checked={archCategories.get(category)}
 									class="checkbox rounded-none"
 									name={category}
 								/>

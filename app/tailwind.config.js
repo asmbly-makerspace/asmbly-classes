@@ -57,7 +57,8 @@ export default {
 					secondary: asmblyWhite,
 					accent: colors.asmbly.DEFAULT,
 					neutral: '#3d4451',
-					'base-100': asmblyWhite
+					'base-100': asmblyWhite,
+					'--rounded-btn': 0
 				}
 			},
 			{
@@ -66,7 +67,8 @@ export default {
 					secondary: asmblyWhite,
 					accent: asmblyWhite,
 					neutral: '#7c879c',
-					'base-100': '#3d4451'
+					'base-100': '#3d4451',
+					'--rounded-btn': 0
 				}
 			}
 		]
