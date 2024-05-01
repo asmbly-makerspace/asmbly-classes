@@ -1,5 +1,6 @@
 import { prisma } from '$lib/postgres.js';
 import { DateTime } from 'luxon';
+import NeonEventType from '$lib/models/neonEventType.js'
 
 export const prerender = false;
 
@@ -31,7 +32,6 @@ export async function load() {
 				orderBy: {
 					startDateTime: 'asc'
 				},
-				take: 1,
 				include: {
 					teacher: {
 						select: {
@@ -51,26 +51,14 @@ export async function load() {
 	const classCategories = new Set();
 
 	for (const event of eventTypes) {
-		const instanceCategory = event.category.find((cat) => cat.archCategories.name !== 'Private');
-		if (!instanceCategory) {
+		const eventModel = NeonEventType.fromPrisma(event)
+		if (eventModel.isPrivate) {
 			continue;
 		}
-		classCategories.add(instanceCategory.archCategories.name);
-		let classContext = {};
-		const instances = event.instances;
-		let classInstances = [];
-		if (instances.length > 0) {
-			for (const instance of instances) {
-				let instanceContext = {};
-				instanceContext.eventId = instance.eventId;
-				instanceContext.attendees = instance.attendeeCount;
-				instanceContext.teacher = instance.teacher.name;
-				instanceContext.startDateTime = instance.startDateTime;
-				instanceContext.endDateTime = instance.endDateTime;
-				instanceContext.price = instance.price;
-				instanceContext.summary = instance.summary;
-				classInstances.push(instanceContext);
-			}
+
+		classCategories.add(eventModel.category);
+		if (event.instances.length > 0) {
+			eventModel.addInstances(...event.instances)
 		} else {
 			const noCurrentInstances = await prisma.neonEventInstance.findMany({
 				where: {
@@ -95,31 +83,18 @@ export async function load() {
 			});
 
 			if (noCurrentInstances.length > 0) {
-				for (const instance of noCurrentInstances) {
-					let instanceContext = {};
-					instanceContext.eventId = instance.eventId;
-					instanceContext.attendees = instance.attendeeCount;
-					instanceContext.teacher = instance.teacher.name;
-					instanceContext.startDateTime = instance.startDateTime;
-					instanceContext.endDateTime = instance.endDateTime;
-					instanceContext.price = instance.price;
-					instanceContext.summary = instance.summary;
-					classInstances.push(instanceContext);
-				}
+				eventModel.addInstances(...noCurrentInstances)
 			}
 		}
-		
-		classContext.classInstances = classInstances;
-		classContext.name = event.name;
-		classContext.category = instanceCategory.archCategories.name;
-		classContext.typeId = event.id;
 
-		const name_split = classContext.name.split(' ');
-
-		if (!name_split.includes('Private') && !name_split.includes('(Private)') && !name_split.includes('Checkout') && !name_split.includes('(Checkout)') && classContext.category !== 'Private' ) {
-			classJson.push(classContext);
-		}
+		classJson.push(eventModel.toJson());
 	}
 
-	return { classJson, classCategories, baseRegLink };
+	const classCategoriesSorted = [...classCategories].sort((a,b) => {
+		if (a === 'Orientation') return -1
+		if (b === 'Orientation') return 1
+		return a.localeCompare(b)
+	})
+
+	return { classJson, classCategories: classCategoriesSorted, baseRegLink };
 }
