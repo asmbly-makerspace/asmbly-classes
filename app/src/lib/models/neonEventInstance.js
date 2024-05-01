@@ -29,10 +29,8 @@ export default class NeonEventInstance {
 		}
 	}
 
-	isAvailable(skipCapacityCheck) {
-		return !this.isPast && (
-			skipCapacityCheck || !this.isFull
-		)
+	isAvailable() {
+		return !this.isPast && !this.isFull
 	}
 
 	compare(o, type, sortAscending) {

@@ -37,19 +37,22 @@ export default class NeonEventType {
 		this.sorted = true
 	}
 
-	soonestDateTime() {
+	soonest(showAll) {
 		this.sortInstances();
-		const latest = this.classInstances[0]?.startDateTime
-		if (latest && latest > Date.now()) {
-			return latest
+		if (showAll) return this.classInstances[0]
+
+		for (let i = 0; i < this.classInstances.length; i++) {
+			if (this.classInstances[i].isAvailable()) {
+				return this.classInstances[i]
+			}
 		}
 
-		return Infinity
+		return this.classInstances[0]
 	}
 
-	instanceList(soonestOnly) {
+	instanceList(soonestOnly, showAll) {
 		this.sortInstances()
-		return soonestOnly ? this.classInstances[0] : this.classInstances
+		return soonestOnly ? this.soonest(showAll) : this.classInstances
 	}
 
 	toJson() {

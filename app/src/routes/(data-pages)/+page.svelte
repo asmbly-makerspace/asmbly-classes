@@ -22,8 +22,9 @@
 	let archCategories = new Map(archCategoriesBase);
 	afterNavigate(async (nav) => {
 		filters = {...defaultFilters}
+		const searchParams = nav.to.url.searchParams
 		for(const key in filters) {
-			const val = nav.to.url.searchParams.get(key)
+			const val = searchParams.get(key)
 			if (val === null) continue;
 			if (key === 'sortBy') {
 				if (val.match(/^(Date|Price|Name)$/)) filters[key] = val
@@ -33,13 +34,15 @@
 		}
 
 		let newCategories = new Map(archCategoriesBase)
-		for (const cat of nav.to.url.searchParams.getAll('archCategories')) {
+		for (const cat of searchParams.getAll('archCategories')) {
 			if (newCategories.get(cat) !== undefined) {
 				newCategories.set(cat, true)
 			}
 		}
 
 		archCategories = newCategories
+
+		filters.searchTerm = searchParams.get('searchTerm') || ''
 	})
 
 	const hoverColorVariants = {
@@ -97,7 +100,9 @@
 			query.set(key, value);
     }
 
-		goto(`?${query.toString()}`);
+		goto(`?${query.toString()}`, {
+			keepFocus: true,
+		});
 	}
 
 
@@ -122,6 +127,7 @@
 			placeholder="Search by class name..."
 			autocomplete="off"
 			bind:value={filters.searchTerm}
+			on:input={(evt) => updateSearchParams('searchTerm', evt.target.value)}
 			/>
 			<button type="submit" class="p-1 material-symbols-outlined">
 				search
