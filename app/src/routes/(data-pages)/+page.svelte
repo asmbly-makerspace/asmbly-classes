@@ -468,7 +468,7 @@
 							{/if}
 							<div class="card-actions content-center justify-end">
 								<p>Price: {event.classInstances[0].price === 0 ? 'Free' : '$' + event.classInstances[0].price + '.00'}</p>
-								<a class="btn btn-primary rounded-none" href="/event/{event.typeId}">Learn More</a>
+								<a class="btn btn-primary rounded-none" href="/event/{event.typeId}">View Schedule</a>
 							</div>
 						</div>
 					</div>
