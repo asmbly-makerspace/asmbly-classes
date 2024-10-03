@@ -186,9 +186,9 @@
 		<div class="divider mx-6 lg:divider-horizontal lg:mx-0 lg:my-8" />
 		<div class="flex flex-col px-5 py-5 md:px-8 md:py-8">
 			{#if DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
+			<h2 class="pb-4 px-4 text-lg font-semibold">{date.toFormat("cccc', 'LLLL d")}</h2>
 			{#each classesOnDate as classOnDate}
 			<div class="px-4">
-				<h2 class="pb-4 text-lg font-semibold">{date.toFormat("cccc', 'LLLL d")}</h2>
 				<div class="flex w-72 justify-between lg:w-96">
 					<div class="border-base-300 pb-4 lg:pb-0">
 						<p class="text-md font-light leading-3">
