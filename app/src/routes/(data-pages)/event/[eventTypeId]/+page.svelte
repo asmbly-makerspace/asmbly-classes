@@ -49,7 +49,7 @@
 		}
 	}
 
-	$: classOnDate = classInstances.find((i) =>
+	$: classesOnDate = classInstances.filter((i) =>
 		DateTime.fromJSDate(i.startDateTime).hasSame(date, 'day')
 	);
 
@@ -186,6 +186,7 @@
 		<div class="divider mx-6 lg:divider-horizontal lg:mx-0 lg:my-8" />
 		<div class="flex flex-col px-5 py-5 md:px-8 md:py-8">
 			{#if DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
+			{#each classesOnDate as classOnDate}
 			<div class="px-4">
 				<h2 class="pb-4 text-lg font-semibold">{date.toFormat("cccc', 'LLLL d")}</h2>
 				<div class="flex w-72 justify-between lg:w-96">
@@ -304,6 +305,8 @@
 					</div>
 				</div>
 			</div>
+			<div class="ml-4 divider" />
+			{/each}
 			{:else}
 			<div class="px-4">
 				<h2 class="pb-4 text-lg font-semibold">No sessions currently scheduled</h2>
@@ -400,12 +403,12 @@
 					</div>
 				</div>
 			</div>
-			{/if}
 			<div class="ml-4 divider" />
+			{/if}
 			<div class="max-w-md px-4">
 				<h2 class="pb-4 text-lg font-semibold">Description</h2>
-				{#if classOnDate}
-				<p class="xs:prose-sm lg:prose-md">{classOnDate.summary ? classOnDate.summary : 'No description available.'}</p>
+				{#if classesOnDate[0]}
+				<p class="xs:prose-sm lg:prose-md">{classesOnDate[0].summary ? classesOnDate[0].summary : 'No description available.'}</p>
 				{:else}
 				<p class="xs:prose-sm lg:prose-md">{classInstances[0].summary}</p>
 				{/if}
