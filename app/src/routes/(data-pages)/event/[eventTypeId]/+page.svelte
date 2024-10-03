@@ -494,7 +494,7 @@
 			{#if DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
 			<div class="flex max-w-md justify-between p-4">
 				<button
-					class="btn btn-ghost btn-sm rounded-none text-sm font-light"
+					class="btn btn-outline rounded-none"
 					on:click={() => document.getElementById('classNotify').showModal()}>Notify me when additional sessions are added</button
 				>
 				<dialog id="classNotify" class="modal">
