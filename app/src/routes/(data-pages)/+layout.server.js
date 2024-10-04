@@ -37,6 +37,11 @@ export async function load() {
 						select: {
 							name: true
 						}
+					},
+					category: {
+						select: {
+							archCategories: true
+						}
 					}
 				}
 			}
@@ -69,6 +74,7 @@ export async function load() {
 				instanceContext.endDateTime = instance.endDateTime;
 				instanceContext.price = instance.price;
 				instanceContext.summary = instance.summary;
+				instanceContext.category = instance.category.archCategories.name;
 				classInstances.push(instanceContext);
 			}
 		} else {
@@ -90,6 +96,11 @@ export async function load() {
 						select: {
 							name: true
 						}
+					},
+					category: {
+						select: {
+							archCategories: true
+						}
 					}
 				}
 			});
@@ -104,6 +115,7 @@ export async function load() {
 					instanceContext.endDateTime = instance.endDateTime;
 					instanceContext.price = instance.price;
 					instanceContext.summary = instance.summary;
+					instanceContext.category = instance.category.archCategories.name;
 					classInstances.push(instanceContext);
 				}
 			}
@@ -111,7 +123,7 @@ export async function load() {
 		
 		classContext.classInstances = classInstances;
 		classContext.name = event.name;
-		classContext.category = instanceCategory.archCategories.name;
+		classContext.category = classInstances[0].category;
 		classContext.typeId = event.id;
 
 		const name_split = classContext.name.split(' ');

@@ -1,0 +1,1 @@
+sudo docker run --rm --volumes-from app-db-1 -v $(pwd):/backup ubuntu /bin/bash -c "cd /var/lib/postgresql/data ; tar cvzf /backup/backup.tar.gz ."
