@@ -30,7 +30,7 @@ export default class NeonEventInstance {
 	}
 
 	isAvailable() {
-		return !this.isPast && !this.isFull
+		return !this.isPast
 	}
 
 	compare(o, type, sortAscending) {

@@ -5,11 +5,11 @@
 	import Fuse from 'fuse.js';
 	import { DateTime } from 'luxon';
 
-	export let classJson = []
+	export let classJson
 	export let filters = {}
 	export let categoryMap = new Map()
 
-	const classTypeList = classJson.map(c => new NeonEventType(c));
+	const classTypeList = classJson.map(c => NeonEventType.fromJson(c));
 
 	function filterClasses(classList, categoryMap, filters) {
 

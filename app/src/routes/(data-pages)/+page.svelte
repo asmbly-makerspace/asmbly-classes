@@ -12,8 +12,8 @@
 	const defaultFilters = {
 		sortBy: 'Date',
 		sortAsc: true,
-		groupByClass: false,
-		showAll: false,
+		groupByClass: true,
+		showAll: true,
 		searchTerm: '',
 		compact: false,
 	}
@@ -119,7 +119,7 @@
 	<div class="drawer-side z-10 lg:p-2 row-start-2">
 		<label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay" />
 		<div class="bg-base-200 w-80 min-h-full p-4">
-			<label class="input input-sm input-accent w-full block flex justify-center">
+			<label class="input input-sm input-accent w-full flex justify-center">
 			<input
 			type="search"
 			name="q"
@@ -148,8 +148,8 @@
 					Sort Order
 				  <div class="swap">
 				  	<input type="checkbox" class="peer" checked={filters.sortAsc} on:change={updateSearchParams('sortAsc', !filters.sortAsc)}/>
-				  	<div class="swap-on group-hover:bg-base-300 peer-focus:bg-base-300 btn btn-sm shadow-none px-2 text-base">Low to High</div>
-			  	  <div class="swap-off group-hover:bg-base-300 peer-focus:bg-base-300 btn btn-sm shadow-none px-2 text-base">High to Low</div>
+				  	<div class="swap-on group-hover:bg-base-300 peer-focus:bg-base-300 btn btn-sm shadow-none px-2 text-base">Asc</div>
+			  	  <div class="swap-off group-hover:bg-base-300 peer-focus:bg-base-300 btn btn-sm shadow-none px-2 text-base">Desc</div>
 		  	 	</div>
 				</label>
 			</div>
@@ -161,17 +161,17 @@
 				</label>
 
 				<label class="label cursor-pointer">
-					Show Unavailable Classes
+					Show Unscheduled Classes
 					<input type="checkbox" checked={filters.showAll} on:change={updateSearchParams('showAll', !filters.showAll)} class="checkbox rounded-none"/>
 				</label>
-				<label class="label cursor-pointer group">
+				<!-- <label class="label cursor-pointer group">
 					Spacing
 				  <div class="swap ">
 				  	<input type="checkbox" checked={filters.compact} on:change={updateSearchParams('compact', !filters.compact)} class="peer"/>
 				  	<div class="swap-on text-right group-hover:bg-base-300 peer-focus:bg-base-300 btn btn-sm shadow-none px-2 text-base">Compact</div>
 			  	  <div class="swap-off text-right group-hover:bg-base-300 peer-focus:bg-base-300 btn btn-sm shadow-none px-2 text-base">Comfy</div>
 		  	 	</div>
-				</label>
+				</label> -->
 			</div>
 			<h2 class="px-2 font-asmbly font-light divider text-lg">Filter by Category</h2>
 			<ul

@@ -1,6 +1,6 @@
 <script>
 	import { DateTime } from 'luxon';
-	export let selectedDate = DateTime.now()
+	export let selectedDate = DateTime.local({zone: 'America/Chicago'})
 	export let classInstances = []
 
 	function getDaysInMonth(currentDate, classInstances) {
@@ -15,6 +15,7 @@
 		const nextDays = [...Array(numNextDays).keys()]
 
 		classInstances.forEach(c => {
+			if (c.startDateTime.year !== currentDate.year) return
 			if (c.startDateTime.month === currentMonth) {
 				monthDays[c.startDateTime.day - 1] = c
 			} else if (c.startDateTime.month === currentMonth - 1 && c.startDateTime.day >= prevDays[0]) {
@@ -31,7 +32,7 @@
 		}
 	}
 
-	$: currentDate = selectedDate || DateTime.now()
+	$: currentDate = selectedDate || DateTime.local({zone: 'America/Chicago'})
 
 	$: daysInMonth = getDaysInMonth(currentDate, classInstances)
 
@@ -49,7 +50,9 @@
 	<div class="flex items-center justify-between px-4 w-full">
 		<button
 			aria-label="calendar backward"
-			class="text-base-content hover:text-base-content focus:text-base-content"
+			class="{currentDate.month === DateTime.local({zone: 'America/Chicago'}).month && currentDate.year === DateTime.local({zone: 'America/Chicago'}).year ? 'cursor-default opacity-30 text-base-content hover:text-base-content focus:text-base-content' : 'cursor-pointer text-asmbly hover:text-asmbly focus:text-asmbly'}"
+			disabled={currentDate.month === DateTime.local({zone: 'America/Chicago'}).month && currentDate.year === DateTime.local({zone: 'America/Chicago'}).year}
+			aria-disabled={currentDate.month === DateTime.local({zone: 'America/Chicago'}).month && currentDate.year === DateTime.local({zone: 'America/Chicago'}).year}
 			on:click={prevMonth}
 		>
 			<svg
@@ -75,7 +78,9 @@
 		>
 		<button
 			aria-label="calendar forward"
-			class="text-base-content hover:text-base-content focus:text-base-content"
+			class="{classInstances.some(c => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year) ? 'cursor-pointer text-asmbly hover:text-asmbly focus:text-asmbly' : 'cursor-default opacity-30 text-base-content hover:text-base-content focus:text-base-content'}"
+			disabled={!classInstances.some(c => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year)}
+			aria-disabled={!classInstances.some(c => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year)}
 			on:click={nextMonth}
 		>
 			<svg
@@ -121,7 +126,7 @@
 								href={day.classUrl}
 								class="{selectedDate.hasSame(day.startDateTime, 'day') ?
 									`${day.isAvailable() ? 'bg-accent text-accent-content' : 'bg-accent/40 text-base-content'} `
-									: `${day.isAvailable() ? 'border-accent' : 'border-accent/40'} border-solid border-4 text-base-content`}
+									: `${day.isAvailable() ? 'border-accent' : 'border-accent/40'} border-solid border-2 text-base-content`}
 									hover:bg-accent
 									hover:border-accent hover:text-accent-content
 									flex h-full w-full items-center justify-center rounded-full font-medium"

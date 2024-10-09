@@ -29,6 +29,8 @@ async function main() {
 	const currentEvents = await getCurrentEvents();
 	const inactiveEventIds = await getInactiveEvents();
 
+	console.log(`Found inactive events: ${inactiveEventIds}.`);
+
 	const remainingPrismaCalls = [];
 
 	const alreadyAddedCats = {};
@@ -49,22 +51,28 @@ async function main() {
 		for (const event of currentInactiveEvents) {
 			eventsToDelete.push(event['eventId']);
 		}
-		await prisma.neonEventInstance.deleteMany({
+		 const result = await prisma.neonEventInstance.deleteMany({
 			where: {
 				eventId: {
 					in: eventsToDelete
 				}
 			}
 		});
+
+		console.log(`Deleted ${result.count} inactive events from database.`);
 	}
 
-	await prisma.neonEventType.deleteMany({
+	const typeDeletetion = await prisma.neonEventType.deleteMany({
 		where: {
 			instances: {
 				none: {}
 			}
 		}
 	});
+
+	if (typeDeletetion.count > 0) {
+		console.log(`Deleted ${typeDeletetion.count} event type(s) from database.`);
+	}
 
 	for (const event of currentEvents) {
         const exists = await prisma.neonEventInstance.findUnique({
@@ -80,8 +88,8 @@ async function main() {
 			}
         })
 
-		const startDateTimeString = event['Event Start Date'] + 'T' + event['Event Start Time'];
-		const endDateTimeString = event['Event End Date'] + 'T' + event['Event End Time'];
+		const startDateTimeString = event['Event Start Date'] + 'T' + (event['Event Start Time'] ? event['Event Start Time'] : '00:00:00');
+		const endDateTimeString = event['Event End Date'] + 'T' + (event['Event End Time'] ? event['Event End Time'] : '00:00:00');
 
 		const startDateTime = DateTime.fromISO(startDateTimeString, { zone: 'America/Chicago' }).toJSDate();
 		const endDateTime = DateTime.fromISO(endDateTimeString, { zone: 'America/Chicago' }).toJSDate();

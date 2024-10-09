@@ -57,6 +57,11 @@ export async function load({ params, setHeaders }) {
 						select: {
 							name: true
 						}
+					},
+					category: {
+						select: {
+							archCategories: true
+						}
 					}
 				}
 			}
@@ -72,9 +77,7 @@ export async function load({ params, setHeaders }) {
 	}
 
 	const eventModel = NeonEventType.fromPrisma(eventType)
-	if (eventType.instances.length) {
-		eventModel.addInstances(...eventType.instances)
-	} else {
+	if (eventType.instances.length == 0) {
 		const instance = await prisma.neonEventInstance.findFirst({
 			where: {
 				eventTypeId: parseInt(params.eventTypeId),
@@ -92,12 +95,18 @@ export async function load({ params, setHeaders }) {
 					select: {
 						name: true
 					}
+				},
+				category: {
+					select: {
+						archCategories: true
+					}
 				}
 			}
 		});
 
 		eventModel.addInstances(instance)
 	}
+	
 
 	const classJson = eventModel.toJson()
 

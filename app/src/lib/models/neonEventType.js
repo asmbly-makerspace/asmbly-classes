@@ -2,9 +2,9 @@ import NeonEventInstance from '$lib/models/neonEventInstance.js';
 
 export default class NeonEventType {
 	constructor(event) {
-		this.category = event.category;
+		this.category = event.category || null;
 		this.name = event.name;
-		this.typeId = event.typeId;
+		this.typeId = event.id || event.typeId;
 		this.classInstances = [];
 		this.isPrivate = event.isPrivate;
 		this.sorted = false;
@@ -14,11 +14,18 @@ export default class NeonEventType {
 			this.isPrivate = true
 		}
 
-		if (event.classInstances) this.addInstances(...event.classInstances)
+		if (event.classInstances) {
+			this.addInstances(...event.classInstances)
+		} else if (event.instances) {
+			this.addInstances(...event.instances)
+		}		
 	}
 
 	get summary() {
-		return classInstances[0].summary
+		if (this.classInstances.length > 0 && typeof this.classInstances[0].summary !== 'undefined') {
+			return this.classInstances[0].summary
+		}
+		return 'No summary available'
 	}
 
 	addInstances(...instances) {
@@ -64,14 +71,23 @@ export default class NeonEventType {
 }
 
 NeonEventType.fromPrisma = function(prismaNeonEventType) {
-	let isPrivate, category;
-	prismaNeonEventType.category.forEach(cat => {
-		if (!cat.archCategories) return
-		if (cat.archCategories.name === 'Private') {
-			isPrivate = true
-		} else {
-			category = cat.archCategories.name
-		}
-	})
-	return new NeonEventType({...prismaNeonEventType, typeId: prismaNeonEventType.id, isPrivate, category})
+	let isPrivate, category, instance;
+
+	if (prismaNeonEventType.instances.length > 0) {
+		instance = prismaNeonEventType.instances.find(i => i.category.archCategories.name !== 'Private')
+		instance ? category = instance.category.archCategories.name : category = null
+	} else {
+		category = prismaNeonEventType.category.find(c => c.archCategories.name !== 'Private')
+		category ? category = category.archCategories.name : category = null
+	}
+	if (category) {
+		isPrivate = false
+	} else {
+		isPrivate = true
+	}
+	return new NeonEventType({...prismaNeonEventType, isPrivate: isPrivate, category: category})
+}
+
+NeonEventType.fromJson = function(jsonNeonEventType) {
+	return new NeonEventType({...jsonNeonEventType, isPrivate: jsonNeonEventType.isPrivate, category: jsonNeonEventType.category})
 }

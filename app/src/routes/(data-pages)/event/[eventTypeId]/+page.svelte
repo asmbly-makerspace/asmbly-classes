@@ -19,11 +19,6 @@
 			await tick();
 			window.scrollTo(0, 0);
 		}
-
-		const el = document.getElementById(classInstanceId);
-		el?.scrollIntoViewIfNeeded({
-      behavior: 'smooth'
-    });
 	});
 
 	const noCheckouts = ['Beginner CNC Router', 'Big Lasers Class', 'Small Lasers Class', 'Woodshop Safety', 'Metal Shop Safety'];
@@ -34,7 +29,7 @@
 
 	$: classInstance = (classInstanceId && classType.classInstances.find(i => i.eventId == classInstanceId)) || classType.classInstances[0]
 
-	$: date = classInstance.startDateTime || DateTime.now()
+	$: date = classInstance.startDateTime >= DateTime.local({zone: 'America/Chicago'}) ? classInstance.startDateTime : DateTime.local({zone: 'America/Chicago'})
 
 	$: classDates = classType.classInstances.map(i => i.startDateTime);
 
@@ -42,7 +37,6 @@
 		const classOnDay = classType.classInstances.find(i => i.startDateTime.hasSame(day, 'day'))
 		return `?eventId=${classOnDay.eventId}`
 	}
-
 </script>
 
 <svelte:head>
@@ -51,7 +45,7 @@
 	<meta name="keywords" content="classes, asmbly" />
 </svelte:head>
 
-<svelte:window on:load={window.scrollTo(0, 0)} />
+
 
 <div id="main" class="flex flex-col items-center justify-start pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
@@ -95,17 +89,27 @@
 				</div>
 				<div class="divider" />
 				{#if classType.anyCurrent}
-				<div class="lg:max-h-60 overflow-auto scroll-smooth">
+				<div class="lg:max-h-64 overflow-auto scroll-smooth">
 					{#each classType.classInstances as instance}
-					<div class="{instance.eventId === classInstance.eventId ? 'bg-accent/20 hover:bg-accent/30' : 'hover:bg-accent/10'} p-4" id="{instance.eventId}">
-						<h2 class="mb-2 text-lg"><span class="font-semibold">{instance.startDateTime.toFormat("cccc', 'LLLL d")}</span><span class="font-light"> &nbsp;at
-							{instance.startDateTime.toLocaleString(DateTime.TIME_SIMPLE)} - {
-											instance.endDateTime.toLocaleString(DateTime.TIME_SIMPLE)}
+					{#if instance.startDateTime.hasSame(date, 'day')}
+					<div class="py-4" id="{instance.eventId}">
+						{#if instance.endDateTime.hasSame(instance.startDateTime, 'day')}
+						<h2 class="mb-4 text-lg"><span class="font-semibold">{instance.startDateTime.toFormat("cccc', 'LLLL d")}</span><span class="font-light"> &nbsp;from
+							{instance.startDateTime.toLocaleString(DateTime.TIME_SIMPLE)} - {instance.endDateTime.toLocaleString(DateTime.TIME_SIMPLE)}
 						</span></h2>
+						{:else}
+						<h2 class="mb-2 text-lg">
+							<span class="font-semibold">{instance.startDateTime.toFormat("LLLL d")}</span>
+							<span class="font-light">&nbsp;at {instance.startDateTime.toLocaleString(DateTime.TIME_SIMPLE)} - </span>
+							<span class="font-semibold">{instance.endDateTime.toFormat("LLLL d")}</span>
+							<span class="font-light">&nbsp;at {instance.endDateTime.toLocaleString(DateTime.TIME_SIMPLE)}</span>
+						</h2>
+						<p class="pb-3"><span class="font-bold text-lasers">Note:</span> This class is held over two sessions. Detailed times can be seen during registration.</p>
+						{/if}
 						<div class="flex justify-between">
 							<div class="border-base-300 pb-4 lg:pb-0">
-								<p class="pt-2 text-md leading-none"><span class="font-bold">Teacher:</span> {instance.teacher}</p>
-								<p class="pt-2 text-md leading-none"><span class="font-bold">Attendees:</span> <span class:text-error={instance.attendees === instance.capacity}>{instance.attendees}</span></p>
+								<p class="text-md leading-none"><span class="font-bold">Teacher:</span> {instance.teacher}</p>
+								<p class="pt-2 text-md leading-none"><span class="font-bold">Attendees:</span> <span class:text-lasers={instance.attendees === instance.capacity}>{instance.attendees}</span></p>
 							</div>
 							<div class="flex items-center justify-end pb-4 lg:pb-0">
 								{#if instance.attendees < instance.capacity}
@@ -205,6 +209,7 @@
 							</div>
 						</div>
 					</div>
+					{/if}
 					{/each}
 				</div>
 				{:else}
@@ -324,7 +329,7 @@
 								Sign up below to request a private or checkout session. Note that we do not offer
 								checkout sessions for all classes. This will be indicated by a disabled "Checkout"
 								option. More info about private and checkout classes can be found in our <a
-									href="/classes-faq">Classes FAQ</a
+									href="https://asmbly.org/faq/#classfaq">Classes FAQ</a
 								>.
 							</p>
 						</div>

@@ -85,13 +85,13 @@ export let checked = false;
 	viewBox={category === 'Miscellaneous' || category === 'Orientation'
 		? '-7.5 0 175 100'
 		: '0 0 195 195'}
-	class={"h-6 w-6 " + generateFillColor(category, alwaysChecked, checked)}
+	class={"h-5 w-5 " + generateFillColor(category, alwaysChecked, checked)}
 >
 	{#each svgs[category] as svgPath}
 		<path
 			stroke-width={category === 'Miscellaneous' ||
 			category === 'Orientation'
-				? '6'
+				? '8'
 				: '2.5'}
 			d={svgPath}
 		/>

@@ -37,6 +37,11 @@ export async function load() {
 						select: {
 							name: true
 						}
+					},
+					category: {
+						select: {
+							archCategories: true
+						}
 					}
 				}
 			}
@@ -56,10 +61,7 @@ export async function load() {
 			continue;
 		}
 
-		classCategories.add(eventModel.category);
-		if (event.instances.length > 0) {
-			eventModel.addInstances(...event.instances)
-		} else {
+		if (event.instances.length == 0) {
 			const noCurrentInstances = await prisma.neonEventInstance.findMany({
 				where: {
 					eventTypeId: event.id,
@@ -78,6 +80,11 @@ export async function load() {
 						select: {
 							name: true
 						}
+					},
+					category: {
+						select: {
+							archCategories: true
+						}
 					}
 				}
 			});
@@ -85,9 +92,12 @@ export async function load() {
 			if (noCurrentInstances.length > 0) {
 				eventModel.addInstances(...noCurrentInstances)
 			}
-		}
+		} 
 
-		classJson.push(eventModel.toJson());
+		if (eventModel.category) {
+			classCategories.add(eventModel.category)
+			classJson.push(eventModel.toJson())
+		}
 	}
 
 	const classCategoriesSorted = [...classCategories].sort((a,b) => {
