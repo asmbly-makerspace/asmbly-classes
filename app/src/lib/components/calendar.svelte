@@ -1,40 +1,40 @@
 <script>
 	import { DateTime } from 'luxon';
-	export let selectedDate = DateTime.local({zone: 'America/Chicago'})
-	export let classInstances = []
+	export let selectedDate = DateTime.local({ zone: 'America/Chicago' });
+	export let classInstances = [];
 
 	function getDaysInMonth(currentDate, classInstances) {
-		const currentMonth = currentDate.month
-		const monthDays = [...Array(currentDate.daysInMonth).keys()]
+		const currentMonth = currentDate.month;
+		const monthDays = [...Array(currentDate.daysInMonth).keys()];
 
-		const numPrevDays = currentDate.startOf('month').weekday
-		const lastPrevDay = currentDate.minus({month: 1}).daysInMonth
-		const prevDays = [...Array(numPrevDays)].map((_v, i) => lastPrevDay - numPrevDays + i)
+		const numPrevDays = currentDate.startOf('month').weekday;
+		const lastPrevDay = currentDate.minus({ month: 1 }).daysInMonth;
+		const prevDays = [...Array(numPrevDays)].map((_v, i) => lastPrevDay - numPrevDays + i);
 
-		const numNextDays = 7 - ((currentDate.endOf('month').weekday + 1) % 7)
-		const nextDays = [...Array(numNextDays).keys()]
+		const numNextDays = 7 - ((currentDate.endOf('month').weekday + 1) % 7);
+		const nextDays = [...Array(numNextDays).keys()];
 
-		classInstances.forEach(c => {
-			if (c.startDateTime.year !== currentDate.year) return
+		classInstances.forEach((c) => {
+			if (c.startDateTime.year !== currentDate.year) return;
 			if (c.startDateTime.month === currentMonth) {
-				monthDays[c.startDateTime.day - 1] = c
+				monthDays[c.startDateTime.day - 1] = c;
 			} else if (c.startDateTime.month === currentMonth - 1 && c.startDateTime.day >= prevDays[0]) {
-				prevDays[lastPrevDay - c.startDateTime.day] = c
+				prevDays[lastPrevDay - c.startDateTime.day] = c;
 			} else if (c.startDateTime.month === currentMonth + 1 && c.startDateTime.day <= numNextDays) {
-				nextDays[c.startDateTime.day - 1] = c
+				nextDays[c.startDateTime.day - 1] = c;
 			}
-		})
+		});
 
 		return {
 			data: prevDays.concat(monthDays, nextDays),
 			startIndex: prevDays.length,
 			endIndex: prevDays.length + monthDays.length
-		}
+		};
 	}
 
-	$: currentDate = selectedDate || DateTime.local({zone: 'America/Chicago'})
+	$: currentDate = selectedDate || DateTime.local({ zone: 'America/Chicago' });
 
-	$: daysInMonth = getDaysInMonth(currentDate, classInstances)
+	$: daysInMonth = getDaysInMonth(currentDate, classInstances);
 
 	function prevMonth() {
 		currentDate = currentDate.minus({ months: 1 });
@@ -43,16 +43,20 @@
 	function nextMonth() {
 		currentDate = currentDate.plus({ months: 1 });
 	}
-
 </script>
 
-<div class="rounded p-5 md:p-8 flex flex-col items-center">
-	<div class="flex items-center justify-between px-4 w-full">
+<div class="flex flex-col items-center rounded p-5 md:p-8">
+	<div class="flex w-full items-center justify-between px-4">
 		<button
 			aria-label="calendar backward"
-			class="{currentDate.month === DateTime.local({zone: 'America/Chicago'}).month && currentDate.year === DateTime.local({zone: 'America/Chicago'}).year ? 'cursor-default opacity-30 text-base-content hover:text-base-content focus:text-base-content' : 'cursor-pointer text-accent hover:text-accent focus:text-accent'}"
-			disabled={currentDate.month === DateTime.local({zone: 'America/Chicago'}).month && currentDate.year === DateTime.local({zone: 'America/Chicago'}).year}
-			aria-disabled={currentDate.month === DateTime.local({zone: 'America/Chicago'}).month && currentDate.year === DateTime.local({zone: 'America/Chicago'}).year}
+			class={currentDate.month === DateTime.local({ zone: 'America/Chicago' }).month &&
+			currentDate.year === DateTime.local({ zone: 'America/Chicago' }).year
+				? 'text-base-content hover:text-base-content focus:text-base-content cursor-default opacity-30'
+				: 'text-accent hover:text-accent focus:text-accent cursor-pointer'}
+			disabled={currentDate.month === DateTime.local({ zone: 'America/Chicago' }).month &&
+				currentDate.year === DateTime.local({ zone: 'America/Chicago' }).year}
+			aria-disabled={currentDate.month === DateTime.local({ zone: 'America/Chicago' }).month &&
+				currentDate.year === DateTime.local({ zone: 'America/Chicago' }).year}
 			on:click={prevMonth}
 		>
 			<svg
@@ -71,16 +75,24 @@
 				<polyline points="15 6 9 12 15 18" />
 			</svg>
 		</button>
-		<span class="font-bold text-base-content focus:outline-none text-lg"
+		<span class="text-base-content text-lg font-bold focus:outline-none"
 			>{new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(
 				currentDate
 			)}</span
 		>
 		<button
 			aria-label="calendar forward"
-			class="{classInstances.some(c => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year) ? 'cursor-pointer text-accent hover:text-accent focus:text-accent' : 'cursor-default opacity-30 text-base-content hover:text-base-content focus:text-base-content'}"
-			disabled={!classInstances.some(c => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year)}
-			aria-disabled={!classInstances.some(c => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year)}
+			class={classInstances.some(
+				(c) => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year
+			)
+				? 'text-accent hover:text-accent focus:text-accent cursor-pointer'
+				: 'text-base-content hover:text-base-content focus:text-base-content cursor-default opacity-30'}
+			disabled={!classInstances.some(
+				(c) => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year
+			)}
+			aria-disabled={!classInstances.some(
+				(c) => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year
+			)}
 			on:click={nextMonth}
 		>
 			<svg
@@ -110,27 +122,30 @@
 			<div class="h-10 w-10 text-center font-light">F</div>
 			<div class="h-10 w-10 text-center font-light">S</div>
 			{#each daysInMonth.data as day, index}
-				{#if typeof day === "number"}
-					<div class="aspect-square h-full w-full p-2 text-center
-					{index < daysInMonth.startIndex || index >= daysInMonth.endIndex ? 'opacity-50' : ''}">
+				{#if typeof day === 'number'}
+					<div
+						class="aspect-square h-full w-full p-2 text-center
+					{index < daysInMonth.startIndex || index >= daysInMonth.endIndex ? 'opacity-50' : ''}"
+					>
 						{day + 1}
 					</div>
 				{:else}
-					<div class="flex aspect-square h-full w-full flex-row items-center justify-center
-					{index < daysInMonth.startIndex || index >= daysInMonth.endIndex ? 'opacity-50' : ''}">
+					<div
+						class="flex aspect-square h-full w-full flex-row items-center justify-center
+					{index < daysInMonth.startIndex || index >= daysInMonth.endIndex ? 'opacity-50' : ''}"
+					>
 						<div
 							class="flex aspect-square h-full w-full cursor-pointer items-center justify-center rounded-full"
 						>
 							<a
 								data-sveltekit-replacestate
 								href={day.classUrl}
-								class="{selectedDate.hasSame(day.startDateTime, 'day') ?
-									`${day.isAvailable() ? 'bg-accent text-accent-content' : 'bg-accent/40 text-base-content'} `
-									: `${day.isAvailable() ? 'border-accent' : 'border-accent/40'} border-solid border-2 text-base-content`}
+								class="{selectedDate.hasSame(day.startDateTime, 'day')
+									? `${day.isAvailable() ? 'bg-accent text-accent-content' : 'bg-accent/40 text-base-content'} `
+									: `${day.isAvailable() ? 'border-accent' : 'border-accent/40'} text-base-content border-2 border-solid`}
 									hover:bg-accent
 									hover:border-accent hover:text-accent-content
-									flex h-full w-full items-center justify-center rounded-full font-medium"
-								>{day.startDateTime.day}</a
+									flex h-full w-full items-center justify-center rounded-full font-medium">{day.startDateTime.day}</a
 							>
 						</div>
 					</div>
