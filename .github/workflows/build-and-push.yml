@@ -45,8 +45,7 @@ jobs:
           source: "./compose.yaml,./cron-service,./caddy"
           target: "~/app"
           overwrite: true
-
-  
+       
   deploy:
     runs-on: ubuntu-latest
     needs: build

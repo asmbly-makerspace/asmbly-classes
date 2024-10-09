@@ -73,7 +73,7 @@ model NeonEventInstanceRequest {
   fulfilled     Boolean            @default(false)
   eventId       Int
   requesterId   Int
-  eventInstance NeonEventInstance  @relation(fields: [eventId], references: [eventId])
+  eventInstance NeonEventInstance  @relation(fields: [eventId], references: [eventId], onDelete: Cascade)
   requester     NeonEventRequester @relation(fields: [requesterId], references: [id])
 
   @@unique([eventId, requesterId], name: "eventInstanceRequest")
@@ -95,7 +95,7 @@ model NeonEventTypeRequest {
   requestType RequestType
   createdAt   DateTime           @default(now())
   fulfilled   Boolean            @default(false)
-  classType   NeonEventType      @relation(fields: [classTypeId], references: [id])
+  classType   NeonEventType      @relation(fields: [classTypeId], references: [id], onDelete: Cascade)
   requester   NeonEventRequester @relation(fields: [requesterId], references: [id])
 
   @@unique([requestType, classTypeId, requesterId], name: "eventTypeRequest")

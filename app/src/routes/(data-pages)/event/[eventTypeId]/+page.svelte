@@ -5,9 +5,11 @@
 	import { DateTime } from 'luxon';
 	import { page } from '$app/stores';
 
+	import NeonEventType from '$lib/models/neonEventType.js'
 	import SuperForm from '$lib/components/classRequestForm.svelte';
 	import TextField from '$lib/components/textField.svelte';
 	import RadioField from '$lib/components/radioField.svelte';
+	import Calendar from '$lib/components/calendar.svelte'
 	import { schema, privateRequestSchema } from '$lib/zodSchemas/schema.js';
 	import { afterNavigate } from '$app/navigation';
 	import { tick } from 'svelte';
@@ -16,63 +18,25 @@
 		if (nav.type === 'link') {
 			await tick();
 			window.scrollTo(0, 0);
-		}}
-	);
+		}
+	});
 
 	const noCheckouts = ['Beginner CNC Router', 'Big Lasers Class', 'Small Lasers Class', 'Woodshop Safety', 'Metal Shop Safety'];
 
-	$: classType = data.classJson;
+	$: classType = new NeonEventType(data.classJson);
 
-	$: classInstances = classType.classInstances;
+	$: classInstanceId = $page.url.searchParams.get('eventId')
 
-	$: classDates = [];	
-	let currentDate;
-	$: {
-		if (classInstances.length > 0) {
-			if (DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})) {
-				classDates = classInstances.map((i) => DateTime.fromJSDate(i.startDateTime));
-				currentDate = classDates.sort((a, b) => a - b)[0];
-			} else {
-				currentDate = DateTime.now();
-			}
-		} else {
-			currentDate = DateTime.now();
-		}
+	$: classInstance = (classInstanceId && classType.classInstances.find(i => i.eventId == classInstanceId)) || classType.classInstances[0]
+
+	$: date = classInstance.startDateTime >= DateTime.local({zone: 'America/Chicago'}) ? classInstance.startDateTime : DateTime.local({zone: 'America/Chicago'})
+
+	$: classDates = classType.classInstances.map(i => i.startDateTime);
+
+	function classDayUrl(day) {
+		const classOnDay = classType.classInstances.find(i => i.startDateTime.hasSame(day, 'day'))
+		return `?eventId=${classOnDay.eventId}`
 	}
-
-	let date;
-	$: {
-		if (classDates.length > 0) {
-			date = classDates.sort((a, b) => a - b)[0];
-		} else {
-			date = DateTime.now();
-		}
-	}
-
-	$: classesOnDate = classInstances.filter((i) =>
-		DateTime.fromJSDate(i.startDateTime).hasSame(date, 'day')
-	);
-
-	function getDaysInMonth(year, month) {
-		return new Date(year, month + 1, 0).getDate();
-	}
-
-	function getFirstDayOfMonth(year, month) {
-		return new Date(year, month, 1).getDay();
-	}
-
-	function isHighlightedDate(date) {
-		return classDates.some((highlightedDate) => highlightedDate.hasSame(date, 'day'));
-	}
-
-	function prevMonth() {
-		currentDate = currentDate.minus({ months: 1 });
-	}
-
-	function nextMonth() {
-		currentDate = currentDate.plus({ months: 1 });
-	}
-
 </script>
 
 <svelte:head>
@@ -81,7 +45,7 @@
 	<meta name="keywords" content="classes, asmbly" />
 </svelte:head>
 
-<svelte:window on:load={window.scrollTo(0, 0)} />
+
 
 <div id="main" class="flex flex-col items-center justify-start pb-8 lg:min-h-[calc(100dvh-4rem)]">
 	<h1
@@ -89,226 +53,166 @@
 	>
 		{classType.name}
 	</h1>
-	<div class="card mt-2 flex lg:w-full max-w-6xl justify-center rounded-none shadow-lg lg:card-side lg:min-h-[540px]">
-		<div class="rounded p-5 md:p-8">
-			<div class="flex items-center justify-between px-4">
-				<button
-					aria-label="calendar backward"
-					class="text-base-content hover:text-base-content focus:text-base-content"
-					on:click={prevMonth}
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="icon icon-tabler icon-tabler-chevron-left"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						fill="none"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-						<polyline points="15 6 9 12 15 18" />
-					</svg>
-				</button>
-				<span class="font-bold text-base-content focus:outline-none text-lg"
-					>{new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(
-						currentDate
-					)}</span
-				>
-				<button
-					aria-label="calendar forward"
-					class="text-base-content hover:text-base-content focus:text-base-content"
-					on:click={nextMonth}
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="icon icon-tabler icon-tabler-chevron-right"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						fill="none"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-						<polyline points="9 6 15 12 9 18" />
-					</svg>
-				</button>
-			</div>
-			<div class="flex items-center justify-between overflow-x-auto pt-12">
-				<div class="grid grid-cols-7 gap-2 p-2 lg:gap-4">
-					<div class="h-10 w-10 text-center font-light">S</div>
-					<div class="h-10 w-10 text-center font-light">M</div>
-					<div class="h-10 w-10 text-center font-light">T</div>
-					<div class="h-10 w-10 text-center font-light">W</div>
-					<div class="h-10 w-10 text-center font-light">T</div>
-					<div class="h-10 w-10 text-center font-light">F</div>
-					<div class="h-10 w-10 text-center font-light">S</div>
-					{#each Array(getDaysInMonth(currentDate.year, currentDate.month - 1)).keys() as day}
-						{#if day === 0}
-							{#each Array(getFirstDayOfMonth(currentDate.year, currentDate.month - 1)).keys() as _}
-								<div class="empty aspect-square h-full w-full bg-base-100" />
-							{/each}
-						{/if}
-						{#if isHighlightedDate(DateTime.local(currentDate.year, currentDate.month, day + 1))}
-							<div class="flex aspect-square h-full w-full flex-row items-center justify-center">
-								<div
-									class="flex aspect-square h-full w-full cursor-pointer items-center justify-center rounded-full"
-								>
-									<button
-										on:click={() => {
-											date = DateTime.local(currentDate.year, currentDate.month, day + 1);
-										}}
-										class="{date.hasSame(
-											DateTime.local(currentDate.year, currentDate.month, day + 1),
-											'day'
-										)
-											? 'bg-accent text-accent-content'
-											: 'border-accent border-solid border-2 text-base-content hover:bg-accent hover:text-accent-content'} flex h-full w-full items-center justify-center rounded-full font-medium"
-										>{day + 1}</button
-									>
-								</div>
-							</div>
-						{:else}
-							<div class="aspect-square h-full w-full p-2 text-center">
-								{day + 1}
-							</div>
-						{/if}
-					{/each}
+	<div class="drawer mt-2 flex lg:w-full max-w-6xl justify-center rounded-none shadow-lg max-lg:drawer-end lg:drawer-open lg:min-h-[540px]">
+		<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+		<div class="drawer-side lg:h-auto z-10">
+			<label for="my-drawer-2" aria-label="close calendar" class="drawer-overlay" />
+			<div class="flex">
+				<div class="bg-base-100">
+					<Calendar selectedDate={date} classInstances={classType.classInstances}/>
 				</div>
+				<div class="lg:divider lg:divider-horizontal lg:mx-0 lg:my-8" />
 			</div>
 		</div>
-		<div class="divider mx-6 lg:divider-horizontal lg:mx-0 lg:my-8" />
-		<div class="flex flex-col px-5 py-5 md:px-8 md:py-8">
-			{#if DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
-			<h2 class="pb-4 px-4 text-lg font-semibold">{date.toFormat("cccc', 'LLLL d")}</h2>
-			{#each classesOnDate as classOnDate}
-			<div class="px-4">
-				<div class="flex w-72 justify-between lg:w-96">
-					<div class="border-base-300 pb-4 lg:pb-0">
-						<p class="text-md font-light leading-3">
-							{DateTime.fromJSDate(classOnDate.startDateTime)
-								.toLocaleString(DateTime.TIME_SIMPLE)} - {DateTime.fromJSDate(
-								classOnDate.endDateTime
-							)
-								.toLocaleString(DateTime.TIME_SIMPLE)}
-						</p>
-						<p class="pt-2 text-md leading-none">Teacher: {classOnDate.teacher}</p>
-						<p class="pt-2 text-md leading-none">
-							Capacity: {classOnDate.capacity}
-						</p>
-						<p class="pt-2 text-md leading-none">Attendees: <span class:text-error={classOnDate.attendees === classOnDate.capacity}>{classOnDate.attendees}</span></p>
-						<p class="pt-2 text-md leading-none">
-							Price: {classOnDate.price === 0 ? 'Free' : '$' + classOnDate.price + '.00'}
-						</p>
-					</div>
-					<div class="flex items-center justify-end pb-4 lg:pb-0">
-						{#if classOnDate.attendees < classOnDate.capacity}
-							<a
-								class="btn btn-primary rounded-none"
-								href={data.baseRegLink.url + classOnDate.eventId}
-								target="_blank">Register</a
-							>
-						{:else if classOnDate.attendees === classOnDate.capacity}
-						<div class="flex flex-col items-center justify-center">
-							<button
-								class="btn btn-primary rounded-none"
-								on:click={() => document.getElementById('fullClassNotification').showModal()}
-								>Join the Waitlist</button
-							>
-							<dialog id="fullClassNotification" class="modal">
-								<div class="modal-box rounded-none">
-									
-										<button
-											class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 rounded-none"
-											on:click={() => document.getElementById('fullClassNotification').close()}
-											>✕</button
-										>
-									
-									<!-- Modal content -->
-
-									<div class="prose">
-										<h2 class="font-asmbly">Notify me</h2>
-										<p>
-											Sign up below to receive an email if a seat opens up in this session of the
-											class.
-										</p>
-									</div>
-
-									<SuperForm
-										action="?/fullClassRequest"
-										data={data?.fullClassRequestForm}
-										dataType="form"
-										invalidateAll={false}
-										validators={schema}
-										eventId={classOnDate.eventId}
-										let:form
-										let:message
-										let:delayed
-									>
-										{#if message}
-											<div
-												class="status {message.status >= 400 ? 'text-error' : ''} {message.status <
-													300 || !message.status
-													? 'text-success'
-													: ''}"
-											>
-												{message.text}
-											</div>
-										{/if}
-										<TextField
-											type="text"
-											{form}
-											field="firstName"
-											label="First Name"
-											class="w-full"
-										/>
-										<TextField
-											type="text"
-											{form}
-											field="lastName"
-											label="Last Name"
-											class="w-full"
-										/>
-										<TextField
-											type="email"
-											{form}
-											field="email"
-											label="Email"
-											class="mb-4 w-full"
-											autocomplete="email"
-										/>
-
-										<p class="flex">
-											<button class="btn btn-primary mb-2 mt-4 rounded-none mr-2" type="submit"
-												>Submit</button
-											>
-											{#if delayed}
-											<span class="loading loading-spinner loading-md "></span>
-											{/if}
-										</p>
-									</SuperForm>
-
-									<!-- End Modal content -->
-								</div>
-								<form method="dialog" class="modal-backdrop">
-									<button>close</button>
-								</form>
-							</dialog>
-						</div>
-						{/if}
-					</div>
-				</div>
+		<div class="drawer-content flex flex-col px-5 py-5 md:px-8 md:py-8">
+			<div class="fixed right-4 top-40 lg:hidden">
+					<label
+						for="my-drawer-2"
+						class="btn btn-primary drawer-button btn-circle drop-shadow-lg"
+					>
+					<span class="material-symbols-outlined">calendar_month</span>
+					</label>
 			</div>
-			<div class="ml-4 divider" />
-			{/each}
-			{:else}
-			<div class="px-4">
+			<div class="max-w-md px-4">
+				<div>
+					<h2 class="pb-4 text-lg font-semibold">Description</h2>
+					<p class="xs:prose-sm lg:prose-md">{classInstance.summary || classType.summary || 'No description available.'}</p>
+				</div>
+				<div class="divider" />
+				<div class="flex justify-between text-md leading-none">
+					<p>
+						<span class="font-semibold">Price:</span> {classInstance.price === 0 ? 'Free' : '$' + classInstance.price + '.00'}
+					</p>
+					<p>
+						<span class="font-semibold">Capacity:</span> {classInstance.capacity}
+					</p>
+				</div>
+				<div class="divider" />
+				{#if classType.anyCurrent}
+				<div class="lg:max-h-64 overflow-auto scroll-smooth">
+					{#each classType.classInstances as instance}
+					{#if instance.startDateTime.hasSame(date, 'day')}
+					<div class="py-4" id="{instance.eventId}">
+						{#if instance.endDateTime.hasSame(instance.startDateTime, 'day')}
+						<h2 class="mb-4 text-lg"><span class="font-semibold">{instance.startDateTime.toFormat("cccc', 'LLLL d")}</span><span class="font-light"> &nbsp;from
+							{instance.startDateTime.toLocaleString(DateTime.TIME_SIMPLE)} - {instance.endDateTime.toLocaleString(DateTime.TIME_SIMPLE)}
+						</span></h2>
+						{:else}
+						<h2 class="mb-2 text-lg">
+							<span class="font-semibold">{instance.startDateTime.toFormat("LLLL d")}</span>
+							<span class="font-light">&nbsp;at {instance.startDateTime.toLocaleString(DateTime.TIME_SIMPLE)} - </span>
+							<span class="font-semibold">{instance.endDateTime.toFormat("LLLL d")}</span>
+							<span class="font-light">&nbsp;at {instance.endDateTime.toLocaleString(DateTime.TIME_SIMPLE)}</span>
+						</h2>
+						<p class="pb-3"><span class="font-bold text-lasers">Note:</span> This class is held over two sessions. Detailed times can be seen during registration.</p>
+						{/if}
+						<div class="flex justify-between">
+							<div class="border-base-300 pb-4 lg:pb-0">
+								<p class="text-md leading-none"><span class="font-bold">Teacher:</span> {instance.teacher}</p>
+								<p class="pt-2 text-md leading-none"><span class="font-bold">Attendees:</span> <span class:text-lasers={instance.attendees === instance.capacity}>{instance.attendees}</span></p>
+							</div>
+							<div class="flex items-center justify-end pb-4 lg:pb-0">
+								{#if instance.attendees < instance.capacity}
+									<a
+										class="btn btn-primary rounded-none"
+										href={data.baseRegLink.url + instance.eventId}
+										target="_blank">Register</a
+									>
+								{:else if instance.attendees === instance.capacity}
+								<div class="flex flex-col items-center justify-center">
+									<button
+										class="btn btn-primary rounded-none"
+										on:click={() => document.getElementById('fullClassNotification').showModal()}
+										>Join the Waitlist</button
+									>
+									<dialog id="fullClassNotification" class="modal">
+										<div class="modal-box rounded-none">
+
+												<button
+													class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 rounded-none"
+													on:click={() => document.getElementById('fullClassNotification').close()}
+													>✕</button
+												>
+
+											<!-- Modal content -->
+
+											<div class="prose">
+												<h2 class="font-asmbly">Notify me</h2>
+												<p>
+													Sign up below to receive an email if a seat opens up in this session of the
+													class.
+												</p>
+											</div>
+
+											<SuperForm
+												action="?/fullClassRequest"
+												data={data?.fullClassRequestForm}
+												dataType="form"
+												invalidateAll={false}
+												validators={schema}
+												eventId={instance.eventId}
+												let:form
+												let:message
+												let:delayed
+											>
+												{#if message}
+													<div
+														class="status {message.status >= 400 ? 'text-error' : ''} {message.status <
+															300 || !message.status
+															? 'text-success'
+															: ''}"
+													>
+														{message.text}
+													</div>
+												{/if}
+												<TextField
+													type="text"
+													{form}
+													field="firstName"
+													label="First Name"
+													class="w-full"
+												/>
+												<TextField
+													type="text"
+													{form}
+													field="lastName"
+													label="Last Name"
+													class="w-full"
+												/>
+												<TextField
+													type="email"
+													{form}
+													field="email"
+													label="Email"
+													class="mb-4 w-full"
+													autocomplete="email"
+												/>
+
+												<p class="flex">
+													<button class="btn btn-primary mb-2 mt-4 rounded-none mr-2" type="submit"
+														>Submit</button
+													>
+													{#if delayed}
+													<span class="loading loading-spinner loading-md "></span>
+													{/if}
+												</p>
+											</SuperForm>
+
+											<!-- End Modal content -->
+										</div>
+										<form method="dialog" class="modal-backdrop">
+											<button>close</button>
+										</form>
+									</dialog>
+								</div>
+								{/if}
+							</div>
+						</div>
+					</div>
+					{/if}
+					{/each}
+				</div>
+				{:else}
 				<h2 class="pb-4 text-lg font-semibold">No sessions currently scheduled</h2>
 				<div class="flex w-72 justify-between lg:w-96">
 					<div class="border-base-300 pb-4 lg:pb-0">
@@ -402,99 +306,90 @@
 
 					</div>
 				</div>
-			</div>
-			<div class="ml-4 divider" />
-			{/if}
-			<div class="max-w-md px-4">
-				<h2 class="pb-4 text-lg font-semibold">Description</h2>
-				{#if classesOnDate[0]}
-				<p class="xs:prose-sm lg:prose-md">{classesOnDate[0].summary ? classesOnDate[0].summary : 'No description available.'}</p>
-				{:else}
-				<p class="xs:prose-sm lg:prose-md">{classInstances[0].summary}</p>
 				{/if}
 			</div>
-			{#if classType.category !== 'Orientation' && DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
-				<div class="flex max-w-md justify-between px-4 pt-4">
-					<button class="btn btn-primary rounded-none" on:click={() => document.getElementById('privateAndCheckout').showModal()}>
-						Request a Private or Checkout Session</button
-					>
-					<dialog id="privateAndCheckout" class="modal">
-						<div class="modal-box rounded-none">
-							
-								<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 rounded-none"
-									on:click={() => document.getElementById('privateAndCheckout').close()}
-									>✕</button
-								>
-							
-							<!-- Modal content -->
+			{#if classType.category !== 'Orientation' && classType.classInstances[0].startDateTime > DateTime.local({zone: 'America/Chicago'})}
+			<div class="flex max-w-md justify-between px-4 mt-12">
+				<button class="btn btn-primary rounded-none" on:click={() => document.getElementById('privateAndCheckout').showModal()}>
+					Request a Private or Checkout Session</button
+				>
+				<dialog id="privateAndCheckout" class="modal">
+					<div class="modal-box rounded-none">
 
-							<div class="prose">
-								<h2 class="font-asmbly">Private/Checkout Class Request</h2>
-								<p>
-									Sign up below to request a private or checkout session. Note that we do not offer
-									checkout sessions for all classes. This will be indicated by a disabled "Checkout"
-									option. More info about private and checkout classes can be found in our <a
-										href="/classes-faq">Classes FAQ</a
-									>.
-								</p>
-							</div>
-
-							<SuperForm
-								action="?/privateRequest"
-								data={data?.privateRequestForm}
-								dataType="form"
-								invalidateAll={false}
-								validators={privateRequestSchema}
-								classTypeId={$page.params.eventTypeId}
-								let:form
-								let:message
-								let:delayed
+							<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 rounded-none"
+								on:click={() => document.getElementById('privateAndCheckout').close()}
+								>✕</button
 							>
-								{#if message}
-									<div
-										class="status {message.status >= 400 ? 'text-error' : ''} {message.status <
-											300 || !message.status
-											? 'text-success'
-											: ''}"
-									>
-										{message.text}
-									</div>
-								{/if}
-								<TextField type="text" {form} field="firstName" label="First Name" class="w-full" />
-								<TextField type="text" {form} field="lastName" label="Last Name" class="w-full" />
-								<TextField type="email" {form} field="email" label="Email" class="mb-4 w-full" autocomplete="email" />
 
-								<RadioField
-									{form}
-									field="sessionType"
-									options={['Private', 'Checkout']}
-									class="my-4 ml-2 radio radio-accent"
-									{noCheckouts}
-									className={classType.name}
-								/>
+						<!-- Modal content -->
 
-								<p class="flex">
-									<button class="btn btn-primary mb-2 mt-4 rounded-none mr-2" type="submit"
-										>Submit</button
-									>
-									{#if delayed}
-									<span class="loading loading-spinner loading-md "></span>
-									{/if}
-								</p>
-							</SuperForm>
-
-							<!-- End Modal content -->
+						<div class="prose">
+							<h2 class="font-asmbly">Private/Checkout Class Request</h2>
+							<p>
+								Sign up below to request a private or checkout session. Note that we do not offer
+								checkout sessions for all classes. This will be indicated by a disabled "Checkout"
+								option. More info about private and checkout classes can be found in our <a
+									href="https://asmbly.org/faq/#classfaq">Classes FAQ</a
+								>.
+							</p>
 						</div>
-						<form method="dialog" class="modal-backdrop">
-							<button>close</button>
-						</form>
-					</dialog>
-				</div>
+
+						<SuperForm
+							action="?/privateRequest"
+							data={data?.privateRequestForm}
+							dataType="form"
+							invalidateAll={false}
+							validators={privateRequestSchema}
+							classTypeId={$page.params.eventTypeId}
+							let:form
+							let:message
+							let:delayed
+						>
+							{#if message}
+								<div
+									class="status {message.status >= 400 ? 'text-error' : ''} {message.status <
+										300 || !message.status
+										? 'text-success'
+										: ''}"
+								>
+									{message.text}
+								</div>
+							{/if}
+							<TextField type="text" {form} field="firstName" label="First Name" class="w-full" />
+							<TextField type="text" {form} field="lastName" label="Last Name" class="w-full" />
+							<TextField type="email" {form} field="email" label="Email" class="mb-4 w-full" autocomplete="email" />
+
+							<RadioField
+								{form}
+								field="sessionType"
+								options={['Private', 'Checkout']}
+								class="my-4 ml-2 radio radio-accent"
+								{noCheckouts}
+								className={classType.name}
+							/>
+
+							<p class="flex">
+								<button class="btn btn-primary mb-2 mt-4 rounded-none mr-2" type="submit"
+									>Submit</button
+								>
+								{#if delayed}
+								<span class="loading loading-spinner loading-md "></span>
+								{/if}
+							</p>
+						</SuperForm>
+
+						<!-- End Modal content -->
+					</div>
+					<form method="dialog" class="modal-backdrop">
+						<button>close</button>
+					</form>
+				</dialog>
+			</div>
 			{/if}
-			{#if DateTime.fromJSDate(classInstances[0].startDateTime) > DateTime.local({zone: 'America/Chicago'})}
+			{#if classType.classInstances[0].startDateTime > DateTime.local({zone: 'America/Chicago'})}
 			<div class="flex max-w-md justify-between p-4">
 				<button
-					class="btn btn-outline rounded-none"
+					class="btn btn-outline btn-sm rounded-none text-sm font-light"
 					on:click={() => document.getElementById('classNotify').showModal()}>Notify me when additional sessions are added</button
 				>
 				<dialog id="classNotify" class="modal">
@@ -558,8 +453,8 @@
 				</dialog>
 			</div>
 			{/if}
-		</div>
 	</div>
+</div>
 </div>
 
 <style>
