@@ -89,7 +89,7 @@
 				</div>
 				<div class="divider" />
 				{#if classType.anyCurrent}
-				<div class="lg:max-h-64 overflow-auto scroll-smooth">
+				<div>
 					{#each classType.classInstances as instance}
 					{#if instance.startDateTime.hasSame(date, 'day')}
 					<div class="py-4" id="{instance.eventId}">

@@ -50,7 +50,7 @@
 	<div class="flex items-center justify-between px-4 w-full">
 		<button
 			aria-label="calendar backward"
-			class="{currentDate.month === DateTime.local({zone: 'America/Chicago'}).month && currentDate.year === DateTime.local({zone: 'America/Chicago'}).year ? 'cursor-default opacity-30 text-base-content hover:text-base-content focus:text-base-content' : 'cursor-pointer text-asmbly hover:text-asmbly focus:text-asmbly'}"
+			class="{currentDate.month === DateTime.local({zone: 'America/Chicago'}).month && currentDate.year === DateTime.local({zone: 'America/Chicago'}).year ? 'cursor-default opacity-30 text-base-content hover:text-base-content focus:text-base-content' : 'cursor-pointer text-accent hover:text-accent focus:text-accent'}"
 			disabled={currentDate.month === DateTime.local({zone: 'America/Chicago'}).month && currentDate.year === DateTime.local({zone: 'America/Chicago'}).year}
 			aria-disabled={currentDate.month === DateTime.local({zone: 'America/Chicago'}).month && currentDate.year === DateTime.local({zone: 'America/Chicago'}).year}
 			on:click={prevMonth}
@@ -78,7 +78,7 @@
 		>
 		<button
 			aria-label="calendar forward"
-			class="{classInstances.some(c => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year) ? 'cursor-pointer text-asmbly hover:text-asmbly focus:text-asmbly' : 'cursor-default opacity-30 text-base-content hover:text-base-content focus:text-base-content'}"
+			class="{classInstances.some(c => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year) ? 'cursor-pointer text-accent hover:text-accent focus:text-accent' : 'cursor-default opacity-30 text-base-content hover:text-base-content focus:text-base-content'}"
 			disabled={!classInstances.some(c => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year)}
 			aria-disabled={!classInstances.some(c => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year)}
 			on:click={nextMonth}
