@@ -19,7 +19,7 @@
 			if (c.startDateTime.month === currentMonth) {
 				monthDays[c.startDateTime.day - 1] = c;
 			} else if (c.startDateTime.month === currentMonth - 1 && c.startDateTime.day >= prevDays[0]) {
-				prevDays[lastPrevDay - c.startDateTime.day] = c;
+				prevDays[numPrevDays - (lastPrevDay - c.startDateTime.day) - 1] = c;
 			} else if (c.startDateTime.month === currentMonth + 1 && c.startDateTime.day <= numNextDays) {
 				nextDays[c.startDateTime.day - 1] = c;
 			}
@@ -36,6 +36,14 @@
 
 	$: daysInMonth = getDaysInMonth(currentDate, classInstances);
 
+	$: areFutureClasses = classInstances.some(
+		(c) => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year
+	);
+
+	$: isCurrentMonth =
+		currentDate.month === DateTime.local({ zone: 'America/Chicago' }).month &&
+		currentDate.year === DateTime.local({ zone: 'America/Chicago' }).year;
+
 	function prevMonth() {
 		currentDate = currentDate.minus({ months: 1 });
 	}
@@ -49,14 +57,11 @@
 	<div class="flex w-full items-center justify-between px-4">
 		<button
 			aria-label="calendar backward"
-			class={currentDate.month === DateTime.local({ zone: 'America/Chicago' }).month &&
-			currentDate.year === DateTime.local({ zone: 'America/Chicago' }).year
+			class={isCurrentMonth
 				? 'text-base-content hover:text-base-content focus:text-base-content cursor-default opacity-30'
 				: 'text-accent hover:text-accent focus:text-accent cursor-pointer'}
-			disabled={currentDate.month === DateTime.local({ zone: 'America/Chicago' }).month &&
-				currentDate.year === DateTime.local({ zone: 'America/Chicago' }).year}
-			aria-disabled={currentDate.month === DateTime.local({ zone: 'America/Chicago' }).month &&
-				currentDate.year === DateTime.local({ zone: 'America/Chicago' }).year}
+			disabled={isCurrentMonth}
+			aria-disabled={isCurrentMonth}
 			on:click={prevMonth}
 		>
 			<svg
@@ -82,17 +87,11 @@
 		>
 		<button
 			aria-label="calendar forward"
-			class={classInstances.some(
-				(c) => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year
-			)
+			class={areFutureClasses
 				? 'text-accent hover:text-accent focus:text-accent cursor-pointer'
 				: 'text-base-content hover:text-base-content focus:text-base-content cursor-default opacity-30'}
-			disabled={!classInstances.some(
-				(c) => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year
-			)}
-			aria-disabled={!classInstances.some(
-				(c) => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year
-			)}
+			disabled={!areFutureClasses}
+			aria-disabled={!areFutureClasses}
 			on:click={nextMonth}
 		>
 			<svg
