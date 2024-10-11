@@ -14,12 +14,12 @@
 	import { afterNavigate } from '$app/navigation';
 	import { tick } from 'svelte';
 
-	afterNavigate(async (nav) => {
-		if (nav.type === 'link') {
-			await tick();
-			window.scrollTo(0, 0);
-		}
-	});
+	// afterNavigate(async (nav) => {
+	// 	if (nav.type === 'link') {
+	// 		await tick();
+	// 		window.scrollTo({top: 0, left: 0, behavior: 'instant'});
+	// 	}
+	// });
 
 	const noCheckouts = [
 		'Beginner CNC Router',
@@ -70,24 +70,11 @@
 		{classType.name}
 	</h1>
 	<div
-		class="drawer max-lg:drawer-end lg:drawer-open mt-2 flex max-w-6xl justify-center rounded-none shadow-lg lg:min-h-[540px] lg:w-full"
+		class="card mt-2 flex max-w-6xl justify-center rounded-none shadow-lg lg:min-h-[540px] lg:w-full lg:card-side"
 	>
-		<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-		<div class="drawer-side z-10 lg:h-auto">
-			<label for="my-drawer-2" aria-label="close calendar" class="drawer-overlay" />
-			<div class="flex">
-				<div class="bg-base-100">
-					<Calendar selectedDate={date} classInstances={classType.classInstances} />
-				</div>
-				<div class="lg:divider lg:divider-horizontal lg:mx-0 lg:my-8" />
-			</div>
-		</div>
+		<Calendar selectedDate={date} classInstances={classType.classInstances} />
+		<div class="divider lg:divider-horizontal mx-8 lg:mx-0 lg:my-8" />
 		<div class="drawer-content flex flex-col px-5 py-5 md:px-8 md:py-8">
-			<div class="fixed right-4 top-40 lg:hidden">
-				<label for="my-drawer-2" class="btn btn-primary drawer-button btn-circle drop-shadow-lg">
-					<span class="material-symbols-outlined">calendar_month</span>
-				</label>
-			</div>
 			<div class="max-w-md px-4">
 				<div>
 					<h2 class="pb-4 text-lg font-semibold">Description</h2>

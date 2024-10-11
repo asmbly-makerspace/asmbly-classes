@@ -138,6 +138,7 @@
 						>
 							<a
 								data-sveltekit-replacestate
+								data-sveltekit-noscroll
 								href={day.classUrl}
 								class="{selectedDate.hasSame(day.startDateTime, 'day')
 									? `${day.isAvailable() ? 'bg-accent text-accent-content' : 'bg-accent/40 text-base-content'} `

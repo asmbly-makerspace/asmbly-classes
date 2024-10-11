@@ -28,7 +28,7 @@
 		/>
 	</figure>
 	<div class="card-body w-full {filters.compact ? 'p-4' : ''}">
-		<div class="flex justify-between items-baseline flex-wrap">
+		<div class="flex justify-between">
 			<h2 class="font-asmbly text-accent card-title font-light">{event.name}</h2>
 			<div class="grid h-8 w-8 place-items-center {filters.compact ? 'order-last' : ''}">
 				<AsmblyIcon category={event.category} alwaysChecked={true} />
