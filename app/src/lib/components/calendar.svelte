@@ -10,6 +10,7 @@
 		const numPrevDays = currentDate.startOf('month').weekday;
 		const lastPrevDay = currentDate.minus({ month: 1 }).daysInMonth;
 		const prevDays = [...Array(numPrevDays)].map((_v, i) => lastPrevDay - numPrevDays + i);
+		const firstPrevDay = prevDays[0] + 1;
 
 		const numNextDays = 7 - ((currentDate.endOf('month').weekday + 1) % 7);
 		const nextDays = [...Array(numNextDays).keys()];
@@ -18,7 +19,7 @@
 			if (c.startDateTime.year !== currentDate.year) return;
 			if (c.startDateTime.month === currentMonth) {
 				monthDays[c.startDateTime.day - 1] = c;
-			} else if (c.startDateTime.month === currentMonth - 1 && c.startDateTime.day >= prevDays[0]) {
+			} else if (c.startDateTime.month === currentMonth - 1 && c.startDateTime.day >= firstPrevDay) {
 				prevDays[numPrevDays - (lastPrevDay - c.startDateTime.day) - 1] = c;
 			} else if (c.startDateTime.month === currentMonth + 1 && c.startDateTime.day <= numNextDays) {
 				nextDays[c.startDateTime.day - 1] = c;

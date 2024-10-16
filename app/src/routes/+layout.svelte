@@ -120,7 +120,7 @@
 					<li><a on:click={() => closer()} class="font-asmbly uppercase" href="/">Search for Classes</a></li>
 					<!-- <li><a on:click={() => closer()} class="font-asmbly uppercase" href="/my-classes">My Classes</a></li> -->
 					<li>
-						<a on:click={() => closer()} class="font-asmbly uppercase" href="/mentor-series">Mentor Series</a>
+						<a on:click={() => closer()} class="font-asmbly uppercase" href="https://asmbly.org/classes-events/mentor-series/">Mentor Series</a>
 					</li>
 					<li><a on:click={() => closer()} class="font-asmbly uppercase" href="https://asmbly.org/faq/#classfaq">Classes FAQ</a></li>
 					<li>
@@ -148,7 +148,7 @@
 					>
 				</li> -->
 				<li>
-					<a class="text-md rounded-none font-asmbly uppercase" href="/mentor-series"
+					<a class="text-md rounded-none font-asmbly uppercase" href="https://asmbly.org/classes-events/mentor-series/"
 						>Mentor Series</a
 					>
 				</li>
