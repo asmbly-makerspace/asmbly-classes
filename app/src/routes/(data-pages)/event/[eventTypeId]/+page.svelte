@@ -42,7 +42,7 @@
 			? classInstance.startDateTime
 			: DateTime.local({ zone: 'America/Chicago' });
 
-	$: classDates = classType.classInstances.map((i) => i.startDateTime);
+	$: latestClassDate = DateTime.max(...classType.classInstances.map((i) => i.startDateTime));
 
 	function classDayUrl(day) {
 		const classOnDay = classType.classInstances.find((i) => i.startDateTime.hasSame(day, 'day'));
@@ -72,7 +72,7 @@
 	<div
 		class="card mt-2 flex max-w-6xl justify-center rounded-none shadow-lg lg:min-h-[540px] lg:w-full lg:card-side"
 	>
-		<Calendar selectedDate={date} classInstances={classType.classInstances} />
+		<Calendar selectedDate={date} classInstances={classType.classInstances} {latestClassDate} />
 		<div class="divider lg:divider-horizontal mx-8 lg:mx-0 lg:my-8" />
 		<div class="drawer-content flex flex-col px-5 py-5 md:px-8 md:py-8">
 			<div class="max-w-md px-4">

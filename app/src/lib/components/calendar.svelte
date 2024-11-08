@@ -2,6 +2,7 @@
 	import { DateTime } from 'luxon';
 	export let selectedDate = DateTime.local({ zone: 'America/Chicago' });
 	export let classInstances = [];
+	export let latestClassDate;
 
 	function getDaysInMonth(currentDate, classInstances) {
 		const currentMonth = currentDate.month;
@@ -19,7 +20,10 @@
 			if (c.startDateTime.year !== currentDate.year) return;
 			if (c.startDateTime.month === currentMonth) {
 				monthDays[c.startDateTime.day - 1] = c;
-			} else if (c.startDateTime.month === currentMonth - 1 && c.startDateTime.day >= firstPrevDay) {
+			} else if (
+				c.startDateTime.month === currentMonth - 1 &&
+				c.startDateTime.day >= firstPrevDay
+			) {
 				prevDays[numPrevDays - (lastPrevDay - c.startDateTime.day) - 1] = c;
 			} else if (c.startDateTime.month === currentMonth + 1 && c.startDateTime.day <= numNextDays) {
 				nextDays[c.startDateTime.day - 1] = c;
@@ -37,9 +41,10 @@
 
 	$: daysInMonth = getDaysInMonth(currentDate, classInstances);
 
-	$: areFutureClasses = classInstances.some(
-		(c) => c.startDateTime.month > currentDate.month && c.startDateTime.year >= currentDate.year
-	);
+	$: areFutureClasses = latestClassDate
+		? (latestClassDate.month > currentDate.month && latestClassDate.year == currentDate.year) ||
+			latestClassDate.year > currentDate.year
+		: false;
 
 	$: isCurrentMonth =
 		currentDate.month === DateTime.local({ zone: 'America/Chicago' }).month &&
