@@ -140,6 +140,9 @@ async function main() {
 			case 'Textiles':
 				await connectArchCat(prisma.asmblyArchCategory, 'Textiles', addCategory.id);
 				break;
+			case 'Ceramics':
+				await connectArchCat(prisma.asmblyArchCategory, 'Ceramics', addCategory.id);
+				break;
 			case 'Orientation':
 				await connectArchCat(prisma.asmblyArchCategory, 'Orientation', addCategory.id);
 				break;
@@ -170,10 +173,10 @@ async function main() {
 		}
 		
 
-		const eventCapacity = parseInt(event['Event Capacity']);
+		const eventCapacity = parseInt(event['Event Capacity']) || 0;
 		const eventPrice = parseFloat(event['Event Admission Fee']);
 		const summary = event['Event Summary'];
-		const eventName = event['Event Name'].split(' w/ ')[0];
+		const eventName = event['Event Name'].split(' w/ ')[0].trim();
 
 		const search = {
 			name: eventName

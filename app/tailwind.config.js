@@ -3,6 +3,10 @@ const colors = {
 		DEFAULT: '#2b2c6b',
 		hover: '#7f80cb'
 	},
+	ceramics: {
+		DEFAULT: '#b34a9a',
+		hover: '#d292c3'
+	},
 	woodwork: {
 		DEFAULT: '#f3b61b',
 		hover: '#f9da8d'

@@ -24,6 +24,9 @@ export const svgs = {
 	],
 	Miscellaneous: [
 		'm122.16,77.71V0H0v44.44h20.85C9.16,51.21,1.05,63.5.1,77.71h-.1v5.59h.1c1.38,20.74,18.01,37.37,38.75,38.75v.1h5.59v-.1c14.22-.95,26.5-9.06,33.27-20.75v20.85h83.3v-44.44h-38.86Zm-5.59,0h-33.27v-33.27h33.27v33.27ZM44.44,44.44h33.27v33.27h-33.27v-33.27ZM83.3,5.59h33.27v33.27h-33.27V5.59Zm-38.86,0h33.27v33.27h-33.27V5.59Zm-38.86,0h33.27v33.27H5.59V5.59Zm33.27,38.96v33.16H5.69c1.36-17.66,15.5-31.81,33.16-33.16ZM5.69,83.3h33.16v33.16c-17.66-1.36-31.81-15.5-33.16-33.16Zm38.75,33.16v-33.16h33.16c-1.36,17.66-15.5,31.81-33.16,33.16Zm72.13.11h-33.27v-33.27h33.27v33.27Zm38.86,0h-33.27v-33.27h33.27v33.27Z'
+	],
+	Ceramics: [
+		'M0,0v215.18h216V0H0ZM135.78,96.42c8.72,9.51,15.61,17.02,13.15,35.72-2.1,15.48-8.82,35.74-14.21,52.02l-1.34,4.05h-50.76l-1.34-4.07c-5.39-16.27-12.1-36.52-14.19-51.94-2.47-18.76,4.42-26.27,13.14-35.77,10.49-11.43,24.86-27.09,11.69-58.84-.24-.56-.34-.8-5.13-10.62h42.43c-4.79,9.81-4.9,10.05-5.14,10.62-13.16,31.74,1.21,47.39,11.7,58.83ZM27.04,26.97h29.68c.69,1.43,2.32,4.77,4.13,8.48,2.59,5.31,5.55,11.34,6.2,12.73,6.43,15.63,2.55,19.85-6.74,29.98-10.19,11.1-24.14,26.31-20.02,57.62,2.23,16.47,8.42,35.94,13.86,52.43h-27.12V26.97ZM188.96,188.21h-27.13c5.44-16.49,11.63-35.97,13.88-52.49,4.11-31.26-9.84-46.47-20.03-57.57-9.29-10.13-13.17-14.35-6.74-29.98.65-1.39,3.61-7.42,6.2-12.73,1.81-3.71,3.45-7.05,4.13-8.48h29.68v161.24Z'
 	]
 };
 
@@ -37,6 +40,7 @@ function generateFillColor(category, alwaysChecked = false, checked = false) {
 		'3D Printing': 'fill-neutral group-hover:fill-3dprinting-hover',
 		Textiles: 'fill-neutral group-hover:fill-textiles-hover',
 		Electronics: 'fill-neutral group-hover:fill-electronics-hover',
+		Ceramics: 'fill-neutral group-hover:fill-ceramics-hover',
 		Miscellaneous:
 			'fill-neutral group-hover:fill-asmbly-hover stroke-neutral group-hover:stroke-asmbly-hover'
 	};
@@ -50,6 +54,7 @@ function generateFillColor(category, alwaysChecked = false, checked = false) {
 		'3D Printing': 'group-hover:fill-3dprinting-hover fill-3dprinting-hover',
 		Textiles: 'group-hover:fill-textiles-hover fill-textiles-hover',
 		Electronics: 'group-hover:fill-electronics-hover fill-electronics-hover',
+		Ceramics: 'group-hover:fill-ceramics-hover fill-ceramics-hover',
 		Miscellaneous:
 			'group-hover:fill-asmbly-hover fill-asmbly-hover stroke-asmbly-hover group-hover:stroke-asmbly-hover'
 	};
@@ -62,6 +67,7 @@ function generateFillColor(category, alwaysChecked = false, checked = false) {
 		'3D Printing': 'fill-3dprinting',
 		Textiles: 'fill-textiles',
 		Electronics: 'fill-electronics',
+		Ceramics: 'fill-ceramics',
 		Miscellaneous: 'stroke-accent'
 	};
 
@@ -77,14 +83,22 @@ function generateFillColor(category, alwaysChecked = false, checked = false) {
 export let category = 'Orientation'
 export let alwaysChecked = false;
 export let checked = false;
+
+function getViewBox(category) {
+	if (category === 'Miscellaneous' || category === 'Orientation') {
+		return '-7.5 0 175 100';
+	} else if (category === 'Ceramics') {
+		return '0 0 215 215';
+	} else {
+		return '0 0 195 195';
+	}
+}
 </script>
 
 <svg
 	stroke-linecap="round"
 	stroke-linejoin="round"
-	viewBox={category === 'Miscellaneous' || category === 'Orientation'
-		? '-7.5 0 175 100'
-		: '0 0 195 195'}
+	viewBox={getViewBox(category)}
 	class={"h-5 w-5 " + generateFillColor(category, alwaysChecked, checked)}
 >
 	{#each svgs[category] as svgPath}

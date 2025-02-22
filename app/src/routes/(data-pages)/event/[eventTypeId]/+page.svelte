@@ -26,7 +26,8 @@
 		'Big Lasers Class',
 		'Small Lasers Class',
 		'Woodshop Safety',
-		'Metal Shop Safety'
+		'Metal Shop Safety',
+		'Ceramics Studio Introduction (CSI)'
 	];
 
 	$: classType = new NeonEventType(data.classJson);

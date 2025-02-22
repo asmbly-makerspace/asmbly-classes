@@ -53,6 +53,7 @@
 		'3D Printing': 'group-hover:bg-3dprinting',
 		Textiles: 'group-hover:bg-textiles',
 		Electronics: 'group-hover:bg-electronics',
+		Ceramics: 'group-hover:bg-ceramics',
 		Miscellaneous: 'group-hover:bg-primary'
 	};
 
@@ -64,6 +65,7 @@
 		'3D Printing': 'bg-3dprinting',
 		Textiles: 'bg-textiles',
 		Electronics: 'bg-electronics',
+		Ceramics: 'bg-ceramics',
 		Miscellaneous: 'bg-primary'
 	};
 
