@@ -15,7 +15,7 @@
 
 	$: summaryLength = filters.compact ? 100 : 200;
 
-	$: summary = event.summary ? `${event.summary.substring(0, summaryLength)}${event.summary.length > summaryLength ? '...' : ''}` : 'No summary available'
+	$: summary = event?.summary ? `${event.summary.substring(0, summaryLength)}${event.summary.length > summaryLength ? '...' : ''}` : 'No summary available'
 </script>
 
 {#if event}
