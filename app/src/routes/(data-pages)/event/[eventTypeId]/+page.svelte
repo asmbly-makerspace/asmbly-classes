@@ -123,7 +123,7 @@
 											>
 										</h2>
 										<p class="pb-3">
-											<span class="text-lasers font-bold">Note:</span> This class is held over two sessions.
+											<span class="text-lasers font-bold">Note:</span> This class is held over multiple sessions.
 											Detailed times can be seen during registration.
 										</p>
 									{/if}

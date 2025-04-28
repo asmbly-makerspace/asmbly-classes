@@ -73,16 +73,4 @@ secrets:
     file: ./secrets/postgres-user.txt
   postgres-password: 
     file: ./secrets/postgres-password.txt
-  internal-api:
-    file: ./secrets/internal-api.txt
-  neon-user:
-    file: ./secrets/neon-user.txt
-  neon-api-key:
-    file: ./secrets/neon-api-key.txt
-  gmail-user:
-    file: ./secrets/gmail-user.txt
-  gmail-pass:
-    file: ./secrets/gmail-pass.txt
-  flodesk-key:
-    file: ./secrets/flodesk-key.txt
 

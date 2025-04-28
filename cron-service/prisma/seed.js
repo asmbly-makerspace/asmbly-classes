@@ -25,6 +25,7 @@ const archCategories = [
 	{ name: 'Laser Cutting' },
 	{ name: '3D Printing' },
 	{ name: 'Textiles' },
+	{ name: 'Ceramics' },
 	{ name: 'Electronics' },
 	{ name: 'Miscellaneous' },
 	{ name: 'Private' }
