@@ -4,7 +4,7 @@ networks:
 
 services:
   app:
-    image: "docker.io/${DOCKER_USER}/asmbly-classes-app:${TAG}"
+    image: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${TAG}"
     env_file:
       - .env
     restart: unless-stopped
