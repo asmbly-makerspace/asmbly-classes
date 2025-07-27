@@ -30,9 +30,6 @@ jobs:
           registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
         
       - name: Build and Push
-        env:
-          REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
-          IMAGE_TAG: ${{ github.sha }}
         uses: docker/build-push-action@v5.1.0
         with:
           context: ./app
@@ -44,8 +41,8 @@ jobs:
             postgres-db=${{ secrets.POSTGRES_DB }}
             postgres-port=${{ secrets.POSTGRES_PORT }}
           tags: |
-            $REGISTRY/$ECR_REPO:latest
-            $REGISTRY/$ECR_REPO:$IMAGE_TAG
+            ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO }}:latest
+            ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO }}:${{ github.sha }}
 
   copy-latest:
     runs-on: ubuntu-latest
@@ -84,6 +81,6 @@ jobs:
             aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
             cd ~/app
             TAG=latest docker compose pull
-            TAG=latest docker compose up -d
+            TAG=latest docker compose up --build -d
             
         
