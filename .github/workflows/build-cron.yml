@@ -38,6 +38,7 @@ jobs:
         with:
           context: ./cron-service
           platforms: linux/arm64
+          provenance: false
           push: true
           cache-from: type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}:buildcache
           cache-to: type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}:buildcache

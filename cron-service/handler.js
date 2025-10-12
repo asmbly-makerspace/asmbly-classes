@@ -12,8 +12,6 @@ export async function lambdaHandler(event) {
         if (!cronType) {
             throw new Error('No cron type found');
         }
-        console.log(cronType);
-        console.log(result.path)
 
         const ssmParams = await getSSMParams();
 
