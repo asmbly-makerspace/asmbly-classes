@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
     paths:
       - 'cron-service/**'
+      - '.github/workflows/build-cron.yml'
 
 env:
   AWS_REGION: us-east-2
