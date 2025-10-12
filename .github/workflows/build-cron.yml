@@ -44,7 +44,7 @@ jobs:
             ${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}:${{ github.sha }}
 
       - name: Deploy
-        uses: aws-actions/aws-lambda-deploy@v1
+        uses: aws-actions/aws-lambda-deploy@v1.1.0
         with:
           function-name: classes-cron
           package-type: Image
