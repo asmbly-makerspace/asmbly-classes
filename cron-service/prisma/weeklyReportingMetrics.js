@@ -64,7 +64,7 @@ function generateWeeklyMetrics(prismaRequestArray) {
  *
  * @return {Promise<void>} - A promise that resolves when the email is sent.
  */
-async function main() {
+async function main(config) {
     const today = DateTime.now();
     const weekStart = today.minus({ days: today.weekday - 1 });
     const weekEnd = weekStart.plus({ days: 6 });
@@ -233,17 +233,19 @@ async function main() {
         to: 'classes@asmbly.org',
         subject: `Weekly Event Request Report: ${weekStart.toLocaleString()} - ${weekEnd.toLocaleString()}`,
         html: emailBody,
-    })
+    }, config)
 
     console.log(`Sent weekly report for ${weekStart.toLocaleString()} - ${weekEnd.toLocaleString()}`);
  
 }
 
-try {
-    main();
-    await prisma.$disconnect();
-} catch (e) {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-}
+// try {
+//     main(config);
+//     await prisma.$disconnect();
+// } catch (e) {
+//     console.error(e);
+//     await prisma.$disconnect();
+//     process.exit(1);
+// }
+
+export { main };

@@ -17,11 +17,11 @@ async function connectArchCat(model, archCatName, catId) {
 	return record;
 }
 
-async function main() {
+async function main(config) {
 
 	console.log(`Seeding database with infrequent classes...`);
 
-	const currentEvents = await getInfreqEvents();
+	const currentEvents = await getInfreqEvents(config);
 
 	const remainingPrismaCalls = [];
 
@@ -226,7 +226,7 @@ async function main() {
     console.log(`Finished seeding infrequent events.`);
 }
 
-main()
+main(config)
   .then(async () => {
     await prisma.$disconnect()
   })

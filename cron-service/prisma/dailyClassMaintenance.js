@@ -19,15 +19,15 @@ async function connectArchCat(model, archCatName, catId) {
 	return record;
 }
 
-async function main() {
+async function main(config) {
 
 	console.log('');
 	console.log(`Running class maintenance for ${DateTime.now().toLocaleString(DateTime.DATETIME_SHORT)}...`);
 	console.log('------------------------------------------------------');
 	console.log('');
 
-	const currentEvents = await getCurrentEvents();
-	const inactiveEventIds = await getInactiveEvents();
+	const currentEvents = await getCurrentEvents(config);
+	const inactiveEventIds = await getInactiveEvents(config);
 
 	console.log(`Found inactive events: ${inactiveEventIds}.`);
 
@@ -356,7 +356,7 @@ async function main() {
 			replyTo: 'membership@asmbly.org',
 			subject: `${requester.eventType} notification request`,
 			html: emailBody,
-		})
+		}, config)
 
         emailsToSend.push(email);
     }
@@ -382,12 +382,14 @@ async function main() {
     console.log(`Finished adding events for (${new Date().toLocaleDateString()}).`);
 }
 
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+// main(config)
+//   .then(async () => {
+//     await prisma.$disconnect()
+//   })
+//   .catch(async (e) => {
+//     console.error(e)
+//     await prisma.$disconnect()
+//     process.exit(1)
+//   })
+
+export { main };

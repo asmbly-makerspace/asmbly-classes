@@ -1,5 +1,5 @@
 # Builder image
-FROM node:21.5.0 AS builder
+FROM node:lts AS builder
 
 # Set environment variables
 ARG NODE_ENV=development
@@ -33,7 +33,7 @@ RUN npm run build
 RUN npm prune --production
 
 # Running image
-FROM node:21.5.0
+FROM node:lts
 
 RUN apt-get update && apt-get upgrade -y
 
@@ -57,4 +57,4 @@ RUN chmod +x /wait-for-it.sh
 
 USER node
 
-CMD ["/wait-for-it.sh", "db:5432", "-t", "10", "-s", "--", "npm", "run", "deploy:prod"]
+CMD ["npm", "run", "deploy:prod"]

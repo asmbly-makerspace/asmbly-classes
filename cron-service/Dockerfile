@@ -1,38 +1,24 @@
-FROM node:21.6.0-alpine3.19 
-
-# Updating packages and installing cron
-RUN apk add --update apk-cron && rm -rf /var/cache/apk/*
-
-# Setting up timezone
-RUN apk add --no-cache alpine-conf && \
-    setup-timezone -z America/Chicago
+FROM public.ecr.aws/lambda/nodejs:22 AS builder
 
 # Set environment variables
-ARG NODE_ENV=production
-
-# Set working directory
-WORKDIR /usr/src/app
+# ENV NODE_ENV=production
 
 # Copy package.json and package-lock.json
-COPY package*.json ./
+COPY package*.json ${LAMBDA_TASK_ROOT}
 
 # Install dependencies
-RUN npm ci
+RUN npm ci --omit=dev
 
-# Copy source code
-COPY ./prisma ./prisma
+FROM public.ecr.aws/lambda/nodejs:22 AS final
+
+COPY --from=builder /var/task/node_modules /var/task/node_modules
+
+COPY ./prisma ${LAMBDA_TASK_ROOT}/prisma
+COPY ./handler.js ${LAMBDA_TASK_ROOT}/handler.js
+
+COPY ./package.json ${LAMBDA_TASK_ROOT}/package.json
 
 # Generate Prisma Client for build
 RUN npx prisma generate
 
-# Adding crontab to the appropriate location
-ADD crontab.txt /crontab.txt
-
-# Giving permission to crontab file
-RUN chmod 0644 /crontab.txt
-
-# Running crontab
-RUN /usr/bin/crontab /crontab.txt
-
-# Creating entry point for cron 
-ENTRYPOINT ["/usr/sbin/crond", "-f", "-l", "8"]
+CMD ["handler.lambdaHandler"]

@@ -1,18 +1,18 @@
-name: Build, Push, and Deploy Classes Page App
+name: Build, Push, and Deploy Classes Cron
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - 'app/**'
+      - 'cron-service/**'
 
 env:
   AWS_REGION: us-east-2
-  APP_ECR_REPO: classes-page
+  CRON_ECR_REPO: classes-cron
 
 jobs:
-  build-app:
-    name: Build and Push Classes Page App
+  build-cron:
+    name: Build, Push, and Deploy Classes Cron
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,18 +30,23 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-        
+
       - name: Build and Push
+        id: build-push
         uses: docker/build-push-action@v5
         with:
-          context: ./app
-          platforms: linux/amd64
+          context: ./cron-service
+          platforms: linux/arm64
           push: true
-          secret-envs: |
-            postgres-user=${{ secrets.POSTGRES_USER }}
-            postgres-pass=${{ secrets.POSTGRES_PASS }}
-            postgres-db=${{ secrets.POSTGRES_DB }}
-            postgres-port=${{ secrets.POSTGRES_PORT }}
           tags: |
-            ${{ steps.login-ecr.outputs.registry}}/${{ env.APP_ECR_REPO }}:latest
-            ${{ steps.login-ecr.outputs.registry}}/${{ env.APP_ECR_REPO }}:${{ github.sha }}
+            ${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}:latest
+            ${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}:${{ github.sha }}
+
+      - name: Deploy
+        uses: aws-actions/lambda-deploy@v1
+        with:
+          function-name: classes-cron
+          package-type: Image
+          platform: arm64
+          image-uri: ${{ steps.build-push.outputs.image }}
+          timeout: 600

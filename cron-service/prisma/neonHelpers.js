@@ -1,25 +1,25 @@
 import { apiCall } from './apiCall.js';
 
-const NEON_API_KEY = process.env.NEON_API_KEY;
-const NEON_API_USER = process.env.NEON_API_USER;
-
-const N_AUTH = `${NEON_API_USER}:${NEON_API_KEY}`;
 const N_BASE_URL = 'https://api.neoncrm.com';
-const N_SIGNATURE = Buffer.from(N_AUTH).toString('base64');
-const N_HEADERS = {
-	'Content-Type': 'application/json',
-	Authorization: `Basic ${N_SIGNATURE}`
-};
 
-async function getIndividualAccount(neonId) {
+function getNHeaders(config) {
+	const N_AUTH = `${config.NEON_API_USER}:${config.NEON_API_KEY}`;
+	const N_SIGNATURE = Buffer.from(N_AUTH).toString('base64');
+	return {
+		'Content-Type': 'application/json',
+		Authorization: `Basic ${N_SIGNATURE}`
+	}
+}
+
+async function getIndividualAccount(neonId, config) {
 	const resourcePath = `/v2/accounts/${neonId}`;
 	const httpVerb = 'GET';
 	const url = N_BASE_URL + resourcePath;
 
-	return await apiCall(httpVerb, url, null, N_HEADERS);
+	return await apiCall(httpVerb, url, null, getNHeaders(config));
 }
 
-async function* postEventSearch(searchFields, outputFields) {
+async function* postEventSearch(searchFields, outputFields, config) {
 	const resourcePath = '/v2/events/search';
 	const httpVerb = 'POST';
 	const url = N_BASE_URL + resourcePath;
@@ -36,27 +36,27 @@ async function* postEventSearch(searchFields, outputFields) {
 			}
 		};
 
-		yield await apiCall(httpVerb, url, data, N_HEADERS);
+		yield await apiCall(httpVerb, url, data, getNHeaders(config));
 		page++;
 	}
 }
 
-async function getEvent(eventId) {
+async function getEvent(eventId, config) {
 	const resourcePath = `/v2/events/${eventId}`;
 	const httpVerb = 'GET';
 	const url = N_BASE_URL + resourcePath;
 
-	return await apiCall(httpVerb, url, null, N_HEADERS);
+	return await apiCall(httpVerb, url, null, getNHeaders(config));
 }
 
-async function getActualAttendees(eventId) {
+async function getActualAttendees(eventId, config) {
 	const resourcePath = `/v2/events/${eventId}/eventRegistrations`;
 	const httpVerb = 'GET';
 	const url = N_BASE_URL + resourcePath;
 
 	let count = 0;
 
-	let response = await apiCall(httpVerb, url, null, N_HEADERS);
+	let response = await apiCall(httpVerb, url, null, getNHeaders(config));
 	let registrationList = response.eventRegistrations;
 	if (registrationList !== null && registrationList !== undefined) {
 		for (const registration of registrationList) {
@@ -70,7 +70,7 @@ async function getActualAttendees(eventId) {
 	return count.toString();
 }
 
-async function getCurrentEvents() {
+async function getCurrentEvents(config) {
 	const today = new Date().toISOString().split('T')[0];
 
 	const searchFields = [
@@ -106,7 +106,7 @@ async function getCurrentEvents() {
 	let finalEvents = [];
 	let responseEvents;
 
-	for await (const response of postEventSearch(searchFields, outputFields)) {
+	for await (const response of postEventSearch(searchFields, outputFields, config)) {
 		if (response.pagination.currentPage < response.pagination.totalPages) {
 			responseEvents = response.searchResults;
 		} else {
@@ -117,7 +117,7 @@ async function getCurrentEvents() {
 			let attendees = event['Registrants'];
 			if (attendees !== event['Event Registration Attendee Count']) {
 				let eventId = event['Event ID'];
-				let actualAttendees = await getActualAttendees(eventId);
+				let actualAttendees = await getActualAttendees(eventId, config);
 				event['Actual Registrants'] = actualAttendees;
 			} else {
 				event['Actual Registrants'] = attendees;
@@ -130,7 +130,7 @@ async function getCurrentEvents() {
 	return finalEvents;
 }
 
-async function getInactiveEvents() {
+async function getInactiveEvents(config) {
 	const today = new Date().toISOString().split('T')[0];
 
 	const searchFields = [
@@ -153,7 +153,7 @@ async function getInactiveEvents() {
 	let finalEvents = [];
 	let responseEvents;
 
-	for await (const response of postEventSearch(searchFields, outputFields)) {
+	for await (const response of postEventSearch(searchFields, outputFields, config)) {
 		if (response.pagination.currentPage < response.pagination.totalPages) {
 			responseEvents = response.searchResults;
 		} else {
@@ -170,7 +170,7 @@ async function getInactiveEvents() {
 	return finalEvents;
 }
 
-async function getInfreqEvents() {
+async function getInfreqEvents(config) {
 	const eventIds = [44732, 52117, 27206, 34411, 51547, 46262, 54842];
 
 	const eventInfo = [];
