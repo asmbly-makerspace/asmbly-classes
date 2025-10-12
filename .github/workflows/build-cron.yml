@@ -39,6 +39,8 @@ jobs:
           context: ./cron-service
           platforms: linux/arm64
           push: true
+          cache-from: type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}:buildcache
+          cache-to: mode=max,image-manifest=true,oci-mediatypes=true,type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}:buildcache
           tags: |
             ${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}:latest
             ${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}:${{ github.sha }}
@@ -46,8 +48,8 @@ jobs:
       - name: Deploy
         uses: aws-actions/aws-lambda-deploy@v1.1.0
         with:
-          function-name: classes-cron
+          function-name: classes-crons
           package-type: Image
           architectures: arm64
-          image-uri: ${{ steps.build-push.outputs.imageid }}
+          image-uri: ${{ steps.login-ecr-outputs.registry }}/${{ env.CRON_ECR_REPO }}@${{ steps.build-push.outputs.imageid }}
           timeout: 600
