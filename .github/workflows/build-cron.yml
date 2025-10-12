@@ -48,6 +48,6 @@ jobs:
         with:
           function-name: classes-cron
           package-type: Image
-          platform: arm64
+          architectures: arm64
           image-uri: ${{ steps.build-push.outputs.image }}
           timeout: 600
