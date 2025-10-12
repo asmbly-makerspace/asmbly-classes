@@ -51,5 +51,5 @@ jobs:
           function-name: classes-crons
           package-type: Image
           architectures: arm64
-          image-uri: ${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}@${{ steps.build-push.outputs.imageid }}
+          image-uri: ${{ steps.login-ecr.outputs.registry }}/${{ env.CRON_ECR_REPO }}:latest
           timeout: 600
