@@ -26,6 +26,6 @@
 		</div>
 	</div>
 	<div class="mb-12 mt-6">
-		<p>Don't have a Neon account yet? <a class="underline hover:text-primary" href="https://asmbly.org/join" target="_blank" rel="noopener">Sign up here</a>.</p>
+		<p>Don't have a Neon account yet? <a class="underline hover:text-primary" href="https://asmbly.app.neoncrm.com/forms/new-account-create" target="_blank" rel="noopener">Sign up here</a>.</p>
 	</div>
 </div>

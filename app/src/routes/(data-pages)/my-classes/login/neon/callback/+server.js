@@ -20,17 +20,27 @@ export const GET = async ({ url, cookies, locals }) => {
 		});
 	}
 	try {
-        const tokens = await validateOAuth2AuthorizationCode(
-            code,
+        const response = await fetch(
             "https://app.neoncrm.com/np/oauth/token",
             {
-                clientId: clientId,
-                clientPassword: {
-                    clientSecret: clientSecret,
-                    authenticateWith: "client_secret"
-                }
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&grant_type=authorization_code`
             }
         )
+		if (!response.ok) {
+			return new Response(null, {
+				status: 400
+			});
+		}
+		const tokens = await response.json();
+		if (!tokens.access_token) {
+			return new Response(null, {
+				status: 400
+			});
+		}
 
 		const getUser = async () => {
 			const existingUser = await getExistingUser(tokens.access_token);
