@@ -120,4 +120,17 @@ async function getCurrentEvents() {
 	return finalEvents;
 }
 
-export { getCurrentEvents, getIndividualAccount };
+async function getUserRegistrations(neonId) {
+	const resourcePath = `/v2/accounts/${neonId}/eventRegistrations`;
+	const httpVerb = 'GET';
+	const url = N_BASE_URL + resourcePath;
+	const params = {
+		pageSize: 100,
+	}
+
+	return await apiCall(httpVerb, url, params, N_HEADERS);
+}
+
+
+
+export { getCurrentEvents, getIndividualAccount, getUserRegistrations, postEventSearch };

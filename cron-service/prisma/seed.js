@@ -33,7 +33,7 @@ const archCategories = [
 
 const BASE_URL = 'https://asmbly.app.neoncrm.com/event.jsp?event=';
 
-async function main() {
+async function main(config) {
 
 	console.log('');
 	console.log(`Seeding database on ${DateTime.now().toLocaleString()}...`);
@@ -55,7 +55,7 @@ async function main() {
 		}
 	});
 
-	const currentEvents = await getCurrentEvents();
+	const currentEvents = await getCurrentEvents(config);
 
 	const remainingPrismaCalls = [];
 
@@ -271,7 +271,13 @@ async function main() {
 	console.log(`Finished seeding database (${new Date().toLocaleDateString()}).`);
 }
 
-main()
+const config = {
+	NEON_API_KEY: process.env.NEON_API_KEY,
+	NEON_API_USER: process.env.NEON_API_USER,
+	DATABASE_URL: process.env.DATABASE_URL
+}
+
+main(config)
   .then(async () => {
     await prisma.$disconnect()
   })
