@@ -46,7 +46,7 @@
 		<div class="flex justify-between">
 			<h2 class="font-asmbly text-accent card-title font-light">{userClass["Event Name"]}</h2>
 			<div class="grid h-8 w-8 place-items-center">
-				<!-- <AsmblyIcon category={userClass["Event Category Name"]} alwaysChecked={true} /> -->
+				<AsmblyIcon category={userClass["Event Category Name"]} alwaysChecked={true} />
 			</div>
 		</div>
 		<p class="text-md">Date: {userClass["Event Start Date"]}</p>
