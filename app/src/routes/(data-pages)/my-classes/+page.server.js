@@ -8,10 +8,10 @@ import { prisma } from '$lib/postgres.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({locals}) {
+	if (locals.session === null || locals.user === null) {
+		redirect(303, "/my-classes/login");
+	}
 	try {
-		if (locals.session === null || locals.user === null) {
-			return redirect(303, "/my-classes/login");
-		}
 
 		// Server API:
 		const classCancelForm = await superValidate(classCancelSchema, {
@@ -21,7 +21,7 @@ export async function load({locals}) {
 		// Retrieve user's class data from the Neon API if they are logged in
 		const userRegistrations = await getUserRegistrations(locals.user.neonId);
 		if (!userRegistrations) {
-			return new Response(null, { status: 500 });
+			throw new Error("An unexpected error occurred while loading your classes from Neon");
 		}
 		const events = userRegistrations.eventRegistrations.reduce((acc, registration) => {
 			const registrationStatus = registration.tickets[0].attendees[0].registrationStatus;
@@ -61,7 +61,7 @@ export async function load({locals}) {
 		return { classCancelForm, user: locals.user, userClasses };
 	} catch (e) {
 		console.error(e);
-		throw error(500, { message: "An unexpected error occurred while loading your classes" });
+		error(500, { message: "An unexpected error occurred while loading your classes" });
 	}
 }
 
@@ -90,6 +90,6 @@ export const actions = {
 		}
 		await deleteSession(locals.session.id); // invalidate session
 		cookies.delete("session_token"); // remove cookie
-		return redirect(303, "/my-classes/login"); // redirect to login page
+		redirect(303, "/my-classes/login"); // redirect to login page
 	}
 }
