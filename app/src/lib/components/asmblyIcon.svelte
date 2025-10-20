@@ -95,6 +95,7 @@ function getViewBox(category) {
 }
 </script>
 
+{#if svgs[category]}
 <svg
 	stroke-linecap="round"
 	stroke-linejoin="round"
@@ -111,3 +112,4 @@ function getViewBox(category) {
 		/>
 	{/each}
 </svg>
+{/if}

@@ -38,20 +38,20 @@
 	<figure class="w-full lg:w-4/5 lg:flex">
 		<enhanced:img
 			class="object-cover h-full lg:w-auto lg-flex-shrink-0 lg:object-center"
-			src={getClassImage(userClass["Event Name"], userClass["Event Category Name"], classImages)}
-			alt="{userClass["Event Name"]} image"
+			src={getClassImage(userClass.eventType.name, userClass.eventType.category[0].archCategories.name, classImages)}
+			alt="{userClass.eventType.name} image"
 		/>
 	</figure>
 	<div class="card-body w-full">
 		<div class="flex justify-between">
-			<h2 class="font-asmbly text-accent card-title font-light">{userClass["Event Name"]}</h2>
+			<h2 class="font-asmbly text-accent card-title font-light">{userClass.eventType.name}</h2>
 			<div class="grid h-8 w-8 place-items-center">
-				<AsmblyIcon category={userClass["Event Category Name"]} alwaysChecked={true} />
+				<AsmblyIcon category={userClass.eventType.category[0].archCategories.name} alwaysChecked={true} />
 			</div>
 		</div>
-		<p class="text-md">Date: {userClass["Event Start Date"]}</p>
+		<p class="text-md">Date: {userClass.startDateTime.toLocaleString('en-US', {dateStyle: "short", timeStyle: "short"})}</p>
 		<div class="card-actions content-center float-right">
-			<a class="btn btn-primary rounded-none" aria-label="Cancel registration for {userClass["Event Name"]}">Cancel Registration</a>
+			<a class="btn btn-primary rounded-none" aria-label="Cancel registration for {userClass.eventType.name}">Cancel Registration</a>
 		</div>
 	</div>
 </div>
