@@ -1,11 +1,52 @@
-import { auth } from "$lib/server/lucia.js";
-import { OAuthRequestError, validateOAuth2AuthorizationCode } from "@lucia-auth/oauth";
-import { CLIENT_SECRET as clientSecret, CLIENT_ID as clientId } from "$lib/server/secrets";
+import { createSession, setSessionTokenCookie } from "$lib/server/auth";
+import { CLIENT_SECRET as clientSecret, CLIENT_ID as clientId, REDIRECT_URI as redirectUri } from "$lib/server/secrets";
+import { prisma } from "$lib/postgres.js";
 
-async function getExistingUser(userId) {
-    const key = await auth.useKey("neon", userId, null);
-    const user = await auth.getUser(key.userId);
-    return user;
+class NeonError extends Error {
+	constructor(message) {
+		super(message);
+		this.name = "NeonError";
+
+		if (Error.captureStackTrace) {
+			Error.captureStackTrace(this, NeonError);
+		}
+	}
+}
+
+async function getOrCreateUser(neonId) {
+	const user = await prisma.user.upsert({
+		where: {
+			neon_id: neonId
+		},
+		update: {},
+		create: {
+			neon_id: neonId
+		}
+	});
+	return user;
+}
+
+async function getNeonAccessToken(code) {
+	const response = await fetch(
+		"https://app.neoncrm.com/np/oauth/token",
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			body: `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirectUri}&grant_type=authorization_code`
+		}
+	)
+	if (!response.ok) {
+		throw new NeonError("Invalid response from Neon");
+	}
+
+	const tokens = await response.json();
+	if (!tokens.access_token) {
+		throw new NeonError("Invalid tokens from Neon");
+	}
+
+	return parseInt(tokens.access_token);
 }
 
 
@@ -13,6 +54,18 @@ export const GET = async ({ url, cookies, locals }) => {
 	const storedState = cookies.get("neon_oauth_state");
 	const state = url.searchParams.get("state");
 	const code = url.searchParams.get("code");
+	const error = url.searchParams.get("error");
+
+	if (error == 'invalid_request') {
+		return new Response(JSON.stringify({
+			error: "You may be logged in as a Neon system user. Please log out of your current session and try again with your constituent account."
+		}), {
+			status: 400,
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
+	}
 	// validate state
 	if (!storedState || !state || storedState !== state || !code) {
 		return new Response(null, {
@@ -20,59 +73,16 @@ export const GET = async ({ url, cookies, locals }) => {
 		});
 	}
 	try {
-        const response = await fetch(
-            "https://app.neoncrm.com/np/oauth/token",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&grant_type=authorization_code`
-            }
-        )
-		if (!response.ok) {
-			return new Response(null, {
-				status: 400
-			});
-		}
-		const tokens = await response.json();
-		if (!tokens.access_token) {
-			return new Response(null, {
-				status: 400
-			});
-		}
+        const accessToken = await getNeonAccessToken(code);
 
-		const getUser = async () => {
-			const existingUser = await getExistingUser(tokens.access_token);
-			if (existingUser) return existingUser;
-			const user = await auth.createUser({
-                key: {
-                    providerId: "neon",
-                    providerUserId: tokens.access_token,
-                    password: null
-                },
-				attributes: {
-					neonId: tokens.access_token
-				}
-			});
-			return user;
-		};
+		const user = await getOrCreateUser(accessToken);
 
-		const user = await getUser();
-		const session = await auth.createSession({
-			userId: user.userId,
-			attributes: {}
-		});
-		locals.auth.setSession(session);
-		return new Response(null, {
-			status: 302,
-			headers: {
-				Location: "/my-classes"
-			}
-		});
+		const session = await createSession(user.id);
+		const sessionExpiresAt = new Date(session.createdAt.getTime() + (60 * 60 * 24 * 1000)); // 1 day from now
+		setSessionTokenCookie(cookies, session.token, sessionExpiresAt);
 	} catch (e) {
-		if (e instanceof OAuthRequestError) {
-			// invalid code
+		console.error(e);
+		if (e instanceof NeonError) {
 			return new Response(null, {
 				status: 400
 			});
@@ -81,4 +91,10 @@ export const GET = async ({ url, cookies, locals }) => {
 			status: 500
 		});
 	}
+	return new Response(null, {
+		status: 303,
+		headers: {
+			Location: "/my-classes"
+		}
+	});
 };

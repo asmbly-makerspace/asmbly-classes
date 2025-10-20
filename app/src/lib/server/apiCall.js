@@ -20,8 +20,16 @@ async function apiCall(httpVerb, url, data, funcHeaders) {
 		headers: requestHeaders
 	};
 
+	const finalUrl = new URL(url);
+
 	if (data !== null) {
-		options.body = JSON.stringify(data);
+		if (httpVerb === 'GET') {
+			for (const [key, value] of Object.entries(data)) {
+				finalUrl.searchParams.set(key, value);
+			}
+		} else {
+			options.body = JSON.stringify(data);
+		}
 	}
 
 	for (let i = 0; i < maxRetries; i++) {
@@ -38,7 +46,7 @@ async function apiCall(httpVerb, url, data, funcHeaders) {
 				}
 			}
 		} else {
-			console.log(`Request failed with status ${result.status}: ${result.statusText}`);
+			console.log(`Request failed with status ${result.status}: ${await result.text()}`);
 			return {
 				status: result.status,
 				statusText: result.statusText

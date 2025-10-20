@@ -1,5 +1,5 @@
 # Base image
-FROM node:21.5.0
+FROM node:lts
 
 # Set environment variables
 ENV NODE_ENV=development

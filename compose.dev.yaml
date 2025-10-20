@@ -60,8 +60,8 @@ services:
       - db
     restart: unless-stopped
     volumes:
-      - ./cron-service:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./cron-service:/var/task
+      - /var/task/node_modules
     networks:
       - backend
 
