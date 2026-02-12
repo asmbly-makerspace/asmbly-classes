@@ -40,7 +40,7 @@ async function* postEventSearch(searchFields, outputFields) {
 }
 
 async function getActualAttendees(eventId) {
-	const resourcePath = `/v2/events/${eventId}/eventRegistrations`;
+	const resourcePath = `/v2/events/${eventId}/eventRegistrations?pageSize=200`;
 	const httpVerb = 'GET';
 	const url = N_BASE_URL + resourcePath;
 
