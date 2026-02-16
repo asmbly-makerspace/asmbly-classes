@@ -399,9 +399,184 @@ describe('neonHelpers', () => {
 
 			const result = await getCurrentEvents();
 
-			// BUG: Currently counts all tickets.length if first ticket is SUCCEEDED
-			// Should count only SUCCEEDED (2), but actually counts all (3)
+			// Should count only SUCCEEDED (2 out of 3)
+			expect(result[0]['Actual Registrants']).toBe('2');
+		});
+
+		it('counts SUCCEEDED across multiple registrations', async () => {
+			const mockSearchResponse = {
+				searchResults: [
+					{
+						'Event ID': 888,
+						'Registrants': 10,
+						'Event Registration Attendee Count': 5
+					}
+				],
+				pagination: { currentPage: 0, totalPages: 1, pageSize: 200 }
+			};
+
+			const mockRegistrationsResponse = {
+				eventRegistrations: [
+					{
+						tickets: [
+							{
+								attendees: [
+									{ registrationStatus: 'SUCCEEDED' },
+									{ registrationStatus: 'SUCCEEDED' }
+								]
+							}
+						]
+					},
+					{
+						tickets: [
+							{
+								attendees: [
+									{ registrationStatus: 'CANCELED' }
+								]
+							}
+						]
+					},
+					{
+						tickets: [
+							{
+								attendees: [
+									{ registrationStatus: 'SUCCEEDED' },
+									{ registrationStatus: 'REFUNDED' },
+									{ registrationStatus: 'SUCCEEDED' }
+								]
+							}
+						]
+					}
+				]
+			};
+
+			mockApiCall
+				.mockResolvedValueOnce(mockSearchResponse)
+				.mockResolvedValueOnce(mockRegistrationsResponse)
+				.mockResolvedValueOnce({
+					searchResults: [],
+					pagination: { currentPage: 1, totalPages: 1, pageSize: 200 }
+				});
+
+			const result = await getCurrentEvents();
+
+			// 2 + 0 + 2 = 4 SUCCEEDED
+			expect(result[0]['Actual Registrants']).toBe('4');
+		});
+
+		it('handles all CANCELED registrations', async () => {
+			const mockSearchResponse = {
+				searchResults: [
+					{
+						'Event ID': 777,
+						'Registrants': 3,
+						'Event Registration Attendee Count': 0
+					}
+				],
+				pagination: { currentPage: 0, totalPages: 1, pageSize: 200 }
+			};
+
+			const mockRegistrationsResponse = {
+				eventRegistrations: [
+					{
+						tickets: [
+							{
+								attendees: [
+									{ registrationStatus: 'CANCELED' },
+									{ registrationStatus: 'REFUNDED' }
+								]
+							}
+						]
+					}
+				]
+			};
+
+			mockApiCall
+				.mockResolvedValueOnce(mockSearchResponse)
+				.mockResolvedValueOnce(mockRegistrationsResponse)
+				.mockResolvedValueOnce({
+					searchResults: [],
+					pagination: { currentPage: 1, totalPages: 1, pageSize: 200 }
+				});
+
+			const result = await getCurrentEvents();
+
+			expect(result[0]['Actual Registrants']).toBe('0');
+		});
+
+		it('handles all SUCCEEDED registrations', async () => {
+			const mockSearchResponse = {
+				searchResults: [
+					{
+						'Event ID': 666,
+						'Registrants': 5,
+						'Event Registration Attendee Count': 3
+					}
+				],
+				pagination: { currentPage: 0, totalPages: 1, pageSize: 200 }
+			};
+
+			const mockRegistrationsResponse = {
+				eventRegistrations: [
+					{
+						tickets: [
+							{
+								attendees: [
+									{ registrationStatus: 'SUCCEEDED' },
+									{ registrationStatus: 'SUCCEEDED' },
+									{ registrationStatus: 'SUCCEEDED' }
+								]
+							}
+						]
+					}
+				]
+			};
+
+			mockApiCall
+				.mockResolvedValueOnce(mockSearchResponse)
+				.mockResolvedValueOnce(mockRegistrationsResponse)
+				.mockResolvedValueOnce({
+					searchResults: [],
+					pagination: { currentPage: 1, totalPages: 1, pageSize: 200 }
+				});
+
+			const result = await getCurrentEvents();
+
 			expect(result[0]['Actual Registrants']).toBe('3');
+		});
+
+		it('handles single attendee registrations with different statuses', async () => {
+			const mockSearchResponse = {
+				searchResults: [
+					{
+						'Event ID': 555,
+						'Registrants': 4,
+						'Event Registration Attendee Count': 2
+					}
+				],
+				pagination: { currentPage: 0, totalPages: 1, pageSize: 200 }
+			};
+
+			const mockRegistrationsResponse = {
+				eventRegistrations: [
+					{ tickets: [{ attendees: [{ registrationStatus: 'SUCCEEDED' }] }] },
+					{ tickets: [{ attendees: [{ registrationStatus: 'CANCELED' }] }] },
+					{ tickets: [{ attendees: [{ registrationStatus: 'SUCCEEDED' }] }] },
+					{ tickets: [{ attendees: [{ registrationStatus: 'REFUNDED' }] }] }
+				]
+			};
+
+			mockApiCall
+				.mockResolvedValueOnce(mockSearchResponse)
+				.mockResolvedValueOnce(mockRegistrationsResponse)
+				.mockResolvedValueOnce({
+					searchResults: [],
+					pagination: { currentPage: 1, totalPages: 1, pageSize: 200 }
+				});
+
+			const result = await getCurrentEvents();
+
+			expect(result[0]['Actual Registrants']).toBe('2');
 		});
 
 		it('handles null event registrations', async () => {
