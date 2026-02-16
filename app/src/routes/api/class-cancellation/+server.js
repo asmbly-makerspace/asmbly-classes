@@ -154,9 +154,9 @@ export async function POST({ request }) {
 
         const sentEmails = await Promise.allSettled(emailList);
 
-        if (sentEmails.some(result => result.status === 'rejected')) {
-            console.error(`Error sending email: ${sentEmails.find(r => r.status === 'rejected').reason}`);
-        }
+        sentEmails
+            .filter(result => result.status === 'rejected')
+            .forEach(rejected => console.error(`Error sending email: ${rejected.reason}`));
 
         if (sentEmails.some(result => result.status === 'fulfilled')) {
             await prisma.neonEventInstanceRequest.updateMany({
