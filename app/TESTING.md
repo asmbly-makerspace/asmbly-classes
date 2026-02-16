@@ -219,68 +219,54 @@ This pattern uses getters to avoid Vitest hoisting issues, allowing mocks to be 
 
 The `$tests` alias is configured in `vite.config.js` and points to the `tests/` directory, keeping test utilities separate from production code.
 
-## Testing Coverage
+### Testing Async Generators
 
-Current test coverage includes:
+When testing async generators (functions with `async function*` and `yield`), be careful to control iteration to prevent infinite loops:
 
-### API Endpoints
-- ✅ API authentication (valid/invalid keys)
-- ✅ Event registration (increment attendee count)
-- ✅ Waitlist fulfillment (matching registrants)
-- ✅ Event cancellation (decrement attendee count)
-- ✅ Duplicate cancellation prevention
-- ✅ Waitlist notifications on seat opening
-- ✅ Email failure handling
-- ✅ Refund vs cancellation status handling
+```javascript
+it('yields paginated results', async () => {
+  // Mock multiple responses
+  mockApiCall
+    .mockResolvedValueOnce(page0Response)
+    .mockResolvedValueOnce(page1Response);
 
-### Page Actions
-- ✅ Newsletter signup (Flodesk API integration)
-- ✅ Private class requests (email notifications)
-- ✅ Full class waitlist requests
-- ✅ Notification requests for class types
-- ✅ On-demand class requests
-- ✅ Form validation failures
-- ✅ Database operations (upsert, transactions)
+  const generator = postEventSearch(searchFields, outputFields);
+  const results = [];
 
-### Page Load Functions
-- ✅ Event page data loading
-- ✅ 404 handling for missing events
-- ✅ Cache header configuration
-- ✅ Event instances with filters
+  // Limit iterations to prevent infinite loop
+  let iteration = 0;
+  for await (const result of generator) {
+    results.push(result);
+    iteration++;
+    if (iteration >= 2) break; // Match number of mocked responses
+  }
 
-## CI/CD Integration
+  expect(results.length).toBe(2);
+});
+```
 
-### Automated Testing on Pull Requests
+**Important:** Always use `mockResolvedValueOnce()` (not `mockResolvedValue()`) for generators, and always include a break condition in your test loop.
 
-Tests are automatically run on every pull request to the `main` branch via GitHub Actions (`.github/workflows/test-pr.yml`).
+### Testing Functions That Call Async Generators
 
-The workflow:
-1. **Triggers** on PRs that modify files in the `app/` directory
-2. **Runs all tests** with `npm test -- --run`
-3. **Generates coverage reports** with `npm test -- --run --coverage`
-4. **Uploads coverage artifacts** for review
-5. **Comments coverage results** directly on the PR
+When testing functions that internally use async generators, ensure mock responses cover:
+1. All data pages needed
+2. The "break" condition page (when generator checks if done)
 
-### Viewing Test Results
+```javascript
+it('processes all pages from generator', async () => {
+  mockApiCall
+    .mockResolvedValueOnce({ // Page 0 - has data
+      searchResults: [{ id: 1 }],
+      pagination: { currentPage: 0, totalPages: 1 }
+    })
+    .mockResolvedValueOnce({ // Page 1 - break condition
+      searchResults: [],
+      pagination: { currentPage: 1, totalPages: 1 }
+    });
 
-- Test results appear in the GitHub Actions tab for each PR
-- Coverage reports are uploaded as artifacts and can be downloaded
-- Coverage summary is automatically commented on the PR
-- Failed tests will block the PR merge if required status checks are enabled
+  const result = await processEvents(); // Uses generator internally
 
-### Local vs CI Testing
-
-Both local and CI environments run the same tests:
-- **Local**: `npm test` (watch mode for development)
-- **CI**: `npm test -- --run` (single run for automated checks)
-
-This ensures consistency between development and production testing.
-
-## Future Enhancements
-
-Consider adding tests for:
-- More helper functions in `src/lib/helpers/`
-- Model classes (`NeonEventType`, `NeonEventInstance`)
-- Server-side authentication logic
-- Additional API endpoints as they are created
-
+  expect(result).toHaveLength(1);
+});
+```

@@ -158,7 +158,9 @@ export function createMockPrisma() {
 		neonEventInstanceCancellee: new Map(),
 		neonBaseRegLink: new Map(),
 		neonEventRequester: new Map(),
-		neonEventTypeRequest: new Map()
+		neonEventTypeRequest: new Map(),
+		session: new Map(),
+		user: new Map()
 	};
 
 	const prisma = {
@@ -451,6 +453,54 @@ export function createMockPrisma() {
 		// NeonEventTypeRequest alias (capitalized)
 		get NeonEventTypeRequest() {
 			return this.neonEventTypeRequest;
+		},
+		// Session table methods for auth testing
+		session: {
+			create: async ({ data: createData }) => {
+				const session = {
+					id: createData.id,
+					user_id: createData.user_id,
+					secret_hash: createData.secret_hash,
+					created_at: createData.created_at
+				};
+				data.session.set(session.id, session);
+				return session;
+			},
+			findUnique: async ({ where, include }) => {
+				const session = data.session.get(where.id);
+				if (!session) return null;
+
+				const result = { ...session };
+
+				if (include?.user) {
+					const user = Array.from(data.user.values())
+						.find(u => u.neon_id === session.user_id);
+					result.user = user || null;
+				}
+
+				return result;
+			},
+			delete: async ({ where }) => {
+				const session = data.session.get(where.id);
+				if (!session) throw new Error('Session not found');
+				data.session.delete(where.id);
+				return session;
+			}
+		},
+		// User table methods for auth testing
+		user: {
+			findUnique: async ({ where }) => {
+				return Array.from(data.user.values())
+					.find(u => u.id === where.id || u.neon_id === where.neon_id) || null;
+			},
+			create: async ({ data: createData }) => {
+				const user = {
+					id: createData.id || Math.floor(Math.random() * 10000),
+					neon_id: createData.neon_id
+				};
+				data.user.set(user.id, user);
+				return user;
+			}
 		},
 		$transaction: async (operations) => {
 			const results = [];
