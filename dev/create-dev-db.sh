@@ -30,6 +30,23 @@ cleanup() {
 }
 trap cleanup EXIT
 
+if ! docker info > /dev/null 2>&1; then
+  echo "==> Starting Docker Desktop..."
+  open -a Docker
+  for i in $(seq 1 60); do
+    if docker info > /dev/null 2>&1; then
+      break
+    fi
+    sleep 1
+  done
+  if ! docker info > /dev/null 2>&1; then
+    echo "ERROR: Docker did not start within 60 seconds." >&2
+    exit 1
+  fi
+fi
+
+docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
+
 echo "==> Starting temporary Postgres..."
 docker run -d --name "$CONTAINER_NAME" \
   -e POSTGRES_PASSWORD="$LOCAL_PASS" \

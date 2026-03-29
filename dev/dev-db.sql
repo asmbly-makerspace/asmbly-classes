@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 5HMtp7se2fBxeTGiscFXwev8ifs5ROjKU225M8JSBg1zI4O1ykQdIhKsOa02Guf
+\restrict 6kdX2YoWrG8fdKnQrpXOh3EsBBWTk7QsRsT2a0HfYLfF0Pgycnzbkekw4s0QoaT
 
 -- Dumped from database version 16.13 (Debian 16.13-1.pgdg13+1)
 -- Dumped by pg_dump version 18.3
@@ -495,18 +495,18 @@ COPY public."NeonBaseRegLink" (id, url) FROM stdin;
 
 COPY public."NeonEventCategory" (id, name, "archCategoriesId") FROM stdin;
 12	Woodshop Mentor Series	\N
-5	Metalworking	3
+4	_3D Printing	5
 14	Ceramics	10
 11	Miscellaneous	8
-3	Woodworking	2
-7	Textiles	6
-4	_3D Printing	5
 9	Orientation	1
-8	Private	9
-6	Electronics	7
-10	Woodshop Safety	2
+5	Metalworking	3
 2	Laser Cutting	4
 1	CNC Router	2
+3	Woodworking	2
+8	Private	9
+7	Textiles	6
+6	Electronics	7
+10	Woodshop Safety	2
 \.
 
 
@@ -1289,6 +1289,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 75418	21	8	2	3	2024-10-30 23:30:00	2024-10-31 02:00:00	This class is an introduction to our ULS lasers - Blue & Pearl.  We will cover laser basics, materials to cut or not cut, basics in CorelDraw, and proper settings and troubleshooting.	70	4
 75338	8	6	5	2	2024-11-26 00:30:01	2024-11-26 03:00:01	This class focuses on teaching the basic skills needed to safely use the manual mill.	135	2
 75398	90	18	3	3	2024-10-29 23:30:00	2024-10-30 01:00:00	The Festool Domino DF500 provides a quick way to create floating tenon joints in a variety of applications. Key uses are in cabinetry, frames, building table tops, joining table legs to aprons, drawers, and boxes.	45	4
+98728	24	57	10	0	2026-04-22 23:30:00	2026-04-23 02:00:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 75358	6	6	5	2	2024-11-27 00:00:00	2024-11-27 03:00:00	This 3 hr class provides an introduction to the metal lathe.  The metal lathe is one of the 2 tools you could use to rebuild the entire world. Its versatility is very understated.  Students will leave with a handout, a greater appreciation of the metal lathe, an Iscar carbide insert, and an aluminum keepsake.	110	3
 75403	90	18	3	4	2024-12-07 18:30:00	2024-12-07 20:00:00	The Festool Domino DF500 provides a quick way to create floating tenon joints in a variety of applications. Key uses are in cabinetry, frames, building table tops, joining table legs to aprons, drawers, and boxes.	45	4
 78399	24	16	10	4	2025-01-16 00:00:01	2025-01-16 02:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	30	4
@@ -1726,6 +1727,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 86085	17	46	5	4	2025-06-26 23:30:00	2025-06-27 02:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	30	4
 87784	184	53	2	4	2025-08-02 14:00:00	2025-08-02 17:00:00	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	100	4
 83193	319	44	5	4	2025-04-26 18:00:01	2025-04-26 21:00:01	In this toolmaking class, we’ll be learning about the forging, grinding, hardening and tempering of high carbon tool steel. The finished projects will be a centerpunch and marking knife for your future metal and wood projects.  Closed-toe shoes, long pants, and safety glasses are required for this course. 	100	4
+99006	19	74	9	0	2026-04-29 23:00:01	2026-04-30 00:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
 83223	174	40	7	1	2025-04-03 23:00:01	2025-04-04 02:00:01	The Leather Belt Making class provides a foundational overview of leather crafting. Attendees will make a leather belt using a variety of techniques.	75	3
 84013	332	61	14	2	2025-04-11 00:00:00	2025-04-11 02:00:00	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 83178	184	8	2	4	2025-04-29 23:00:00	2025-04-30 02:00:00	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	100	4
@@ -1747,6 +1749,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 83118	328	57	3	3	2025-04-28 23:00:01	2025-04-29 00:30:01	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	30	4
 84008	332	55	14	4	2025-04-04 00:00:00	2025-04-04 02:00:00	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 83213	330	48	7	2	2025-04-28 23:00:01	2025-04-29 01:00:01	Learn about sublimation best practices, techniques, and tips and tricks, then leave with a personalized tote bag and mug of your own creation.	35	3
+98678	24	57	10	0	2026-04-15 23:30:00	2026-04-16 02:00:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 94654	378	57	8	1	2025-10-23 23:30:01	2025-10-24 02:30:01	This class gives a combined orientation and Woodshop Safety to get members in the shop as quickly as possible. Woodshop Safety provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.	95	1
 84003	332	27	14	5	2025-07-19 19:00:00	2025-07-19 21:00:00	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 83208	330	48	7	3	2025-04-17 23:00:00	2025-04-18 01:00:00	Learn about sublimation best practices, techniques, and tips and tricks, then leave with a personalized tote bag and mug of your own creation.	35	3
@@ -1884,7 +1887,6 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 84028	332	70	14	4	2025-05-02 00:00:00	2025-05-02 02:00:00	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 84078	332	61	14	4	2025-05-16 00:00:01	2025-05-16 02:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 91468	17	10	5	2	2025-10-19 15:00:00	2025-10-19 17:30:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	30	4
-98201	380	57	3	0	2026-03-23 23:30:01	2026-03-25 02:30:01	Join us for a hands-on exploration of beginner to intermediate woodshop techniques, designed to elevate your woodworking skills to the next level. In this course, we will delve into the essential tools and techniques needed to craft a beautiful, functional, and well-constructed hardwood cutting or serving board.\r\n\r\n*This is a 2 day class; please see the details in the full event description. It is recommended, but not required, to take "Woodshop Safety" before this class.*	135	4
 85330	184	56	2	4	2025-05-31 14:00:01	2025-05-31 17:00:01	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	100	4
 85325	350	47	6	3	2025-05-25 18:00:00	2025-05-25 21:00:00	This course introduces the fundamentals of operating an Arduino Uno microcontroller, including programming and connecting various peripheral devices. Participants will gain the foundational skills needed to develop their own electronics projects and implement mechanical control. By the end of the class, you will have coded and assembled a small robotic arm using 3d printed parts and various motors and electronics. No prior electronics or programming experience is necessary. All materials are provided, including an electronics kit with an Arduino Uno, servo motor, stepper motor, potentiometer, buttons, resistors, etc\r\n\r\nNote: Please bring a laptop to class.	110	3
 87052	19	54	9	7	2025-07-05 20:00:00	2025-07-05 21:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
@@ -1962,6 +1964,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 86417	5	42	4	1	2025-06-18 23:00:00	2025-06-19 02:00:00	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	75	4
 91483	399	47	8	1	2025-09-23 18:00:00	2025-09-23 19:00:00		75	1
 86402	387	27	8	1	2025-05-31 02:00:00	2025-05-31 04:00:00	Payment portal for the GSCTX Junior Art and Design Badge Workshop	760	1
+98528	24	57	10	0	2026-04-26 14:00:01	2026-04-26 16:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 86497	175	40	7	2	2025-06-28 21:00:00	2025-06-29 00:00:00	The Intro to Leatherworking class provides a foundational overview of leather crafting with an emphasis on hand stitching. Attendees will make a leather wallet using a variety of techniques.	75	3
 91978	19	62	9	10	2025-11-22 21:00:01	2025-11-22 22:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	13
 92578	19	77	9	12	2025-10-29 23:00:00	2025-10-30 00:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
@@ -2036,6 +2039,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 87528	382	74	7	0	2025-07-12 15:00:00	2025-07-12 17:00:00	In this hands-on class, students will get a practical introduction to the art of leather stamping and tooling. Perfect for beginners or anyone looking to refresh their basic leatherworking skills, this workshop guides participants through the essential techniques of tooling and dyeing. Each student will create a custom wristband from pre-cut leather, which they’ll finish and take home at the end of the session.	45	6
 97271	333	41	3	4	2026-02-28 00:30:01	2026-02-28 03:30:01	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
 97266	100	72	5	5	2026-02-26 00:00:00	2026-02-26 04:30:00	In this class we go over all the required skills to make parts on the Tormach CNC mill. \r\nPre-Requisites: Tormach Part 1: Fusion CAM and Milling: Techniques	160	5
+98478	24	57	10	1	2026-04-19 14:00:01	2026-04-19 16:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 87477	333	41	3	4	2025-07-18 23:00:01	2025-07-19 02:00:01	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	70	4
 87467	24	57	10	4	2025-07-16 23:30:00	2025-07-17 02:00:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	30	4
 87457	328	57	3	4	2025-07-15 23:30:00	2025-07-16 01:00:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	30	4
@@ -2055,7 +2059,6 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 93324	18	57	5	3	2025-11-04 19:00:01	2025-11-04 22:00:01	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
 97276	182	46	3	2	2026-01-31 20:00:01	2026-01-31 22:00:01	This class will teach you some of  the incredible capabilities that the Shaper Origin has and will certify you to use the tool.	80	3
 86482	383	75	3	3	2025-07-08 23:00:00	2025-07-30 02:00:00	The Jupiter Side Table is a great introduction to furniture making techniques and traditional joinery. We’ll be using african mahogany (aka sapele) for the top and hard maple for the legs and rails. You’ll learn how to layout & create joinery for mortise and tenons joints and half lap joints, cutting circles, tapering legs, counterboring, resawing, and bookmatching. You’ll gain experience using the bandsaw, drill press, table saw, milling machines like the jointer and planer, and hand held tools like the plunge router. **Note - This is four week course that will meet on Tuesday nights from 6PM - 9PM. We must have three students to run this class. If the three spots are not filled by 48 hours before the start date, we will need to push the start date back.**	350	3
-90130	173	56	4	4	2025-09-13 19:30:00	2025-09-13 21:00:00	This introductory course is designed for beginners and intermediate users looking to harness the potential of the Bambulab P1S 3D printer and the Automatic Material System (AMS). Participants will learn how to set up and operate the P1S for single- and multi-material printing. The course also covers material management with the AMS, including filament handling, storage, and color management. By the end of the course, students will have the skills and confidence to create high-quality, multi-material 3D prints efficiently.	30	4
 87422	321	17	3	3	2025-07-11 23:00:00	2025-07-12 02:00:00	This is a beginner level class that covers the basic use of lathe tools and best practices with the lathe itself, focused on bowl turning. You do not need to have taken the spindle class before taking this class. During this class we will cover the different tools and how to sharpen them, as well as several different project mounting techniques. You will get to choose from several different bowl blanks that we have on hand, however you may also bring your own if you choose, so long as it is at least 4” x 4” x 2 ½” in dimension (though I recommend walnut, cherry, and maple. Certain species, mostly super-dense hardwoods (purple heart), and all oak species, will be harder to turn).	100	3
 87407	333	41	3	4	2025-07-10 23:00:01	2025-07-11 02:00:01	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	70	4
 86005	24	57	10	4	2025-07-02 23:00:00	2025-07-03 01:30:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	30	4
@@ -2112,6 +2115,9 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 88647	330	48	7	3	2025-07-30 23:00:00	2025-07-31 01:00:00	Learn about sublimation best practices, techniques, and tips and tricks, then leave with a personalized tote bag and mug of your own creation.	35	3
 87936	332	27	14	7	2025-08-02 19:00:01	2025-08-02 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 97866	453	27	8	2	2026-02-16 21:00:00	2026-02-16 22:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	2
+100199	328	57	3	1	2026-04-07 23:30:00	2026-04-08 01:00:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
+100214	316	69	7	1	2026-04-07 23:00:00	2026-04-08 01:00:00	The Intro to Sewing class is designed to provide beginners with the fundamental knowledge and skills needed to start their sewing journey.	75	3
+98428	24	57	10	1	2026-04-12 14:00:01	2026-04-12 16:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 91573	324	6	5	2	2025-10-13 23:15:00	2025-10-14 02:15:00	This class focuses on teaching the basic skills needed to safely use the manual mill.	135	2
 91538	412	74	7	4	2025-10-16 23:00:01	2025-10-17 01:00:01	In this hands-on class, students will get a practical introduction to the art of leather stamping and tooling. Perfect for beginners or anyone looking to refresh their basic leatherworking skills, this workshop guides participants through the essential techniques of tooling and dyeing. Each student will create a custom wristband from pre-cut leather, which they’ll finish and take home at the end of the session.	45	6
 91518	17	46	5	1	2025-10-09 23:30:00	2025-10-10 02:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	30	4
@@ -2131,7 +2137,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 91528	17	46	5	3	2025-10-23 23:30:00	2025-10-24 02:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	30	4
 91558	153	57	2	4	2025-10-27 23:30:01	2025-10-28 02:00:01	This class is an introduction to our ULS lasers - Blue & Pearl.  We will cover laser basics, materials to cut or not cut, basics in CorelDraw, and proper settings and troubleshooting.	70	4
 90528	182	13	3	2	2025-11-23 22:30:00	2025-11-24 00:30:00	This class will teach you some of  the incredible capabilities that the Shaper Origin has and will certify you to use the tool.	80	3
-97841	184	56	2	4	2026-02-28 15:00:01	2026-02-28 18:00:01	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
+97841	184	56	2	5	2026-02-28 15:00:01	2026-02-28 18:00:01	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
 90538	184	53	2	3	2025-10-04 14:00:01	2025-10-04 17:00:01	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	100	4
 89844	324	6	8	1	2025-08-11 14:00:01	2025-08-11 17:00:01	This class focuses on teaching the basic skills needed to safely use the manual mill.	135	1
 90533	85	33	8	4	2025-09-15 20:00:00	2025-09-15 23:00:00	This class provides an introduction to TIG welding, granting precise control over heat input and the ability to weld thinner materials.	110	4
@@ -2142,7 +2148,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 97226	184	56	2	4	2026-01-31 00:00:00	2026-01-31 03:00:00	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
 90883	328	57	3	3	2025-10-05 18:00:00	2025-10-05 19:30:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	30	4
 88236	332	27	14	4	2025-09-13 19:00:01	2025-09-13 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
-96236	19	62	9	12	2026-03-21 20:00:01	2026-03-21 21:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+96236	19	62	9	14	2026-03-21 20:00:01	2026-03-21 21:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
 88672	100	72	5	5	2025-08-07 23:00:00	2025-08-08 03:30:00	In this class we go over all the required skills to make parts on the Tormach CNC mill. \r\nPre-Requisites: Tormach Part 1: Fusion CAM and Intro to Milling	135	5
 88657	324	6	5	2	2025-07-27 18:00:01	2025-07-27 21:00:01	This class focuses on teaching the basic skills needed to safely use the manual mill.	135	2
 88286	332	27	14	5	2025-09-20 19:00:01	2025-09-20 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
@@ -2232,7 +2238,6 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 88732	381	56	7	4	2025-08-07 23:00:00	2025-08-08 02:00:00	In this hands-on class, you’ll get to know our awesome Brother embroidery machines as you explore both patch making and direct-to-garment stitching. You’ll learn how to bring your designs to life with the right stabilizers, fabrics, and setup techniques — plus get the scoop on threading, hooping, and fine-tuning your projects. We’ll also cover fun finishing tricks to make your creations look polished and professional. Whether you're dreaming of custom patches or jazzing up your wardrobe, this class is your perfect starting point!	75	4
 89797	90	57	8	1	2025-08-06 19:00:00	2025-08-06 20:00:00	The Festool Domino DF500 provides a quick way to create floating tenon joints in a variety of applications. Key uses are in cabinetry, frames, building table tops, joining table legs to aprons, drawers, and boxes.	55	1
 88947	382	74	7	1	2025-08-25 23:30:00	2025-08-26 01:30:00	In this hands-on class, students will get a practical introduction to the art of leather stamping and tooling. Perfect for beginners or anyone looking to refresh their basic leatherworking skills, this workshop guides participants through the essential techniques of tooling and dyeing. Each student will create a custom wristband from pre-cut leather, which they’ll finish and take home at the end of the session.	45	6
-90135	153	57	2	4	2025-09-15 23:30:00	2025-09-16 02:00:00	This class is an introduction to our ULS lasers - Blue & Pearl.  We will cover laser basics, materials to cut or not cut, basics in CorelDraw, and proper settings and troubleshooting.	70	4
 89762	173	56	4	4	2025-08-23 17:00:00	2025-08-23 18:30:00	This introductory course is designed for beginners and intermediate users looking to harness the potential of the Bambulab P1S 3D printer and the Automatic Material System (AMS). Participants will learn how to set up and operate the P1S for single- and multi-material printing. The course also covers material management with the AMS, including filament handling, storage, and color management. By the end of the course, students will have the skills and confidence to create high-quality, multi-material 3D prints efficiently.	30	4
 89782	392	27	8	1	2025-08-05 00:30:01	2025-08-05 02:30:01		40	1
 89767	18	57	8	4	2025-08-13 19:00:00	2025-08-13 22:00:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	110	4
@@ -2250,6 +2255,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 89829	88	27	8	1	2025-08-07 23:00:00	2025-08-08 02:30:00	In this class, you will learn how to use the "Manufacture" portion of Autodesk Fusion to create toolpaths that you can use to make parts on the Tormach PCNC 1100 mill.	80	1
 89804	153	57	8	1	2025-08-07 19:00:01	2025-08-07 22:00:01	This class is an introduction to our ULS lasers - Blue & Pearl.  We will cover laser basics, materials to cut or not cut, basics in CorelDraw, and proper settings and troubleshooting.	175	1
 89849	24	57	8	1	2025-08-19 21:00:01	2025-08-19 23:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	75	1
+96686	19	74	9	13	2026-03-25 23:00:01	2026-03-26 00:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
 89884	321	17	3	3	2025-08-28 23:00:00	2025-08-29 02:30:00	This is a beginner level class that covers the basic use of lathe tools and best practices with the lathe itself, focused on bowl turning. You do not need to have taken the spindle class before taking this class. During this class we will cover the different tools and how to sharpen them, as well as several different project mounting techniques. You will get to choose from several different bowl blanks that we have on hand, however you may also bring your own if you choose, so long as it is at least 4” x 4” x 2 ½” in dimension (though I recommend walnut, cherry, and maple. Certain species, mostly super-dense hardwoods (purple heart), and all oak species, will be harder to turn).	100	3
 89869	361	73	3	3	2025-08-23 14:00:01	2025-08-23 16:00:01	Prepare your hand plane for daily use and achieve crisp clean shavings. Students will learn the proper methods of disassembling, cleaning, adjusting the frog to set the plane mouth opening, flattening the plane’s sole, and fitting the cap iron (chip breaker) to the plane iron. We will also sharpen the plane iron and learn how to adjust the plane iron to take straight clean shavings. (Bring one metal hand plane size #4 - #8)	0	3
 89874	309	57	8	1	2025-08-28 20:00:01	2025-08-28 23:00:01	Try your hand at wheel throwing! In this beginner-friendly class, you’ll learn how to center clay, pull walls, and shape your piece on the wheel. Get plenty of hands-on guidance and support as you explore the basics of throwing. At the end of class, choose your favorite piece to keep! Your instructor will trim and bisque-fire it for you, and you can return to glaze it yourself during one of our Glazing Workshops, or opt to have it glazed for you for a small additional fee.	175	1
@@ -2265,7 +2271,6 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 90070	24	57	10	4	2025-09-07 14:00:01	2025-09-07 16:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	30	4
 96811	324	6	8	3	2026-01-19 15:00:01	2026-01-19 18:00:01	This class focuses on teaching the basic skills needed to safely use the manual mill.	160	3
 96586	19	52	9	13	2026-03-11 23:00:01	2026-03-12 00:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
-96686	19	77	9	5	2026-03-25 23:00:00	2026-03-26 00:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
 90065	177	17	3	3	2025-09-07 14:00:01	2025-09-07 17:00:01	This is a beginner level class that covers the basic use of lathe tools and best practices with the lathe itself, focused on spindle turning. During this class we will cover the different tools and how to sharpen them, as well as several different project mounting techniques. You will get to choose from several project options (bottle stopper, coffee scoop, or screwdriver) to finish and take home at the end of this class. You will be provided a wood blank, but you may bring your own if you choose, so long as it is at least 2” x 2” x 5” in dimension (unless you choose a bottle stopper, in which case it may be 2” x 2” x 3”).	85	3
 91688	324	6	5	2	2025-10-27 23:15:01	2025-10-28 02:15:01	This class focuses on teaching the basic skills needed to safely use the manual mill.	135	2
 90115	18	57	8	0	2025-09-02 14:30:01	2025-09-02 17:30:01	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	110	4
@@ -2273,6 +2278,8 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 90125	381	56	7	4	2025-09-13 16:00:00	2025-09-13 19:00:00	In this hands-on class, you’ll get to know our awesome Brother embroidery machines as you explore both patch making and direct-to-garment stitching. You’ll learn how to bring your designs to life with the right stabilizers, fabrics, and setup techniques — plus get the scoop on threading, hooping, and fine-tuning your projects. We’ll also cover fun finishing tricks to make your creations look polished and professional. Whether you're dreaming of custom patches or jazzing up your wardrobe, this class is your perfect starting point!	75	4
 89792	350	47	6	3	2025-08-18 23:00:01	2025-08-19 02:00:01	This course introduces the fundamentals of operating an Arduino Uno microcontroller, including programming and connecting various peripheral devices. Participants will gain the foundational skills needed to develop their own electronics projects and implement mechanical control. By the end of the class, you will have coded and assembled a small robotic arm using 3d printed parts and various motors and electronics. No prior electronics or programming experience is necessary. All materials are provided, including an electronics kit with an Arduino Uno, servo motor, stepper motor, potentiometer, buttons, resistors, etc\r\n\r\nNote: Please bring a laptop to class.	110	3
 90241	353	56	7	1	2025-09-21 15:00:01	2025-09-21 18:00:01	In this class, students will learn how to make their own piece of leather armor utilizing various leatherworking skills. They will also learn the basics of cutting and etching designs on our Ruida controlled lasers, Students will be taught each step by an instructor, then make a personalized first project. When the class is complete, students will leave with their project and knowledge of two of Asmbly’s fantastic workshops.	85	4
+90130	173	56	4	4	2025-09-13 19:30:00	2025-09-13 21:00:00	This introductory course is designed for beginners and intermediate users looking to harness the potential of the Bambulab P1S 3D printer and the Automatic Material System (AMS). Participants will learn how to set up and operate the P1S for single- and multi-material printing. The course also covers material management with the AMS, including filament handling, storage, and color management. By the end of the course, students will have the skills and confidence to create high-quality, multi-material 3D prints efficiently.	30	4
+90135	153	57	2	4	2025-09-15 23:30:00	2025-09-16 02:00:00	This class is an introduction to our ULS lasers - Blue & Pearl.  We will cover laser basics, materials to cut or not cut, basics in CorelDraw, and proper settings and troubleshooting.	70	4
 90140	5	42	8	1	2025-08-23 21:00:00	2025-08-23 22:00:00	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	60	1
 89799	404	28	14	4	2025-08-24 18:00:00	2025-08-24 20:00:00	Learn the technique of throwing off the hump to quickly create  repeated shapes from one large lump of clay.  Imagine and shape  miniature pottery and cut it off the wheel while it’s still spinning! These miniature pots make great testers for glazes and are very collectable. Throwing off the hump is also commonly used for creating bowls, small cups, and teapot spouts.	45	5
 90120	18	11	5	4	2025-09-13 14:30:00	2025-09-13 17:30:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	110	4
@@ -2351,8 +2358,8 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 97871	24	57	10	4	2026-02-25 00:30:01	2026-02-25 03:00:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 90673	333	41	3	4	2025-10-19 14:00:01	2025-10-19 17:00:01	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	70	4
 90382	388	66	14	3	2025-09-06 14:00:00	2025-10-18 17:00:00	This beginner-friendly course meets once a week for six weeks and is designed to give new ceramicists a strong foundation while offering returning potters a chance to deepen their skills with hands-on support. Through structured lessons and guided studio time, students will learn the full workflow of wheel-thrown pottery, from shaping wet clay to finishing glazed pieces.\r\n\r\nStudents will leave with multiple completed pieces and a foundational understanding of the wheel-throwing process, supported each step of the way by their instructor. (The class has a minimum requirement of 2 students to run. If less than two students sign up, we will reschedule.)	350	5
-97906	24	57	10	4	2026-03-22 14:00:00	2026-03-22 16:30:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 97911	24	57	10	4	2026-03-29 14:00:01	2026-03-29 16:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
+97906	24	57	10	3	2026-03-22 14:00:00	2026-03-22 16:30:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 91368	17	10	5	4	2025-10-12 15:00:01	2025-10-12 17:30:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	30	4
 88536	332	27	14	5	2025-10-25 19:00:01	2025-10-25 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 88486	332	27	14	4	2025-10-18 19:00:01	2025-10-18 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
@@ -2371,13 +2378,14 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 97896	24	57	10	4	2026-03-01 15:00:00	2026-03-01 17:30:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 97876	24	57	10	4	2026-03-05 00:30:01	2026-03-05 03:00:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 98267	395	52	4	3	2026-03-24 23:00:01	2026-03-25 02:00:01	This introductory course is designed for beginner users looking to explore 3D modeling with Autodesk Fusion (AKA Fusion 360), with an emphasis on creating models optimized for 3D printing. Participants will learn the fundamentals of sketching, parametric design, and solid modeling, along with best practices for designing printable parts. By the end of the course, students will have the skills and confidence to create, modify, and export 3D models suitable for slicing and fabrication on FDM and SLA/DLP printers.	65	4
+98378	24	57	10	4	2026-04-05 14:00:01	2026-04-05 16:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 93248	84	11	5	2	2025-11-08 15:30:00	2025-11-08 18:30:00	This 3 hr class covers the more advanced process of AC TIG welding aluminum. It is recommended to take Intro to TIG Welding Steel class first. Students will learn proper equipment setup, joint preparation, and safety considerations specific to aluminum welding.  Must wear natural fiber long pants, natural fiber shirt, and closed toe shoes (natural fiber being cotton or wool).	140	4
 95811	432	46	8	1	2026-02-21 00:00:00	2026-02-26 02:30:00	Payment registration link for HERC team shop access fourth block (3 dates)	337.5	1
 97261	88	72	5	8	2026-02-25 00:00:01	2026-02-25 03:30:01	In this class, you will learn how to use the "Manufacture" portion of Autodesk Fusion to create toolpaths that you can use to make parts on the Tormach PCNC 1100 mill.	100	8
 98272	457	46	8	0	2026-03-11 23:00:01	2026-03-12 01:30:01	Payment registration link for HERC team shop access.	675	1
-98241	184	56	2	1	2026-03-30 23:00:00	2026-03-31 02:00:00	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
 98036	177	17	3	3	2026-03-18 23:00:00	2026-03-19 02:00:00	This is a beginner level class that covers the basic use of lathe tools and best practices with the lathe itself, focused on spindle turning. During this class we will cover the different tools and how to sharpen them, as well as several different project mounting techniques. You will get to choose from several project options (bottle stopper, coffee scoop, or screwdriver) to finish and take home at the end of this class. You will be provided a wood blank, but you may bring your own if you choose, so long as it is at least 2” x 2” x 5” in dimension (unless you choose a bottle stopper, in which case it may be 2” x 2” x 3”).	110	3
 97891	24	6	10	4	2026-03-18 23:30:00	2026-03-19 02:00:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
+98241	184	56	2	4	2026-03-30 23:00:00	2026-03-31 02:00:00	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
 93314	309	57	14	5	2025-11-04 00:30:00	2025-11-04 03:30:00	Try your hand at wheel throwing! In this beginner-friendly class, you’ll learn how to center clay, pull walls, and shape your piece on the wheel. Get plenty of hands-on guidance and support as you explore the basics of throwing. At the end of class, choose your favorite piece to keep! Your instructor will trim and bisque-fire it for you, and you can return to glaze it yourself during one of our Glazing Workshops, or opt to have it glazed for you for a small additional fee.	85	5
 91628	350	47	6	2	2025-10-20 23:00:00	2025-10-21 02:00:00	This course introduces the fundamentals of operating an Arduino Uno microcontroller, including programming and connecting various peripheral devices. Participants will gain the foundational skills needed to develop their own electronics projects and implement mechanical control. By the end of the class, you will have coded and assembled a small robotic arm using 3d printed parts and various motors and electronics. No prior electronics or programming experience is necessary. All materials are provided, including an electronics kit with an Arduino Uno, servo motor, stepper motor, potentiometer, buttons, resistors, etc\r\n\r\nNote: Please bring a laptop to class.	110	4
 97831	321	17	3	3	2026-02-26 00:00:01	2026-02-26 03:30:01	This is a beginner level class that covers the basic use of lathe tools and best practices with the lathe itself, focused on bowl turning. You do not need to have taken the spindle class before taking this class. During this class we will cover the different tools and how to sharpen them, as well as several different project mounting techniques. You will get to choose from several different bowl blanks that we have on hand, however you may also bring your own if you choose, so long as it is at least 4” x 4” x 2 ½” in dimension (though I recommend walnut, cherry, and maple. Certain species, mostly super-dense hardwoods (purple heart), and all oak species, will be harder to turn).	130	3
@@ -2385,7 +2393,6 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 93339	321	17	3	0	2025-11-09 15:30:00	2025-11-09 19:00:00	This is a beginner level class that covers the basic use of lathe tools and best practices with the lathe itself, focused on bowl turning. You do not need to have taken the spindle class before taking this class. During this class we will cover the different tools and how to sharpen them, as well as several different project mounting techniques. You will get to choose from several different bowl blanks that we have on hand, however you may also bring your own if you choose, so long as it is at least 4” x 4” x 2 ½” in dimension (though I recommend walnut, cherry, and maple. Certain species, mostly super-dense hardwoods (purple heart), and all oak species, will be harder to turn).	130	3
 93269	18	11	8	2	2025-10-18 14:00:01	2025-10-18 17:00:01	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	220	2
 93289	24	57	10	4	2025-11-06 00:30:01	2025-11-06 03:00:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
-98277	31	39	8	0	2026-03-23 23:30:00	2026-03-24 02:00:00	The Intro to Resin 3D Printing class covers the principles, techniques, and applications of using a liquid resin in our Elegoo SLA printers to create detailed and precise three dimensional objects, layer-by-layer.	90	4
 93299	328	57	3	3	2025-11-02 21:00:01	2025-11-02 22:30:01	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
 93284	24	57	10	4	2025-11-09 15:00:00	2025-11-09 17:30:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 93319	31	39	4	2	2025-11-04 00:30:01	2025-11-04 03:00:01	The Intro to Resin 3D Printing class covers the principles, techniques, and applications of using a liquid resin in our Elegoo SLA printers to create detailed and precise three dimensional objects, layer-by-layer.	90	3
@@ -2394,6 +2401,11 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 93304	18	11	5	4	2025-11-02 15:30:00	2025-11-02 18:30:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
 93309	17	10	5	2	2025-11-02 16:00:00	2025-11-02 18:30:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 93279	24	57	10	4	2025-11-02 15:00:01	2025-11-02 17:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
+99406	19	54	9	0	2026-05-02 20:00:00	2026-05-02 21:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+99156	19	47	9	0	2026-05-20 23:00:01	2026-05-21 00:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+98906	19	47	9	0	2026-04-15 23:00:01	2026-04-16 00:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+99356	19	62	9	0	2026-04-25 20:00:00	2026-04-25 21:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+99206	19	54	9	4	2026-04-04 20:00:01	2026-04-04 21:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
 97306	436	48	8	0	2026-06-22 13:00:00	2026-06-26 17:00:00	In Board Game Camp, students design and build original tabletop games from the ground up. Campers use digital design tools and hands-on maker technology to create physical game boards, pieces, and components, then test and refine their games through guided play. This camp blends creativity, problem-solving, and fabrication, giving students a finished, fully playable board game to take home and the skills to keep iterating on their ideas long after camp ends.	225	8
 97321	439	48	8	0	2026-07-20 13:00:01	2026-07-24 17:00:01	In Board Game Camp, students design and build original tabletop games from the ground up. Campers use digital design tools and hands-on maker technology to create physical game boards, pieces, and components, then test and refine their games through guided play. This camp blends creativity, problem-solving, and fabrication, giving students a finished, fully playable board game to take home and the skills to keep iterating on their ideas long after camp ends.	225	8
 93349	153	57	2	1	2025-11-07 00:30:01	2025-11-07 03:00:01	This class is an introduction to our ULS lasers - Blue & Pearl.  We will cover laser basics, materials to cut or not cut, basics in CorelDraw, and proper settings and troubleshooting.	100	4
@@ -2407,11 +2419,13 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 98146	350	47	6	2	2026-03-17 23:00:01	2026-03-18 02:00:01	This course introduces the fundamentals of operating an Arduino Uno microcontroller, including programming and connecting various peripheral devices. Participants will gain the foundational skills needed to develop their own electronics projects and implement mechanical control. By the end of the class, you will have coded and assembled a small robotic arm using 3d printed parts and various motors and electronics. No prior electronics or programming experience is necessary. All materials are provided, including an electronics kit with an Arduino Uno, servo motor, stepper motor, potentiometer, buttons, resistors, etc\r\n\r\nNote: Please bring a laptop to class.	150	4
 97331	443	48	8	2	2026-06-08 13:00:00	2026-06-12 17:00:00	Renaissance Camp blends traditional art techniques with modern maker tools to give kids a taste of what’s possible through hands-on creation and innovation. Campers experiment across multiple materials and processes, build finished projects they can take home, and gain confidence using tools in a safe, supportive environment. It’s exploratory, creative, and designed to keep hands busy and minds engaged.	225	8
 97311	440	48	8	2	2026-07-06 18:00:01	2026-07-10 22:00:01	In Board Game Camp, students design and build original tabletop games from the ground up. Campers use digital design tools and hands-on maker technology to create physical game boards, pieces, and components, then test and refine their games through guided play. This camp blends creativity, problem-solving, and fabrication, giving students a finished, fully playable board game to take home and the skills to keep iterating on their ideas long after camp ends.	225	8
+99556	19	12	9	0	2026-05-23 20:00:00	2026-05-23 21:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+99456	19	12	9	0	2026-05-09 20:00:00	2026-05-09 21:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+99106	19	12	9	0	2026-05-13 23:00:00	2026-05-14 00:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+98856	19	52	9	0	2026-04-08 23:00:01	2026-04-09 00:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
 97366	444	57	8	0	2026-06-22 18:00:00	2026-06-26 22:00:00	In this advanced camp, teens design and build a solid wood side table with a welded metal frame. Students learn foundational woodshop and metalshop techniques, practice safe tool use, and see a complex project through from start to finish. This camp is ideal for teens ready to take on longer builds, work with real materials, and walk away with a finished piece they’ll actually use.	325	8
-97376	446	57	8	0	2026-08-03 18:00:00	2026-08-07 22:00:00	In this advanced camp, teens design and build a solid wood side table with a welded metal frame. Students learn foundational woodshop and metalshop techniques, practice safe tool use, and see a complex project through from start to finish. This camp is ideal for teens ready to take on longer builds, work with real materials, and walk away with a finished piece they’ll actually use.	325	8
 97351	447	48	8	0	2026-07-13 18:00:00	2026-07-17 22:00:00	Renaissance Camp blends traditional art techniques with modern maker tools to give kids a taste of what’s possible through hands-on creation and innovation. Campers experiment across multiple materials and processes, build finished projects they can take home, and gain confidence using tools in a safe, supportive environment. It’s exploratory, creative, and designed to keep hands busy and minds engaged.	225	8
 93344	416	57	14	0	2025-10-19 20:00:00	2025-10-19 23:00:00	Join us for a day of "making with a cause" as the Asmbly Ceramics Studio partners with Austin Empty Bowl Project (AEBP) to raise money for Central Texas Food Bank Kids Cafe and Meals on Wheels Central Texas! During this completely free event, the Asmbly pottery community will come together to glaze the bowls made during our first Bowlathon. 	0	10
-97361	448	48	8	1	2026-07-27 06:00:00	2026-07-31 22:00:00	Renaissance Camp blends traditional art techniques with modern maker tools to give kids a taste of what’s possible through hands-on creation and innovation. Campers experiment across multiple materials and processes, build finished projects they can take home, and gain confidence using tools in a safe, supportive environment. It’s exploratory, creative, and designed to keep hands busy and minds engaged.	225	8
 93419	316	43	7	2	2025-11-19 00:00:01	2025-11-19 02:00:01	The Intro to Sewing class is designed to provide beginners with the fundamental knowledge and skills needed to start their sewing journey.	75	2
 93489	85	11	5	4	2025-11-22 15:30:00	2025-11-22 18:30:00	This class provides an introduction to TIG welding, granting precise control over heat input and the ability to weld thinner materials.	140	4
 93424	349	17	3	3	2025-11-21 00:00:01	2025-11-21 03:00:01	This three hour class will walk students through the three day process of making curved-checkerboard cutting boards. Making this board will use a variety of tools in the woodshop and introduce a fairly niche technique to make curved joints on the cutting board using the bandsaw.	135	4
@@ -2419,12 +2433,14 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 93389	350	47	6	4	2025-11-14 00:00:01	2025-11-14 03:00:01	This course introduces the fundamentals of operating an Arduino Uno microcontroller, including programming and connecting various peripheral devices. Participants will gain the foundational skills needed to develop their own electronics projects and implement mechanical control. By the end of the class, you will have coded and assembled a small robotic arm using 3d printed parts and various motors and electronics. No prior electronics or programming experience is necessary. All materials are provided, including an electronics kit with an Arduino Uno, servo motor, stepper motor, potentiometer, buttons, resistors, etc\r\n\r\nNote: Please bring a laptop to class.	150	4
 97356	449	48	8	1	2026-07-27 13:00:01	2026-07-31 17:00:01	Renaissance Camp blends traditional art techniques with modern maker tools to give kids a taste of what’s possible through hands-on creation and innovation. Campers experiment across multiple materials and processes, build finished projects they can take home, and gain confidence using tools in a safe, supportive environment. It’s exploratory, creative, and designed to keep hands busy and minds engaged.	225	8
 93409	18	57	5	4	2025-11-18 00:30:00	2025-11-18 03:30:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
+97376	446	57	8	1	2026-08-03 18:00:00	2026-08-07 22:00:00	In this advanced camp, teens design and build a solid wood side table with a welded metal frame. Students learn foundational woodshop and metalshop techniques, practice safe tool use, and see a complex project through from start to finish. This camp is ideal for teens ready to take on longer builds, work with real materials, and walk away with a finished piece they’ll actually use.	325	8
 93479	17	46	5	3	2025-11-21 00:30:01	2025-11-21 03:00:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 93399	17	46	5	2	2025-11-07 00:30:01	2025-11-07 03:00:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 93484	184	53	2	4	2025-11-22 15:00:00	2025-11-22 18:00:00	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
 93414	396	39	11	5	2025-11-18 00:30:01	2025-11-18 02:30:01	This class explores the latest AI tools to complement the creative process across digital fabrication methods such as laser cutting, CNC routing, 3D printing, and more! Students will learn how to use AI to generate production-ready assets and improve design workflows through prompt engineering. Whether you're simple curious about AI or looking to discover new tools for idea generation and output, this class is a space for exploration, conversation, and hands-on learning. Bring your curiosity and an open mind!	45	6
 93639	24	57	10	4	2025-11-30 15:00:00	2025-11-30 17:30:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 93589	24	57	10	4	2025-11-23 15:00:00	2025-11-23 17:30:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
+97361	448	48	8	2	2026-07-27 06:00:00	2026-07-31 22:00:00	Renaissance Camp blends traditional art techniques with modern maker tools to give kids a taste of what’s possible through hands-on creation and innovation. Campers experiment across multiple materials and processes, build finished projects they can take home, and gain confidence using tools in a safe, supportive environment. It’s exploratory, creative, and designed to keep hands busy and minds engaged.	225	8
 97346	450	48	8	0	2026-07-06 13:00:00	2026-07-10 17:00:00	Renaissance Camp blends traditional art techniques with modern maker tools to give kids a taste of what’s possible through hands-on creation and innovation. Campers experiment across multiple materials and processes, build finished projects they can take home, and gain confidence using tools in a safe, supportive environment. It’s exploratory, creative, and designed to keep hands busy and minds engaged.	225	8
 93709	386	69	7	0	2025-11-22 16:00:01	2025-11-22 19:00:01	In this hands-on sewing class, students will learn to create a stylish and practical lined tote bag, perfect for everyday use. The class covers essential sewing skills such as making pockets, sewing seams, attaching straps, and installing a magnetic snap closure. By the end of the course, students will have completed a lined tote bag and built a strong foundation in basic sewing techniques. This class is designed for beginners but is also suitable for anyone looking to refine their sewing skills in a supportive, creative environment. All materials are provided!\r\n\r\nThis class requires some basic proficiency in these skills:\r\n- Following a seam allowance\r\n- Confidence in sewing a straight line\r\n- Understanding the basics of sewing two pieces of fabric together (starting and stopping, backstitching)	85	3
 93774	393	78	5	4	2025-11-29 14:00:01	2025-11-29 20:00:01	Transform a “high carbon” railroad spike into a sharp, rugged camp knife in this hands-on forging workshop. Spend 70–80% of your time at the anvil, hammering, shaping, and refining the blade, with the final touches completed on a 2"x72" belt grinder.	180	4
@@ -2467,21 +2483,22 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 95273	24	57	10	4	2026-01-15 00:30:01	2026-01-15 03:00:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 95298	24	57	10	4	2026-01-18 15:00:01	2026-01-18 17:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 95263	328	57	3	4	2026-01-07 00:30:00	2026-01-07 02:00:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
-98307	406	27	11	7	2026-04-25 15:00:00	2026-04-25 17:00:00	Stop the Bleed teaches critical life-saving skills to lay people so they can act quickly in response to an emergency.  Bleeding (or hemorrhage) is the leading cause of preventable death in a trauma, and this frequently is due to the severe amount of blood loss before EMS arrives.  Bystanders can save a life by controlling the bleed until healthcare professionals arrive.  This FREE 2-hour course is taught by an expert nurse from the Level II Trauma Center at St. David's Round Rock Medical Center.  Participants will be educated on recognizing life-threatening bleeding, as well as skills such as wound packing, tourniquet application, and chest seals.	0	20
 98026	5	42	4	4	2026-03-12 23:00:01	2026-03-13 02:00:01	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	80	4
 94479	332	27	14	6	2026-01-31 20:00:01	2026-01-31 22:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 97381	425	57	8	1	2026-02-05 15:00:00	2026-02-05 18:00:00	This class gives a combined orientation and Woodshop Safety to get members in the shop as quickly as possible. Woodshop Safety provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.	95	1
 98031	321	17	3	3	2026-03-07 15:30:01	2026-03-07 19:00:01	This is a beginner level class that covers the basic use of lathe tools and best practices with the lathe itself, focused on bowl turning. You do not need to have taken the spindle class before taking this class. During this class we will cover the different tools and how to sharpen them, as well as several different project mounting techniques. You will get to choose from several different bowl blanks that we have on hand, however you may also bring your own if you choose, so long as it is at least 4” x 4” x 2 ½” in dimension (though I recommend walnut, cherry, and maple. Certain species, mostly super-dense hardwoods (purple heart), and all oak species, will be harder to turn).	130	3
 97916	24	6	10	4	2026-03-15 14:00:01	2026-03-15 16:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
+99056	19	12	9	0	2026-05-06 23:00:00	2026-05-07 00:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
 97921	425	57	8	1	2026-03-02 20:00:00	2026-03-02 23:00:00	This class gives a combined orientation and Woodshop Safety to get members in the shop as quickly as possible. Woodshop Safety provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.	95	1
 94634	359	58	14	8	2025-11-13 00:30:01	2025-11-13 02:00:01	Bring your bisque-fired pieces to life in this hands-on Glazing Workshop! In this session, you’ll learn the fundamentals of glazing, including how to apply glaze cleanly, the different techniques, experiment with colors, and achieve a unique finish. The instructor will cover best practices for dipping, pouring, brushing, and layering glazes to create unique effects. This workshop is perfect for beginners and those looking to refine their glazing skills. All materials and tools are provided. Students can bring bisque-fired pieces made in the studio, or glaze pieces made in other classes.	0	8
+99956	332	27	14	0	2026-05-31 19:00:01	2026-05-31 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 96826	316	69	7	2	2026-02-12 00:00:01	2026-02-12 02:00:01	The Intro to Sewing class is designed to provide beginners with the fundamental knowledge and skills needed to start their sewing journey.	75	2
 97386	184	53	8	4	2026-02-19 00:00:01	2026-02-19 03:00:01	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
 97926	309	57	14	5	2026-03-03 00:30:00	2026-03-03 03:30:00	Try your hand at wheel throwing! In this beginner-friendly class, you’ll learn how to center clay, pull walls, and shape your piece on the wheel. Get plenty of hands-on guidance and support as you explore the basics of throwing. At the end of class, choose your favorite piece to keep! Your instructor will trim and bisque-fire it for you, and you can return to glaze it during one of our Glazing Workshops.	85	5
-98282	85	11	5	1	2026-03-29 14:30:00	2026-03-29 17:30:00	This class provides an introduction to TIG welding, granting precise control over heat input and the ability to weld thinner materials.	140	4
 94279	332	27	14	3	2026-01-03 20:00:01	2026-01-03 22:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 94649	18	11	8	1	2025-10-24 19:00:00	2025-10-24 20:00:00		85	1
 93258	330	48	7	4	2025-11-12 00:00:00	2025-11-12 02:00:00	Learn about sublimation best practices, techniques, and tips and tricks, then leave with a personalized tote bag and mug of your own creation.	45	4
+98282	85	11	5	2	2026-03-29 14:30:00	2026-03-29 17:30:00	This class provides an introduction to TIG welding, granting precise control over heat input and the ability to weld thinner materials.	140	4
 95313	1	1	1	4	2026-01-13 01:30:01	2026-01-15 03:00:01	Learn to use the Laguna CNC routers at Asmbly. This course is a two-part course that will take place on two evenings in the same week.	250	4
 95072	381	56	7	3	2025-12-28 18:00:01	2025-12-28 21:00:01	In this hands-on class, you’ll get to know our awesome Brother embroidery machines as you explore both patch making and direct-to-garment stitching. You’ll learn how to bring your designs to life with the right stabilizers, fabrics, and setup techniques — plus get the scoop on threading, hooping, and fine-tuning your projects. We’ll also cover fun finishing tricks to make your creations look polished and professional. Whether you're dreaming of custom patches or jazzing up your wardrobe, this class is your perfect starting point!	80	4
 95067	184	56	2	4	2025-12-28 00:00:01	2025-12-28 03:00:01	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
@@ -2510,11 +2527,11 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 97996	17	10	5	1	2026-03-01 16:00:01	2026-03-01 18:30:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 97971	333	41	3	3	2026-03-01 15:00:00	2026-03-01 18:00:00	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
 97951	328	57	3	4	2026-03-01 21:00:01	2026-03-01 22:30:01	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
-98317	18	57	8	0	2026-03-26 17:00:01	2026-03-26 18:00:01		105	1
-98287	1	1	1	1	2026-04-08 00:30:01	2026-04-09 03:30:01	Learn to use the Laguna CNC routers at Asmbly. This course is a two-part course that will take place on two evenings in the same week.	250	4
-98312	421	57	8	0	2026-03-26 14:00:00	2026-03-26 17:00:00	This class gives a combined Orientation and Metal Shop Safety to get members in the shop as quickly as possible. This class provides an introduction to our metal working shop, with a focus on safely using hand tools, the band saws, the chop saws, the sanders and grinders, and the drill press. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures.	95	1
 98297	1	23	1	3	2026-03-14 23:00:00	2026-03-15 18:00:00	Learn to use the Laguna CNC routers at Asmbly. This course is a two-part course that will take place on two evenings in the same week.	250	4
 98292	1	1	1	1	2026-04-25 00:00:01	2026-04-25 17:00:01	Learn to use the Laguna CNC routers at Asmbly. This course is a two-part course that will take place on two evenings in the same week.	250	4
+98287	1	1	1	2	2026-04-08 00:30:01	2026-04-09 03:30:01	Learn to use the Laguna CNC routers at Asmbly. This course is a two-part course that will take place on two evenings in the same week.	250	4
+98317	18	57	8	0	2026-03-26 17:00:01	2026-03-26 18:00:01		105	1
+98312	421	57	8	1	2026-03-26 14:00:01	2026-03-26 17:00:01	This class gives a combined Orientation and Metal Shop Safety to get members in the shop as quickly as possible. This class provides an introduction to our metal working shop, with a focus on safely using hand tools, the band saws, the chop saws, the sanders and grinders, and the drill press. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures.	100	1
 91683	403	69	7	1	2025-10-27 23:00:00	2025-10-28 01:00:00	In this hands-on sewing class, students will learn to create a simple, yet practical pillowcase, perfect for everyday use. The class covers essential sewing skills such as encasing raw edges, using a decorative stitch, and basic construction. By the end of the course, students will have a completed pillowcase and the confidence to complete a sewing project on their own. This class is designed for beginners but is also suitable for anyone looking to refine their sewing skills in a supportive, creative environment.	85	2
 91678	321	17	3	3	2025-10-26 14:30:01	2025-10-26 18:00:01	This is a beginner level class that covers the basic use of lathe tools and best practices with the lathe itself, focused on bowl turning. You do not need to have taken the spindle class before taking this class. During this class we will cover the different tools and how to sharpen them, as well as several different project mounting techniques. You will get to choose from several different bowl blanks that we have on hand, however you may also bring your own if you choose, so long as it is at least 4” x 4” x 2 ½” in dimension (though I recommend walnut, cherry, and maple. Certain species, mostly super-dense hardwoods (purple heart), and all oak species, will be harder to turn).	100	3
 96186	19	77	9	12	2026-03-14 20:00:00	2026-03-14 21:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
@@ -2523,13 +2540,15 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 94679	333	41	3	4	2025-11-13 00:30:00	2025-11-13 03:30:00	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
 98191	393	78	5	0	2026-03-22 14:00:01	2026-03-22 20:00:01	Transform a “high carbon” railroad spike into a sharp, rugged camp knife in this hands-on forging workshop. Spend 70–80% of your time at the anvil, hammering, shaping, and refining the blade, with the final touches completed on a 2"x72" belt grinder.	200	4
 98171	393	78	5	0	2026-03-21 14:00:01	2026-03-21 20:00:01	Transform a “high carbon” railroad spike into a sharp, rugged camp knife in this hands-on forging workshop. Spend 70–80% of your time at the anvil, hammering, shaping, and refining the blade, with the final touches completed on a 2"x72" belt grinder.	200	4
-98166	384	51	3	0	2026-03-20 23:00:01	2026-03-21 02:00:01	Ready to refine your spindle turning skills? This hands-on intermediate class focuses entirely on creating clean, crisp beads and smooth, flowing coves – essential elements in decorative spindle work. We’ll practice techniques to achieve better control, discuss proper tool selection (spindle vs. detail gouges, choosing the right size), and learn how to present the tool correctly to avoid catches. Leave with greater confidence and the ability to add sophisticated shapes to your projects.	100	3
 97371	445	57	8	3	2026-07-20 18:00:01	2026-07-24 22:00:01	In this advanced camp, teens design and build a solid wood side table with a welded metal frame. Students learn foundational woodshop and metalshop techniques, practice safe tool use, and see a complex project through from start to finish. This camp is ideal for teens ready to take on longer builds, work with real materials, and walk away with a finished piece they’ll actually use.	325	8
-98081	359	57	14	2	2026-03-22 21:00:00	2026-03-22 22:30:00	Bring your bisque-fired pieces to life in this hands-on Glazing Workshop! In this session, you’ll learn the fundamentals of glazing, including how to apply glaze cleanly, the different techniques, experiment with colors, and achieve a unique finish. The instructor will cover best practices for dipping, pouring, brushing, and layering glazes to create unique effects. This workshop is perfect for beginners and those looking to refine their glazing skills. All materials and tools are provided. Students can bring bisque-fired pieces made in the studio, or glaze pieces made in other classes.	30	8
+98166	384	51	3	1	2026-03-20 23:00:01	2026-03-21 02:00:01	Ready to refine your spindle turning skills? This hands-on intermediate class focuses entirely on creating clean, crisp beads and smooth, flowing coves – essential elements in decorative spindle work. We’ll practice techniques to achieve better control, discuss proper tool selection (spindle vs. detail gouges, choosing the right size), and learn how to present the tool correctly to avoid catches. Leave with greater confidence and the ability to add sophisticated shapes to your projects.	100	3
 98086	184	56	2	4	2026-03-10 23:00:00	2026-03-11 02:00:00	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
 98141	396	39	11	2	2026-03-16 23:30:01	2026-03-17 01:30:01	This class explores the latest AI tools to complement the creative process across digital fabrication methods such as laser cutting, CNC routing, 3D printing, and more! Students will learn how to use AI to generate production-ready assets and improve design workflows through prompt engineering. Whether you're simple curious about AI or looking to discover new tools for idea generation and output, this class is a space for exploration, conversation, and hands-on learning. Bring your curiosity and an open mind!	45	6
 98322	401	80	8	1	2026-03-13 15:00:01	2026-03-13 17:00:01		200	1
-98181	327	18	3	2	2026-03-21 19:00:01	2026-03-21 21:00:01	The Festool Domino DF500 provides a quick way to create floating tenon joints in a variety of applications. Key uses are in cabinetry, frames, building table tops, joining table legs to aprons, drawers, and boxes.	80	4
+100499	184	56	2	0	2026-04-14 23:00:00	2026-04-15 02:00:00	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
+98181	327	18	3	3	2026-03-21 19:00:01	2026-03-21 21:00:01	The Festool Domino DF500 provides a quick way to create floating tenon joints in a variety of applications. Key uses are in cabinetry, frames, building table tops, joining table legs to aprons, drawers, and boxes.	80	4
+100549	184	56	2	0	2026-04-26 17:00:01	2026-04-26 20:00:01	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
+100439	327	18	3	0	2026-04-11 19:00:00	2026-04-11 21:00:00	The Festool Domino DF500 provides a quick way to create floating tenon joints in a variety of applications. Key uses are in cabinetry, frames, building table tops, joining table legs to aprons, drawers, and boxes.	80	4
 94744	418	74	8	1	2025-10-29 23:00:00	2025-10-30 01:00:00		100	1
 94739	5	42	4	4	2025-11-14 00:00:01	2025-11-14 03:00:01	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	80	4
 94729	323	6	5	2	2025-11-20 00:15:01	2025-11-20 03:15:01	This class focuses on teaching the basic skills needed to safely use the metal lathe.	140	3
@@ -2546,7 +2565,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 97391	183	56	2	3	2026-02-22 18:00:00	2026-02-22 20:00:00	In this class you will learn how to safely and accurately engrave curved / round materials on the Dorian laser using the 4th axis (rotary) tool. You will learn how to attach the rotary axis, operate the Dorian laser with the rotary axis, and then return Dorian to normal functions for makerspace users after removing the axis. At the end of the class you will take home an engraved item that you create.\r\n\r\nPre-Requisites: Big Lasers	75	3
 97396	357	18	3	4	2026-02-25 00:30:01	2026-02-25 02:30:01	The Festool Domino DF500 provides a quick way to create floating tenon joints in a variety of applications. Key uses are in cabinetry, frames, building table tops, joining table legs to aprons, drawers, and boxes.	80	4
 98011	359	57	14	2	2026-03-08 21:00:00	2026-03-08 22:30:00	Bring your bisque-fired pieces to life in this hands-on Glazing Workshop! In this session, you’ll learn the fundamentals of glazing, including how to apply glaze cleanly, the different techniques, experiment with colors, and achieve a unique finish. The instructor will cover best practices for dipping, pouring, brushing, and layering glazes to create unique effects. This workshop is perfect for beginners and those looking to refine their glazing skills. All materials and tools are provided. Students can bring bisque-fired pieces made in the studio, or glaze pieces made in other classes.	30	8
-96286	19	12	9	2	2026-03-28 20:00:01	2026-03-28 21:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+100564	323	6	5	0	2026-04-15 23:15:00	2026-04-16 02:15:00	This class focuses on teaching the basic skills needed to safely use the metal lathe.	140	3
 94852	378	57	8	1	2025-11-19 19:00:00	2025-11-19 22:00:00	This class gives a combined orientation and Woodshop Safety to get members in the shop as quickly as possible. Woodshop Safety provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.	95	1
 94817	422	47	6	4	2025-11-25 00:30:01	2025-11-25 02:30:01	Learn the fundamentals of electronics through hands-on circuit building and soldering! In this beginner-friendly class, you’ll build and test simple breadboard circuits while gaining confidence with essential tools like multimeters, power supplies, and soldering irons. Along the way, you’ll practice safe lab habits, proper soldering techniques, and how to connect components like resistors, LEDs, and capacitors.\r\n\r\nBy the end of class, you’ll have assembled your own working circuit and soldered a custom board provided by our friends at PCBWay. No prior experience required, just curiosity and a steady hand!	45	4
 94862	395	76	8	2	2025-11-18 19:00:01	2025-11-18 22:00:01	This introductory course is designed for beginner users looking to explore 3D modeling with Autodesk Fusion (AKA Fusion 360), with an emphasis on creating models optimized for 3D printing. Participants will learn the fundamentals of sketching, parametric design, and solid modeling, along with best practices for designing printable parts. By the end of the course, students will have the skills and confidence to create, modify, and export 3D models suitable for slicing and fabrication on FDM and SLA/DLP printers.	100	2
@@ -2562,6 +2581,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 94867	328	57	3	2	2025-11-30 19:00:01	2025-11-30 20:30:01	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
 94887	17	46	5	4	2025-12-05 00:30:01	2025-12-05 03:00:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 94837	359	58	14	8	2025-12-20 00:30:01	2025-12-20 02:00:01	Bring your bisque-fired pieces to life in this hands-on Glazing Workshop! In this session, you’ll learn the fundamentals of glazing, including how to apply glaze cleanly, the different techniques, experiment with colors, and achieve a unique finish. The instructor will cover best practices for dipping, pouring, brushing, and layering glazes to create unique effects. This workshop is perfect for beginners and those looking to refine their glazing skills. All materials and tools are provided. Students can bring bisque-fired pieces made in the studio, or glaze pieces made in other classes.	30	8
+100489	328	57	3	0	2026-04-12 17:00:00	2026-04-12 18:30:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
 94972	18	57	5	4	2025-12-09 00:30:00	2025-12-09 03:30:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
 98006	17	46	5	4	2026-03-12 23:30:00	2026-03-13 02:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 94987	184	56	2	4	2025-12-10 00:00:01	2025-12-10 03:00:01	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
@@ -2592,6 +2612,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 94977	18	11	5	4	2025-12-13 15:30:00	2025-12-13 18:30:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
 95052	384	51	3	3	2025-12-20 00:00:01	2025-12-20 03:00:01	Ready to refine your spindle turning skills? This hands-on intermediate class focuses entirely on creating clean, crisp beads and smooth, flowing coves – essential elements in decorative spindle work. We’ll practice techniques to achieve better control, discuss proper tool selection (spindle vs. detail gouges, choosing the right size), and learn how to present the tool correctly to avoid catches. Leave with greater confidence and the ability to add sophisticated shapes to your projects.	100	3
 94952	328	57	3	4	2025-12-16 00:30:01	2025-12-16 02:00:01	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
+100554	330	48	7	0	2026-04-14 23:00:00	2026-04-15 01:00:00	Learn about sublimation best practices, techniques, and tips and tricks, then leave with a personalized tote bag and mug of your own creation.	45	4
 95032	324	6	5	1	2025-12-18 00:00:01	2025-12-18 03:00:01	This class focuses on teaching the basic skills needed to safely use the manual mill.	160	2
 95047	422	47	6	4	2025-12-16 00:30:00	2025-12-16 02:30:00	Learn the fundamentals of electronics through hands-on circuit building and soldering! In this beginner-friendly class, you’ll build and test simple breadboard circuits while gaining confidence with essential tools like multimeters, power supplies, and soldering irons. Along the way, you’ll practice safe lab habits, proper soldering techniques, and how to connect components like resistors, LEDs, and capacitors.\r\n\r\nBy the end of class, you’ll have assembled your own working circuit and soldered a custom board provided by our friends at PCBWay. No prior experience required, just curiosity and a steady hand!	45	4
 95002	323	6	5	2	2025-12-10 00:15:01	2025-12-10 03:15:01	This class focuses on teaching the basic skills needed to safely use the metal lathe.	140	3
@@ -2603,6 +2624,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 97986	85	11	5	4	2026-03-22 14:30:00	2026-03-22 17:30:00	This class provides an introduction to TIG welding, granting precise control over heat input and the ability to weld thinner materials.	140	4
 95122	386	69	7	0	2025-12-13 16:00:01	2025-12-13 19:00:01	In this hands-on sewing class, students will learn to create a stylish and practical lined tote bag, perfect for everyday use. The class covers essential sewing skills such as making pockets, sewing seams, attaching straps, and installing a magnetic snap closure. By the end of the course, students will have completed a lined tote bag and built a strong foundation in basic sewing techniques. This class is designed for beginners but is also suitable for anyone looking to refine their sewing skills in a supportive, creative environment. All materials are provided!\r\n\r\nThis class requires some basic proficiency in these skills:\r\n- Following a seam allowance\r\n- Confidence in sewing a straight line\r\n- Understanding the basics of sewing two pieces of fabric together (starting and stopping, backstitching)	85	3
 95182	330	48	7	4	2025-12-16 00:00:00	2025-12-16 02:00:00	Learn about sublimation best practices, techniques, and tips and tricks, then leave with a personalized tote bag and mug of your own creation.	45	4
+100559	324	6	5	1	2026-04-14 23:15:01	2026-04-15 02:15:01	This class focuses on teaching the basic skills needed to safely use the manual mill.	160	2
 97411	18	33	8	2	2026-02-08 20:00:00	2026-02-08 23:00:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	280	2
 95167	174	40	7	1	2025-12-21 19:00:01	2025-12-21 22:00:01	The Leather Belt Making class provides a foundational overview of leather crafting. Attendees will make a leather belt using a variety of techniques.	85	3
 95579	174	40	7	3	2026-01-23 00:00:01	2026-01-23 03:30:01	The Leather Belt Making class provides a foundational overview of leather crafting. Attendees will make a leather belt using a variety of techniques.	85	3
@@ -2632,9 +2654,9 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 95253	31	39	4	3	2026-01-06 00:30:00	2026-01-06 03:00:00	The Intro to Resin 3D Printing class covers the principles, techniques, and applications of using a liquid resin in our Elegoo SLA printers to create detailed and precise three dimensional objects, layer-by-layer.	90	3
 95228	388	66	14	6	2026-01-10 15:00:01	2026-02-21 18:00:01	This beginner-friendly course meets once a week for six weeks and is designed to give new ceramicists a strong foundation while offering returning potters a chance to deepen their skills with hands-on support. Through structured lessons and guided studio time, students will learn the full workflow of wheel-thrown pottery, from shaping wet clay to finishing glazed pieces.\r\n\r\nStudents will leave with multiple completed pieces and a foundational understanding of the wheel-throwing process, supported each step of the way by their instructor. (The class has a minimum requirement of 2 students to run. If less than two students sign up, we will reschedule.)	375	6
 95238	359	58	14	8	2026-01-06 00:00:00	2026-01-06 01:30:00	Bring your bisque-fired pieces to life in this hands-on Glazing Workshop! In this session, you’ll learn the fundamentals of glazing, including how to apply glaze cleanly, the different techniques, experiment with colors, and achieve a unique finish. The instructor will cover best practices for dipping, pouring, brushing, and layering glazes to create unique effects. This workshop is perfect for beginners and those looking to refine their glazing skills. All materials and tools are provided. Students can bring bisque-fired pieces made in the studio, or glaze pieces made in other classes.	30	8
-97981	333	41	3	3	2026-03-25 23:30:00	2026-03-26 02:30:00	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
 98176	381	56	7	4	2026-03-21 17:00:01	2026-03-21 20:00:01	In this hands-on class, you’ll get to know our awesome Brother embroidery machines as you explore both patch making and direct-to-garment stitching. You’ll learn how to bring your designs to life with the right stabilizers, fabrics, and setup techniques — plus get the scoop on threading, hooping, and fine-tuning your projects. We’ll also cover fun finishing tricks to make your creations look polished and professional. Whether you're dreaming of custom patches or jazzing up your wardrobe, this class is your perfect starting point!	80	4
 97976	333	41	3	4	2026-03-15 14:00:00	2026-03-15 17:00:00	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
+97981	333	41	3	4	2026-03-25 23:30:00	2026-03-26 02:30:00	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
 98106	323	6	5	2	2026-04-01 23:15:01	2026-04-02 02:15:01	This class focuses on teaching the basic skills needed to safely use the metal lathe.	140	3
 95373	17	46	5	4	2026-01-30 00:30:01	2026-01-30 03:00:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 95368	17	46	5	4	2026-01-23 00:30:00	2026-01-23 03:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
@@ -2646,13 +2668,14 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 95348	17	10	5	4	2026-01-18 16:00:01	2026-01-18 18:30:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 95378	330	48	7	2	2026-01-07 00:00:01	2026-01-07 02:00:01	Learn about sublimation best practices, techniques, and tips and tricks, then leave with a personalized tote bag and mug of your own creation.	45	4
 95308	328	57	3	4	2026-01-11 18:00:00	2026-01-11 19:30:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
-98136	17	10	5	0	2026-03-29 15:00:00	2026-03-29 17:30:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 95383	333	41	3	4	2026-01-08 00:30:01	2026-01-08 03:30:01	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
 98131	17	10	5	0	2026-03-22 15:00:00	2026-03-22 17:30:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 95363	17	46	5	4	2026-01-16 00:30:01	2026-01-16 03:00:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
-98161	17	46	5	0	2026-03-26 23:30:01	2026-03-27 02:00:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 98101	323	6	5	3	2026-03-11 23:15:00	2026-03-12 02:15:00	This class focuses on teaching the basic skills needed to safely use the metal lathe.	140	3
 98126	17	10	5	3	2026-03-15 15:00:01	2026-03-15 17:30:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
+98161	17	46	5	3	2026-03-26 23:30:01	2026-03-27 02:00:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
+98578	24	57	10	4	2026-04-01 23:30:00	2026-04-02 02:00:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
+98628	24	57	10	3	2026-04-08 23:30:00	2026-04-09 02:00:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 95393	333	41	3	2	2026-01-11 15:00:00	2026-01-11 18:00:00	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
 95403	417	17	3	3	2026-01-09 00:00:01	2026-01-09 03:30:01	This is a beginner level class that covers the basic use of lathe tools and best practices with the lathe itself, focused on turning a small bowl with a fitted lid. You do not need to have taken spindle/bowl turning before this class. During this class we will cover the different tools and how to sharpen them, as well as several different project mounting techniques (including mounting bowls on tenon, as opposed to mounting on mortise in the bowl turning class.) We will provide blanks for this project. But if you would like to bring your own, please ensure it is at least 3”x3”x6” long.	130	3
 95423	5	56	4	1	2025-12-21 23:00:00	2025-12-22 02:00:00	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	80	4
@@ -2676,14 +2699,16 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 95057	322	51	3	2	2025-12-20 15:00:00	2025-12-20 19:00:00	Expand your woodturning skills with this guided vase-turning class! Designed for students with prior wood lathe experience (or those who have completed our introductory woodturning classes) this session will help you refine your technique and take on a more advanced project.\r\n\r\nYou’ll learn essential skills such as spindle turning between centers, creating a tenon, finishing, boring, and tasteful tenon removal.\r\n\r\nMaterials:\r\n\r\nA face mask for sanding.\r\nWood will be provided, but students are welcome to bring their own domestic hardwood, sized between 2.5” x 2.5” x 8” and 3” x 3” x 10”.	175	3
 95458	396	39	11	6	2026-01-13 00:30:00	2026-01-13 02:30:00	This class explores the latest AI tools to complement the creative process across digital fabrication methods such as laser cutting, CNC routing, 3D printing, and more! Students will learn how to use AI to generate production-ready assets and improve design workflows through prompt engineering. Whether you're simple curious about AI or looking to discover new tools for idea generation and output, this class is a space for exploration, conversation, and hands-on learning. Bring your curiosity and an open mind!	45	6
 95483	423	48	3	3	2026-01-15 00:00:01	2026-01-15 03:00:01	Make a handcrafted wooden pen from start to finish in this beginner-friendly project class. We’ll guide you through preparing the blank, turning it to shape, and applying a polished finish before assembling your pen. You’ll have the chance to practice foundational turning skills and lathe use while completing a beautiful project to take home.\r\n\r\n*NOTE: This class does not certify students for personal lathe use. If you would like to work on the lathe outside of class time, you will need to take one of the "Intro Turning” classes (Handles, Bowls, or Lidded Vessels).*	95	3
-98071	328	57	3	2	2026-03-22 17:00:00	2026-03-22 18:30:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
 98186	182	46	3	1	2026-03-21 19:00:00	2026-03-21 21:00:00	This class will teach you some of  the incredible capabilities that the Shaper Origin has and will certify you to use the tool.	80	3
 98111	455	17	3	3	2026-03-11 23:00:01	2026-03-12 02:00:01	This three hour class will walk students through the three day process of making curved-checkerboard cutting boards. Making this board will use a variety of tools in the woodshop and introduce a fairly niche technique to make curved joints on the cutting board using the bandsaw.	135	4
 98116	153	57	2	3	2026-03-12 23:30:00	2026-03-13 02:00:00	This class is an introduction to our ULS lasers - Blue & Pearl.  We will cover laser basics, materials to cut or not cut, basics in CorelDraw, and proper settings and troubleshooting.	100	4
 98096	324	6	5	2	2026-03-31 23:15:01	2026-04-01 02:15:01	This class focuses on teaching the basic skills needed to safely use the manual mill.	160	2
-98076	328	57	3	2	2026-03-29 17:00:00	2026-03-29 18:30:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
-98156	17	46	5	1	2026-03-19 23:30:00	2026-03-20 02:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
+100194	18	11	5	2	2026-04-04 14:30:00	2026-04-04 17:30:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
 98151	330	48	7	3	2026-03-19 23:00:00	2026-03-20 01:00:00	Learn about sublimation best practices, techniques, and tips and tricks, then leave with a personalized tote bag and mug of your own creation.	45	4
+98156	17	46	5	2	2026-03-19 23:30:00	2026-03-20 02:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
+98071	328	57	3	3	2026-03-22 17:00:00	2026-03-22 18:30:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
+98076	328	57	3	4	2026-03-29 17:00:00	2026-03-29 18:30:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
+96286	19	12	9	13	2026-03-28 20:00:00	2026-03-28 21:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
 95524	427	57	3	4	2026-01-21 00:30:00	2026-01-21 03:30:00	Step confidently into the woodshop with this beginner-friendly, hands-on workshop focused on building both foundational skills and a sturdy wooden toolbox. Designed for first-time woodworkers or those looking to refresh their fundamentals, this class provides a supportive, structured introduction to working safely and effectively in the shop.\r\n\r\nStudents will construct a functional toolbox while learning to use three cornerstone woodworking tools: the miter saw, cordless drill, and impact driver. Along the way, participants will practice measuring, cutting, assembly, and basic finishing techniques, essential skills that translate directly to a wide range of future woodworking projects. By the end of class, each student will leave with a completed toolbox and increased confidence working with common shop tools.	80	4
 95529	18	57	5	4	2026-01-21 20:00:01	2026-01-21 23:00:01	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
 95513	422	47	6	4	2026-01-11 00:00:00	2026-01-11 02:00:00	Learn the fundamentals of electronics through hands-on circuit building and soldering! In this beginner-friendly class, you’ll build and test simple breadboard circuits while gaining confidence with essential tools like multimeters, power supplies, and soldering irons. Along the way, you’ll practice safe lab habits, proper soldering techniques, and how to connect components like resistors, LEDs, and capacitors.\r\n\r\nBy the end of class, you’ll have assembled your own working circuit and soldered a custom board provided by our friends at PCBWay. No prior experience required, just curiosity and a steady hand!	45	4
@@ -2694,10 +2719,10 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 97511	332	27	14	3	2026-03-01 20:00:01	2026-03-01 22:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 98323	459	11	5	1	2026-04-11 14:30:00	2026-04-11 17:30:00	Take your welding skills further with this project-based class designed for students who have completed Intro to MIG Welding and Metal Shop Safety (or have previous basic welding experience). In this workshop, you’ll practice running weld beads in the four fundamental welding positions (flat, horizontal, vertical, and overhead) while using tools from both the metal shop and welding area such as the cold saw, plasma cutter, belt sander, angle grinders, and MIG welders.\r\n\r\nBy the end of the class you’ll create a unique “metal log” made from layered practice beads that showcase your welds in each position. Students are encouraged to continue adding beads and refining their project during open shop time.	180	4
 97561	332	27	14	2	2026-03-08 19:00:01	2026-03-08 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
-98261	386	69	7	0	2026-03-28 15:00:00	2026-03-28 18:00:00	In this hands-on sewing class, students will learn to create a stylish and practical lined tote bag, perfect for everyday use. The class covers essential sewing skills such as making pockets, sewing seams, attaching straps, and installing a magnetic snap closure. By the end of the course, students will have completed a lined tote bag and built a strong foundation in basic sewing techniques. This class is designed for beginners but is also suitable for anyone looking to refine their sewing skills in a supportive, creative environment. All materials are provided!\r\n\r\nThis class requires some basic proficiency in these skills:\r\n- Following a seam allowance\r\n- Confidence in sewing a straight line\r\n- Understanding the basics of sewing two pieces of fabric together (starting and stopping, backstitching)	90	3
 98246	457	46	8	1	2026-03-01 20:00:00	2026-03-02 00:00:00	Payment registration link for HERC team shop access fourth block (3 dates)	180	1
 98251	316	69	7	3	2026-03-12 23:00:01	2026-03-13 01:00:01	The Intro to Sewing class is designed to provide beginners with the fundamental knowledge and skills needed to start their sewing journey.	75	3
 98256	316	69	7	3	2026-03-24 23:00:00	2026-03-25 01:00:00	The Intro to Sewing class is designed to provide beginners with the fundamental knowledge and skills needed to start their sewing journey.	75	3
+100689	458	69	8	0	2026-04-04 16:00:01	2026-04-04 18:00:01	Private session for Branislav	72	1
 96536	19	52	9	10	2026-03-05 00:00:01	2026-03-05 01:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
 95746	24	57	10	4	2026-02-08 15:00:01	2026-02-08 17:30:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
 96761	184	56	2	4	2026-02-11 00:00:01	2026-02-11 03:00:01	In this class you will be introduced to laser cutters and learn the process of going from a design to cutting/etching using Lightburn on our large lasers.	135	4
@@ -2712,7 +2737,6 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 95695	361	73	3	2	2026-01-10 15:00:00	2026-01-10 17:00:00	Prepare your hand plane for daily use and achieve crisp clean shavings. Students will learn the proper methods of disassembling, cleaning, adjusting the frog to set the plane mouth opening, flattening the plane’s sole, and fitting the cap iron (chip breaker) to the plane iron. We will also sharpen the plane iron and learn how to adjust the plane iron to take straight clean shavings. (Bring one metal hand plane size #4 - #8)	0	3
 95700	153	57	2	4	2026-01-23 00:30:00	2026-01-23 03:00:00	This class is an introduction to our ULS lasers - Blue & Pearl.  We will cover laser basics, materials to cut or not cut, basics in CorelDraw, and proper settings and troubleshooting.	100	4
 95871	17	46	5	2	2026-02-27 00:30:00	2026-02-27 03:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
-98041	423	48	3	1	2026-03-31 23:00:00	2026-04-01 02:00:00	Make a handcrafted wooden pen from start to finish in this beginner-friendly project class. We’ll guide you through preparing the blank, turning it to shape, and applying a polished finish before assembling your pen. You’ll have the chance to practice foundational turning skills and lathe use while completing a beautiful project to take home.\r\n\r\n*NOTE: This class does not certify students for personal lathe use. If you would like to work on the lathe outside of class time, you will need to take one of the "Intro Turning” classes (Handles, Bowls, or Lidded Vessels).*	95	3
 95791	24	57	8	2	2026-01-11 22:00:00	2026-01-12 00:30:00	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	70	2
 95574	5	42	4	4	2026-01-23 00:00:01	2026-01-23 03:00:01	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	80	4
 95690	405	73	3	4	2026-01-17 15:00:00	2026-01-17 18:00:00	A sharp tool is a joy to use, and essential for precise, safe woodworking. In this hands-on class, you’ll learn the principles, techniques, and best practices for sharpening and maintaining your hand tools. We’ll cover the differences between “sharp” and “keen” edges, explore various sharpening theories and media, and practice using jigs and hand sharpening techniques. By the end, you’ll be able to bring your plane irons and chisels to a surgical level of sharpness and know how to maintain them for long-lasting performance.	70	4
@@ -2732,7 +2756,8 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 95851	17	10	5	4	2026-02-22 16:00:01	2026-02-22 18:30:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 95861	17	46	5	4	2026-02-13 00:30:01	2026-02-13 03:00:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
 95846	17	10	5	4	2026-02-15 16:00:01	2026-02-15 18:30:01	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
-98328	401	80	8	1	2026-03-22 15:00:01	2026-03-22 18:30:01		350	1
+98328	401	27	8	1	2026-03-22 15:00:01	2026-03-22 18:30:01		350	1
+97761	332	27	14	0	2026-04-05 19:00:01	2026-04-05 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 95886	85	33	8	1	2026-01-17 19:00:01	2026-01-17 22:00:01	This class provides an introduction to TIG welding, granting precise control over heat input and the ability to weld thinner materials.	350	1
 96711	31	39	4	3	2026-02-03 00:30:00	2026-02-03 03:00:00	The Intro to Resin 3D Printing class covers the principles, techniques, and applications of using a liquid resin in our Elegoo SLA printers to create detailed and precise three dimensional objects, layer-by-layer.	90	3
 95711	429	27	3	6	2026-01-15 00:00:01	2026-01-15 01:30:01	This short, demonstration-style class introduces the safe and effective use of common abrasive machines found in the woodshop. Designed to build shared knowledge and improve day-to-day shop practices, the session focuses on practical tips, correct operation, and how to recognize when a machine isn’t running as it should.\r\n\r\nMachines covered include orbital sanders, belt/disc sander, spindle sander, drum sander, and the wide belt sander. While this is not a hands-on checkout class, participants will observe each machine in use, learn proper setup and technique, and discuss common mistakes, wear signs, and basic troubleshooting cues. These free classes are offered with the understanding that participants will help support the shop community by sharing best practices and gently correcting unsafe or improper use when they see it.	0	6
@@ -2746,10 +2771,7 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 96696	328	57	3	4	2026-02-08 18:00:01	2026-02-08 19:30:01	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
 96726	18	57	5	1	2026-02-04 20:00:00	2026-02-04 23:00:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
 96731	18	57	5	4	2026-02-25 20:00:00	2026-02-25 23:00:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
-97761	332	27	14	0	2026-04-05 19:00:01	2026-04-05 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 96736	18	11	5	4	2026-02-15 15:30:00	2026-02-15 18:30:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
-98211	362	57	14	0	2026-03-26 23:15:01	2026-03-27 02:15:01	Learn the art of coil pottery in this hands-on workshop. Participants will create their own coil pot, mastering essential handbuilding techniques and understanding the tools and materials involved. Get plenty of hands-on guidance and support as you explore the basics of coiling. At the end of class, choose your favorite piece to keep! Your instructor will dry and bisque-fire it for you, and you can return to glaze it yourself during one of our Glazing Workshops, or opt to have it glazed for you for a small additional fee.	50	8
-98221	422	47	6	0	2026-03-28 23:00:01	2026-03-29 01:00:01	Learn the fundamentals of electronics through hands-on circuit building and soldering! In this beginner-friendly class, you’ll build and test simple breadboard circuits while gaining confidence with essential tools like multimeters, power supplies, and soldering irons. Along the way, you’ll practice safe lab habits, proper soldering techniques, and how to connect components like resistors, LEDs, and capacitors.\r\n\r\nBy the end of class, you’ll have assembled your own working circuit and soldered a custom board provided by our friends at PCBWay. No prior experience required, just curiosity and a steady hand!	45	4
 96801	422	47	6	4	2026-02-15 00:00:01	2026-02-15 02:00:01	Learn the fundamentals of electronics through hands-on circuit building and soldering! In this beginner-friendly class, you’ll build and test simple breadboard circuits while gaining confidence with essential tools like multimeters, power supplies, and soldering irons. Along the way, you’ll practice safe lab habits, proper soldering techniques, and how to connect components like resistors, LEDs, and capacitors.\r\n\r\nBy the end of class, you’ll have assembled your own working circuit and soldered a custom board provided by our friends at PCBWay. No prior experience required, just curiosity and a steady hand!	45	4
 95569	349	17	3	3	2026-01-22 00:00:00	2026-01-22 03:00:00	This three hour class will walk students through the three day process of making curved-checkerboard cutting boards. Making this board will use a variety of tools in the woodshop and introduce a fairly niche technique to make curved joints on the cutting board using the bandsaw.	135	4
 96776	412	74	7	3	2026-02-13 00:30:01	2026-02-13 03:00:01	In this hands-on class, students will get a practical introduction to the art of leather stamping and tooling. Perfect for beginners or anyone looking to refresh their basic leatherworking skills, this workshop guides participants through the essential techniques of tooling and dyeing. Each student will create a custom wristband from pre-cut leather, which they’ll finish and take home at the end of the session.	55	6
@@ -2758,11 +2780,11 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 96781	175	40	7	3	2026-02-14 00:00:00	2026-02-14 03:30:00	The Intro to Leatherworking class provides a foundational overview of leather crafting with an emphasis on hand stitching. Attendees will make a leather wallet using a variety of techniques.	85	3
 96751	85	11	5	4	2026-02-07 15:30:01	2026-02-07 18:30:01	This class provides an introduction to TIG welding, granting precise control over heat input and the ability to weld thinner materials.	140	4
 96771	363	57	14	3	2026-02-13 00:30:00	2026-02-13 03:30:00	Discover the art of ceramic tile relief through hands-on handbuilding techniques. In this beginner-friendly workshop, you'll learn how to design, sculpt, and texture clay to create striking 3D tiles. Choose from a variety of geometric stencils or sketch your own design from scratch. With guided instruction and plenty of support, you’ll explore the fundamentals of slab building and surface detailing. \r\nAt the end of class, select your favorite tile to keep! Your instructor will dry and bisque-fire it for you. You can return to glaze it yourself during one of our Glazing Workshops, or opt to have it glazed for a small additional fee.	50	6
+97661	332	27	14	4	2026-03-21 19:00:00	2026-03-21 21:00:00	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 96766	5	42	4	4	2026-02-13 00:00:01	2026-02-13 03:00:01	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	80	4
-97661	332	27	14	2	2026-03-21 19:00:00	2026-03-21 21:00:00	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
-98206	5	42	4	1	2026-03-26 23:00:00	2026-03-27 02:00:00	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	80	4
+98206	5	42	4	4	2026-03-26 23:00:00	2026-03-27 02:00:00	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	80	4
+97711	332	27	14	2	2026-03-29 19:00:01	2026-03-29 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 96756	85	11	5	4	2026-02-22 15:30:00	2026-02-22 18:30:00	This class provides an introduction to TIG welding, granting precise control over heat input and the ability to weld thinner materials.	140	4
-97711	332	27	14	0	2026-03-29 19:00:01	2026-03-29 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 97611	332	27	14	0	2026-03-14 19:00:01	2026-03-14 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
 96821	380	57	3	4	2026-02-17 00:30:00	2026-02-18 03:30:00	Join us for a hands-on exploration of beginner to intermediate woodshop techniques, designed to elevate your woodworking skills to the next level. In this course, we will delve into the essential tools and techniques needed to craft a beautiful, functional, and well-constructed hardwood cutting or serving board.\r\n\r\n*This is a 2 day class; please see the details in the full event description. It is recommended, but not required, to take "Woodshop Safety" before this class.*	135	4
 96831	396	39	11	2	2026-02-17 00:30:01	2026-02-17 02:30:01	This class explores the latest AI tools to complement the creative process across digital fabrication methods such as laser cutting, CNC routing, 3D printing, and more! Students will learn how to use AI to generate production-ready assets and improve design workflows through prompt engineering. Whether you're simple curious about AI or looking to discover new tools for idea generation and output, this class is a space for exploration, conversation, and hands-on learning. Bring your curiosity and an open mind!	45	6
@@ -2777,8 +2799,8 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 95625	324	6	5	2	2026-02-18 00:15:01	2026-02-18 03:15:01	This class focuses on teaching the basic skills needed to safely use the manual mill.	160	2
 96906	153	57	2	4	2026-02-20 00:30:01	2026-02-20 03:00:01	This class is an introduction to our ULS lasers - Blue & Pearl.  We will cover laser basics, materials to cut or not cut, basics in CorelDraw, and proper settings and troubleshooting.	100	4
 98046	422	47	6	1	2026-03-08 00:00:00	2026-03-08 02:00:00	Learn the fundamentals of electronics through hands-on circuit building and soldering! In this beginner-friendly class, you’ll build and test simple breadboard circuits while gaining confidence with essential tools like multimeters, power supplies, and soldering irons. Along the way, you’ll practice safe lab habits, proper soldering techniques, and how to connect components like resistors, LEDs, and capacitors.\r\n\r\nBy the end of class, you’ll have assembled your own working circuit and soldered a custom board provided by our friends at PCBWay. No prior experience required, just curiosity and a steady hand!	45	4
-97826	1	23	1	4	2026-03-28 23:00:01	2026-03-30 00:00:01	Learn to use the Laguna CNC routers at Asmbly. This course is a two-part course that will take place on two evenings in the same week.	250	4
 96901	323	6	5	3	2026-02-26 00:15:01	2026-02-26 03:15:01	This class focuses on teaching the basic skills needed to safely use the metal lathe.	140	3
+97826	1	1	1	4	2026-03-28 23:00:00	2026-03-29 16:00:00	Learn to use the Laguna CNC routers at Asmbly. This course is a two-part course that will take place on two evenings in the same week.	250	4
 97816	1	1	1	4	2026-03-10 00:30:00	2026-03-11 03:00:00	Learn to use the Laguna CNC routers at Asmbly. This course is a two-part course that will take place on two evenings in the same week.	250	4
 97821	1	23	1	3	2026-03-14 23:00:00	2026-03-16 00:00:00	Learn to use the Laguna CNC routers at Asmbly. This course is a two-part course that will take place on two evenings in the same week.	250	4
 97176	425	57	8	1	2026-01-29 15:00:00	2026-01-29 18:00:00	This class gives a combined orientation and Woodshop Safety to get members in the shop as quickly as possible. Woodshop Safety provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.	95	1
@@ -2796,6 +2818,72 @@ COPY public."NeonEventInstance" ("eventId", "eventTypeId", "teacherId", "categor
 97191	182	46	3	1	2026-02-28 20:00:01	2026-02-28 22:00:01	This class will teach you some of  the incredible capabilities that the Shaper Origin has and will certify you to use the tool.	80	3
 98051	328	57	3	1	2026-03-08 17:00:00	2026-03-08 18:30:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
 98226	18	57	5	4	2026-03-31 23:30:01	2026-04-01 02:30:01	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
+98806	19	74	9	5	2026-04-01 23:00:00	2026-04-02 00:30:00	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+100699	361	73	3	1	2026-04-04 14:00:00	2026-04-04 16:00:00	Prepare your hand plane for daily use and achieve crisp clean shavings. Students will learn the proper methods of disassembling, cleaning, adjusting the frog to set the plane mouth opening, flattening the plane’s sole, and fitting the cap iron (chip breaker) to the plane iron. We will also sharpen the plane iron and learn how to adjust the plane iron to take straight clean shavings. (Bring one metal hand plane size #4 - #8)	0	3
+100156	332	27	14	0	2026-06-28 19:00:01	2026-06-28 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+99906	332	27	14	0	2026-05-24 19:00:01	2026-05-24 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+99856	332	27	14	0	2026-05-17 19:00:01	2026-05-17 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+99706	332	27	14	0	2026-04-26 19:00:01	2026-04-26 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+100177	461	44	5	4	2026-04-18 14:00:00	2026-04-18 17:00:00	Forge your own heirloom frying pan! In this three hour blacksmithing class, you will form a pan, forge a handle, and rivet the handle to the pan. As well as being an unforgettable experience, the frying pan and skills learned will serve you for the rest of your life.	120	4
+100694	395	76	4	0	2026-04-25 16:00:01	2026-04-25 19:00:01	This introductory course is designed for beginner users looking to explore 3D modeling with Autodesk Fusion (AKA Fusion 360), with an emphasis on creating models optimized for 3D printing. Participants will learn the fundamentals of sketching, parametric design, and solid modeling, along with best practices for designing printable parts. By the end of the course, students will have the skills and confidence to create, modify, and export 3D models suitable for slicing and fabrication on FDM and SLA/DLP printers.	65	3
+99656	332	27	14	0	2026-04-19 19:00:01	2026-04-19 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+99606	332	27	14	0	2026-04-12 19:00:01	2026-04-12 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+100056	332	27	14	0	2026-06-14 19:00:01	2026-06-14 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+100106	332	27	14	0	2026-06-21 19:00:01	2026-06-21 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+100006	332	27	14	0	2026-06-07 19:00:01	2026-06-07 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+99806	332	27	14	0	2026-05-10 19:00:01	2026-05-10 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+100184	309	57	14	0	2026-04-06 23:30:01	2026-04-07 02:30:01	Try your hand at wheel throwing! In this beginner-friendly class, you’ll learn how to center clay, pull walls, and shape your piece on the wheel. Get plenty of hands-on guidance and support as you explore the basics of throwing. At the end of class, choose your favorite piece to keep! Your instructor will trim and bisque-fire it for you, and you can return to glaze it during one of our Glazing Workshops.	85	5
+99756	332	27	14	0	2026-05-03 19:00:01	2026-05-03 21:00:01	This is an introductory ceramics orientation and safety course designed to familiarize members with the studio's policies, layout, and available equipment. The primary focus of this class is understanding the rules and procedures to ensure a safe and productive experience for all users. All necessary materials are provided.\r\n\r\nNote that attendance in a CSI session  is required for all ceramics members before using the studio.	0	6
+100189	17	46	5	2	2026-04-02 23:30:00	2026-04-03 02:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
+100209	31	39	4	0	2026-04-06 23:30:00	2026-04-07 02:00:00	The Intro to Resin 3D Printing class covers the principles, techniques, and applications of using a liquid resin in our Elegoo SLA printers to create detailed and precise three dimensional objects, layer-by-layer.	90	3
+100204	359	57	14	1	2026-04-05 21:00:00	2026-04-05 22:30:00	Bring your bisque-fired pieces to life in this hands-on Glazing Workshop! In this session, you’ll learn the fundamentals of glazing, including how to apply glaze cleanly, the different techniques, experiment with colors, and achieve a unique finish. The instructor will cover best practices for dipping, pouring, brushing, and layering glazes to create unique effects. This workshop is perfect for beginners and those looking to refine their glazing skills. All materials and tools are provided. Students can bring bisque-fired pieces made in the studio, or glaze pieces made in other classes.	30	8
+98307	406	27	11	10	2026-04-25 15:00:00	2026-04-25 17:00:00	Stop the Bleed teaches critical life-saving skills to lay people so they can act quickly in response to an emergency.  Bleeding (or hemorrhage) is the leading cause of preventable death in a trauma, and this frequently is due to the severe amount of blood loss before EMS arrives.  Bystanders can save a life by controlling the bleed until healthcare professionals arrive.  This FREE 2-hour course is taught by an expert nurse from the Level II Trauma Center at St. David's Round Rock Medical Center.  Participants will be educated on recognizing life-threatening bleeding, as well as skills such as wound packing, tourniquet application, and chest seals.	0	20
+100424	363	57	14	0	2026-04-09 23:30:00	2026-04-10 02:30:00	Discover the art of ceramic tile relief through hands-on handbuilding techniques. In this beginner-friendly workshop, you'll learn how to design, sculpt, and texture clay to create striking 3D tiles. Choose from a variety of geometric stencils or sketch your own design from scratch. With guided instruction and plenty of support, you’ll explore the fundamentals of slab building and surface detailing. \r\nAt the end of class, select your favorite tile to keep! Your instructor will dry and bisque-fire it for you. You can return to glaze it yourself during one of our Glazing Workshops, or opt to have it glazed for a small additional fee.	50	6
+100429	412	74	7	0	2026-04-09 23:30:01	2026-04-10 02:00:01	In this hands-on class, students will get a practical introduction to the art of leather stamping and tooling. Perfect for beginners or anyone looking to refresh their basic leatherworking skills, this workshop guides participants through the essential techniques of tooling and dyeing. Each student will create a custom wristband from pre-cut leather, which they’ll finish and take home at the end of the session.	55	6
+100419	17	46	5	0	2026-04-30 23:30:00	2026-05-01 02:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
+100369	17	46	5	0	2026-04-23 23:30:00	2026-04-24 02:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
+100319	17	46	5	0	2026-04-16 23:30:00	2026-04-17 02:00:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
+100434	405	73	3	0	2026-04-11 14:00:00	2026-04-11 17:00:00	A sharp tool is a joy to use, and essential for precise, safe woodworking. In this hands-on class, you’ll learn the principles, techniques, and best practices for sharpening and maintaining your hand tools. We’ll cover the differences between “sharp” and “keen” edges, explore various sharpening theories and media, and practice using jigs and hand sharpening techniques. By the end, you’ll be able to bring your plane irons and chisels to a surgical level of sharpness and know how to maintain them for long-lasting performance.	70	4
+100629	328	57	3	0	2026-04-19 17:00:00	2026-04-19 18:30:00	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
+100579	85	11	5	0	2026-04-19 14:30:01	2026-04-19 17:30:01	This class provides an introduction to TIG welding, granting precise control over heat input and the ability to weld thinner materials.	140	4
+98081	359	57	14	3	2026-03-22 21:00:00	2026-03-22 22:30:00	Bring your bisque-fired pieces to life in this hands-on Glazing Workshop! In this session, you’ll learn the fundamentals of glazing, including how to apply glaze cleanly, the different techniques, experiment with colors, and achieve a unique finish. The instructor will cover best practices for dipping, pouring, brushing, and layering glazes to create unique effects. This workshop is perfect for beginners and those looking to refine their glazing skills. All materials and tools are provided. Students can bring bisque-fired pieces made in the studio, or glaze pieces made in other classes.	30	8
+100684	383	75	3	0	2026-04-05 14:00:01	2026-04-26 17:00:01	The Jupiter Side Table is a great introduction to furniture making techniques and traditional joinery. We’ll be using african mahogany (aka sapele) for the top and maple for the legs and rails. You’ll learn how to layout & create joinery for mortise and tenons joints and half lap joints, cutting circles, tapering legs, counterboring, resawing, and bookmatching. You’ll gain experience using the bandsaw, drill press, table saw, milling machines like the jointer and planer, and hand held tools like the plunge router. **Note - This is four week course that will meet on Sunday Mornings from 9am - 12pm, March 8th - March 29th. We must have three students to run this class. If the spots are not filled by 48 hours before the start date, we will need to push the start date back.**	395	4
+100709	183	56	2	0	2026-04-21 23:00:00	2026-04-22 01:00:00	In this class you will learn how to safely and accurately engrave curved / round materials on the Dorian laser using the 4th axis (rotary) tool. You will learn how to attach the rotary axis, operate the Dorian laser with the rotary axis, and then return Dorian to normal functions for makerspace users after removing the axis. At the end of the class you will take home an engraved item that you create.\r\n\r\nPre-Requisites: Big Lasers	75	3
+100714	327	18	3	0	2026-04-22 23:30:00	2026-04-23 01:30:00	The Festool Domino DF500 provides a quick way to create floating tenon joints in a variety of applications. Key uses are in cabinetry, frames, building table tops, joining table legs to aprons, drawers, and boxes.	80	4
+100829	24	6	10	0	2026-04-29 23:30:01	2026-04-30 02:00:01	This class provides an introduction to our woodworking shop, with a focus on safely using a miter saw, table saw, jointer, planer, band saw, router, and drill press.  Attendees MUST wear closed toe shoes for this class.	35	4
+98041	423	48	3	3	2026-03-31 23:00:00	2026-04-01 02:00:00	Make a handcrafted wooden pen from start to finish in this beginner-friendly project class. We’ll guide you through preparing the blank, turning it to shape, and applying a polished finish before assembling your pen. You’ll have the chance to practice foundational turning skills and lathe use while completing a beautiful project to take home.\r\n\r\n*NOTE: This class does not certify students for personal lathe use. If you would like to work on the lathe outside of class time, you will need to take one of the "Intro Turning” classes (Handles, Bowls, or Lidded Vessels).*	95	3
+100219	5	42	4	2	2026-04-09 23:00:01	2026-04-10 02:00:01	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	80	4
+100704	350	47	6	0	2026-04-20 23:00:00	2026-04-21 02:00:00	This course introduces the fundamentals of operating an Arduino Uno microcontroller, including programming and connecting various peripheral devices. Participants will gain the foundational skills needed to develop their own electronics projects and implement mechanical control. By the end of the class, you will have coded and assembled a small robotic arm using 3d printed parts and various motors and electronics. No prior electronics or programming experience is necessary. All materials are provided, including an electronics kit with an Arduino Uno, servo motor, stepper motor, potentiometer, buttons, resistors, etc\r\n\r\nNote: Please bring a laptop to class.	150	4
+100734	309	56	14	0	2026-04-24 23:00:01	2026-04-25 02:00:01	Try your hand at wheel throwing! In this beginner-friendly class, you’ll learn how to center clay, pull walls, and shape your piece on the wheel. Get plenty of hands-on guidance and support as you explore the basics of throwing. At the end of class, choose your favorite piece to keep! Your instructor will trim and bisque-fire it for you, and you can return to glaze it yourself during one of our Glazing Workshops, or opt to have it glazed for you for a small additional fee.	85	5
+100744	393	78	5	0	2026-04-26 14:00:01	2026-04-26 20:00:01	Transform a “high carbon” railroad spike into a sharp, rugged camp knife in this hands-on forging workshop. Spend 70–80% of your time at the anvil, hammering, shaping, and refining the blade, with the final touches completed on a 2"x72" belt grinder.	200	4
+100739	393	78	5	0	2026-04-25 14:00:01	2026-04-25 20:00:01	Transform a “high carbon” railroad spike into a sharp, rugged camp knife in this hands-on forging workshop. Spend 70–80% of your time at the anvil, hammering, shaping, and refining the blade, with the final touches completed on a 2"x72" belt grinder.	200	4
+100729	384	51	3	0	2026-04-24 23:00:00	2026-04-25 02:00:00	Ready to refine your spindle turning skills? This hands-on intermediate class focuses entirely on creating clean, crisp beads and smooth, flowing coves – essential elements in decorative spindle work. We’ll practice techniques to achieve better control, discuss proper tool selection (spindle vs. detail gouges, choosing the right size), and learn how to present the tool correctly to avoid catches. Leave with greater confidence and the ability to add sophisticated shapes to your projects.	100	3
+100719	5	42	4	0	2026-04-23 23:00:01	2026-04-24 02:00:01	This is an introductory course to the use of the Prusa Mk3s printer. During the instruction, students will learn how to load and unload filament, infill settings, supports, and different materials that can be used on the machine, and how to navigate prusaslicer and its basic settings.	80	4
+100754	462	46	8	0	2026-03-25 23:00:00	2026-04-02 01:30:00	Payment registration link for HERC team shop access.	450	1
+100759	422	47	6	2	2026-04-25 23:00:01	2026-04-26 01:00:01	Learn the fundamentals of electronics through hands-on circuit building and soldering! In this beginner-friendly class, you’ll build and test simple breadboard circuits while gaining confidence with essential tools like multimeters, power supplies, and soldering irons. Along the way, you’ll practice safe lab habits, proper soldering techniques, and how to connect components like resistors, LEDs, and capacitors.\r\n\r\nBy the end of class, you’ll have assembled your own working circuit and soldered a custom board provided by our friends at PCBWay. No prior experience required, just curiosity and a steady hand!	45	4
+100789	322	51	3	0	2026-04-25 14:00:01	2026-04-25 18:00:01	Expand your woodturning skills with this guided vase-turning class! Designed for students with prior wood lathe experience (or those who have completed our introductory woodturning classes) this session will help you refine your technique and take on a more advanced project.\r\n\r\nYou’ll learn essential skills such as spindle turning between centers, creating a tenon, finishing, boring, and tasteful tenon removal.\r\n\r\nMaterials:\r\n\r\nA face mask for sanding.\r\nWood will be provided, but students are welcome to bring their own domestic hardwood, sized between 2.5” x 2.5” x 8” and 3” x 3” x 10”.	175	3
+100804	18	57	5	0	2026-04-27 23:30:01	2026-04-28 02:30:01	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
+100809	316	69	7	0	2026-04-28 23:00:01	2026-04-29 01:00:01	The Intro to Sewing class is designed to provide beginners with the fundamental knowledge and skills needed to start their sewing journey.	75	3
+100794	328	57	3	0	2026-04-26 17:00:01	2026-04-26 18:30:01	This class provides an introduction to the powered sanding equipment at Asmbly, including the spindle sander, edge sander, combo sander, drum sander, downdraft table, and wide belt sander.	35	4
+100819	100	72	5	1	2026-04-29 23:00:00	2026-04-30 03:30:00	In this class we go over all the required skills to make parts on the Tormach CNC mill. \r\nPre-Requisites: Tormach Part 1: Fusion CAM and Milling: Techniques	160	5
+100764	175	40	7	1	2026-04-10 23:00:01	2026-04-11 02:30:01	The Intro to Leatherworking class provides a foundational overview of leather crafting with an emphasis on hand stitching. Attendees will make a leather wallet using a variety of techniques.	85	3
+100814	88	72	5	2	2026-04-28 23:00:00	2026-04-29 02:30:00	In this class, you will learn how to use the "Manufacture" portion of Autodesk Fusion to create toolpaths that you can use to make parts on the Tormach PCNC 1100 mill.	100	8
+98956	19	52	9	0	2026-04-22 23:00:01	2026-04-23 00:30:01	This is an informative, and required, orientation session for new and prospective Asmbly members.	0	12
+100749	182	46	3	3	2026-04-25 19:00:01	2026-04-25 21:00:01	This class will teach you some of  the incredible capabilities that the Shaper Origin has and will certify you to use the tool.	80	3
+98136	17	10	5	3	2026-03-29 15:00:00	2026-03-29 17:30:00	This class provides an introduction to our metal working shop. This class aims to convey the general safety principles of the metal shop as well as covering its specific policies and procedures. Members must take this class before using the tools in the metal shop.\r\n\r\nAttendees should bring eye protection and hearing protection to class, wear long pants, and wear closed toe shoes.	35	4
+100774	333	41	3	0	2026-04-29 23:30:00	2026-04-30 02:30:00	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
+100784	380	57	3	0	2026-04-20 23:30:01	2026-04-22 02:30:01	Join us for a hands-on exploration of beginner to intermediate woodshop techniques, designed to elevate your woodworking skills to the next level. In this course, we will delve into the essential tools and techniques needed to craft a beautiful, functional, and well-constructed hardwood cutting or serving board.\r\n\r\n*This is a 2 day class; please see the details in the full event description. It is recommended, but not required, to take "Woodshop Safety" before this class.*	135	4
+100824	427	57	3	0	2026-04-30 23:30:00	2026-05-01 02:30:00	Step confidently into the woodshop with this beginner-friendly, hands-on workshop focused on building both foundational skills and a sturdy wooden toolbox. Designed for first-time woodworkers or those looking to refresh their fundamentals, this class provides a supportive, structured introduction to working safely and effectively in the shop.\r\n\r\nStudents will construct a functional toolbox while learning to use three cornerstone woodworking tools: the miter saw, cordless drill, and impact driver. Along the way, participants will practice measuring, cutting, assembly, and basic finishing techniques, essential skills that translate directly to a wide range of future woodworking projects. By the end of class, each student will leave with a completed toolbox and increased confidence working with common shop tools.	80	3
+100835	174	40	7	0	2026-04-16 23:00:01	2026-04-17 02:00:01	The Leather Belt Making class provides a foundational overview of leather crafting. Attendees will make a leather belt using a variety of techniques.	85	3
+100769	333	41	3	2	2026-04-15 23:30:01	2026-04-16 02:30:01	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
+100855	349	17	3	1	2026-05-13 23:00:00	2026-05-14 02:00:00	This three hour class will walk students through the three day process of making curved-checkerboard cutting boards. Making this board will use a variety of tools in the woodshop and introduce a fairly niche technique to make curved joints on the cutting board using the bandsaw.	135	4
+100850	417	17	3	1	2026-05-06 23:00:01	2026-05-07 02:30:01	This is a beginner level class that covers the basic use of lathe tools and best practices with the lathe itself, focused on turning a small bowl with a fitted lid. You do not need to have taken spindle/bowl turning before this class. During this class we will cover the different tools and how to sharpen them, as well as several different project mounting techniques (including mounting bowls on tenon, as opposed to mounting on mortise in the bowl turning class.) We will provide blanks for this project. But if you would like to bring your own, please ensure it is at least 3”x3”x6” long.	130	3
+100494	18	57	5	0	2026-04-14 23:30:00	2026-04-15 02:30:00	The MIG Welding class provides a thorough introduction to Metal Inert Gas (also called "wire") welding techniques, covering equipment setup, safety, and proper welding procedures. Participants will gain practical hands-on experience to confidently and safely create strong, clean welds.	140	4
+100799	381	56	7	4	2026-04-26 20:30:01	2026-04-26 23:30:01	In this hands-on class, you’ll get to know our awesome Brother embroidery machines as you explore both patch making and direct-to-garment stitching. You’ll learn how to bring your designs to life with the right stabilizers, fabrics, and setup techniques — plus get the scoop on threading, hooping, and fine-tuning your projects. We’ll also cover fun finishing tricks to make your creations look polished and professional. Whether you're dreaming of custom patches or jazzing up your wardrobe, this class is your perfect starting point!	80	4
+100724	362	57	14	0	2026-04-16 23:30:00	2026-04-17 02:30:00	Learn the art of coil pottery in this hands-on workshop. Participants will create their own coil pot, mastering essential handbuilding techniques and understanding the tools and materials involved. Get plenty of hands-on guidance and support as you explore the basics of coiling. At the end of class, choose your favorite piece to keep! Your instructor will dry and bisque-fire it for you, and you can return to glaze it yourself during one of our Glazing Workshops, or opt to have it glazed for you for a small additional fee.	50	8
+100569	153	57	2	0	2026-04-13 23:30:01	2026-04-14 02:00:01	This class is an introduction to our ULS lasers - Blue & Pearl.  We will cover laser basics, materials to cut or not cut, basics in CorelDraw, and proper settings and troubleshooting.	100	4
+100779	333	41	3	2	2026-04-12 14:00:01	2026-04-12 17:00:01	Everything is a box! From bookshelves to cabinets, much of woodworking revolves around the fundamental structure of the box. This beginner-friendly class focuses on the core woodworking techniques of box construction. You'll build a basic open-topped box while learning essential skills: precise length cutting, creating rabbets, mitering corners, and cutting grooves. We'll primarily use the table saw, but also explore other tools for achieving similar results. These fundamental skills will empower you to tackle a wide range of projects, from custom boxes and drawers to bookshelves and cabinets.  No prior experience necessary!	90	4
+100830	463	81	6	1	2026-04-22 23:00:01	2026-04-24 02:00:01	Step into the world of combat robotics and build your own battle-ready bot from the ground up. In this hands-on workshop, you’ll design, assemble, and prepare a small combat robot inspired by the Weaponized Plastic Fighting League (WPFL).\r\nYour robot will feature a 3D-printed chassis, drivetrain, and weapon system, powered by a microcontroller (ESP32-C3) that enables control via WiFi or Bluetooth. You’ll assemble all components, including light soldering on a custom PCB, and bring your robot to life.\r\n\r\nThis class, and the companion SIG, emphasize practical engineering, iterative design, and learning by doing.\r\n\r\nDedicated SIG sessions will focus on weapon design and fabrication, customization options, and troubleshooting, giving students the opportunity to experiment, refine strategy, and prepare for friendly competition.\r\n\r\nThis workshop emphasizes practical, hands-on learning across mechanics, electronics, and embedded systems, and serves as an entry point into Asmbly’s Weaponized Plastic League, culminating in a live, bracket-style Battle Day tournament in an arena fabricated by Asmbly community members.	200	4
 \.
 
 
@@ -3347,6 +3435,8 @@ COPY public."NeonEventInstanceCancellee" ("neonId") FROM stdin;
 541
 542
 543
+544
+545
 \.
 
 
@@ -5678,15 +5768,13 @@ COPY public."NeonEventInstanceRequest" (id, "createdAt", fulfilled, "eventId", "
 2369	2026-03-11 22:07:05.345	f	97986	5836
 2350	2026-03-07 05:44:19.322	t	97821	5792
 2371	2026-03-12 18:44:01.337	f	98016	4229
-2375	2026-03-13 00:28:43.868	f	97906	5628
 2376	2026-03-13 20:11:40.404	f	97401	1386
 2340	2026-03-05 01:07:48.582	t	97916	5773
 2345	2026-03-05 15:20:48.693	t	97916	5781
 2363	2026-03-10 16:57:06.428	t	97916	4412
 2373	2026-03-13 00:26:56.103	t	97916	5628
-2378	2026-03-16 12:45:54.701	f	97906	5819
 2380	2026-03-16 12:47:34.615	f	98096	5819
-2370	2026-03-17 15:08:27.605	f	97906	5781
+2384	2026-03-19 16:35:34.275	f	98226	5901
 2381	2026-03-17 15:08:35.951	f	97911	5781
 2341	2026-03-05 01:07:57.261	t	97891	5773
 2374	2026-03-13 00:28:34.687	t	97891	5628
@@ -5695,6 +5783,25 @@ COPY public."NeonEventInstanceRequest" (id, "createdAt", fulfilled, "eventId", "
 2372	2026-03-12 21:06:21.768	t	97886	5843
 2379	2026-03-16 12:46:07.72	t	97886	5819
 2383	2026-03-18 03:16:07.546	f	97886	5773
+2370	2026-03-17 15:08:27.605	t	97906	5781
+2375	2026-03-13 00:28:43.868	t	97906	5628
+2378	2026-03-16 12:45:54.701	t	97906	5819
+2385	2026-03-20 00:49:50.026	f	98176	5559
+2386	2026-03-21 23:58:31.655	f	97826	2688
+2387	2026-03-22 01:46:59.117	f	97886	5914
+2388	2026-03-22 05:56:12.194	f	97911	5914
+2389	2026-03-23 09:10:34.892	f	98016	3013
+2390	2026-03-24 01:24:31.083	f	97826	5925
+2391	2026-03-24 18:35:57.072	f	97886	5933
+2392	2026-03-24 19:55:20.65	f	97826	5933
+2393	2026-03-25 23:39:45.462	f	98378	5942
+2395	2026-03-25 23:40:25.805	f	97911	5942
+2396	2026-03-26 15:41:59.032	f	97826	2796
+2394	2026-03-25 23:40:04.759	t	98578	5942
+2397	2026-03-27 00:51:12.335	f	98378	5949
+2398	2026-03-27 14:14:42.508	f	97911	5951
+2399	2026-03-27 15:58:39.161	f	97911	5954
+2400	2026-03-28 03:18:06.309	f	100177	418
 \.
 
 
@@ -5726,31 +5833,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 5657	user5657@test.com	Test	User5657
 5659	user5659@test.com	Test	User5659
 5665	user5665@test.com	Test	User5665
-5670	user5670@test.com	Test	User5670
-5679	user5679@test.com	Test	User5679
-5825	user5825@test.com	Test	User5825
-5530	user5530@test.com	Test	User5530
-5754	user5754@test.com	Test	User5754
-5757	user5757@test.com	Test	User5757
-5758	user5758@test.com	Test	User5758
-5828	user5828@test.com	Test	User5828
-5764	user5764@test.com	Test	User5764
-5767	user5767@test.com	Test	User5767
-5768	user5768@test.com	Test	User5768
-5770	user5770@test.com	Test	User5770
-5829	user5829@test.com	Test	User5829
-5801	user5801@test.com	Test	User5801
-5521	user5521@test.com	Test	User5521
-5778	user5778@test.com	Test	User5778
-5779	user5779@test.com	Test	User5779
-5843	user5843@test.com	Test	User5843
-5526	user5526@test.com	Test	User5526
-5808	user5808@test.com	Test	User5808
-5809	user5809@test.com	Test	User5809
-5810	user5810@test.com	Test	User5810
-5813	user5813@test.com	Test	User5813
-5597	user5597@test.com	Test	User5597
-5549	user5549@test.com	Test	User5549
 5	user5@test.com	Test	User5
 7	user7@test.com	Test	User7
 8	user8@test.com	Test	User8
@@ -5758,14 +5840,12 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 104	user104@test.com	Test	User104
 105	user105@test.com	Test	User105
 93	user93@test.com	Test	User93
-19	user19@test.com	Test	User19
 20	user20@test.com	Test	User20
 26	user26@test.com	Test	User26
 29	user29@test.com	Test	User29
 30	user30@test.com	Test	User30
 31	user31@test.com	Test	User31
 33	user33@test.com	Test	User33
-147	user147@test.com	Test	User147
 111	user111@test.com	Test	User111
 112	user112@test.com	Test	User112
 39	user39@test.com	Test	User39
@@ -5863,6 +5943,8 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 88	user88@test.com	Test	User88
 9	user9@test.com	Test	User9
 199	user199@test.com	Test	User199
+147	user147@test.com	Test	User147
+19	user19@test.com	Test	User19
 3043	user3043@test.com	Test	User3043
 219	user219@test.com	Test	User219
 350	user350@test.com	Test	User350
@@ -5923,7 +6005,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 344	user344@test.com	Test	User344
 450	user450@test.com	Test	User450
 441	user441@test.com	Test	User441
-389	user389@test.com	Test	User389
 396	user396@test.com	Test	User396
 261	user261@test.com	Test	User261
 403	user403@test.com	Test	User403
@@ -5973,6 +6054,7 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 368	user368@test.com	Test	User368
 335	user335@test.com	Test	User335
 321	user321@test.com	Test	User321
+389	user389@test.com	Test	User389
 509	user509@test.com	Test	User509
 511	user511@test.com	Test	User511
 512	user512@test.com	Test	User512
@@ -6125,7 +6207,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 769	user769@test.com	Test	User769
 785	user785@test.com	Test	User785
 786	user786@test.com	Test	User786
-787	user787@test.com	Test	User787
 831	user831@test.com	Test	User831
 719	user719@test.com	Test	User719
 835	user835@test.com	Test	User835
@@ -6198,6 +6279,7 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 826	user826@test.com	Test	User826
 729	user729@test.com	Test	User729
 863	user863@test.com	Test	User863
+787	user787@test.com	Test	User787
 1100	user1100@test.com	Test	User1100
 960	user960@test.com	Test	User960
 1071	user1071@test.com	Test	User1071
@@ -6854,7 +6936,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 2755	user2755@test.com	Test	User2755
 2756	user2756@test.com	Test	User2756
 2757	user2757@test.com	Test	User2757
-2688	user2688@test.com	Test	User2688
 2759	user2759@test.com	Test	User2759
 2761	user2761@test.com	Test	User2761
 2838	user2838@test.com	Test	User2838
@@ -6867,6 +6948,7 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 2670	user2670@test.com	Test	User2670
 2636	user2636@test.com	Test	User2636
 2645	user2645@test.com	Test	User2645
+2688	user2688@test.com	Test	User2688
 2772	user2772@test.com	Test	User2772
 2840	user2840@test.com	Test	User2840
 2773	user2773@test.com	Test	User2773
@@ -6905,7 +6987,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 2923	user2923@test.com	Test	User2923
 2896	user2896@test.com	Test	User2896
 2897	user2897@test.com	Test	User2897
-2443	user2443@test.com	Test	User2443
 2902	user2902@test.com	Test	User2902
 2903	user2903@test.com	Test	User2903
 2909	user2909@test.com	Test	User2909
@@ -6962,7 +7043,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 3183	user3183@test.com	Test	User3183
 3168	user3168@test.com	Test	User3168
 3035	user3035@test.com	Test	User3035
-3013	user3013@test.com	Test	User3013
 3170	user3170@test.com	Test	User3170
 3069	user3069@test.com	Test	User3069
 3070	user3070@test.com	Test	User3070
@@ -6977,7 +7057,9 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 2993	user2993@test.com	Test	User2993
 2760	user2760@test.com	Test	User2760
 2851	user2851@test.com	Test	User2851
+2443	user2443@test.com	Test	User2443
 2945	user2945@test.com	Test	User2945
+3013	user3013@test.com	Test	User3013
 3071	user3071@test.com	Test	User3071
 3072	user3072@test.com	Test	User3072
 3075	user3075@test.com	Test	User3075
@@ -7255,6 +7337,7 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 3776	user3776@test.com	Test	User3776
 3777	user3777@test.com	Test	User3777
 3769	user3769@test.com	Test	User3769
+934	user934@test.com	Test	User934
 796	user796@test.com	Test	User796
 3803	user3803@test.com	Test	User3803
 3805	user3805@test.com	Test	User3805
@@ -7275,7 +7358,7 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 3755	user3755@test.com	Test	User3755
 3730	user3730@test.com	Test	User3730
 3638	user3638@test.com	Test	User3638
-934	user934@test.com	Test	User934
+559	user559@test.com	Test	User559
 3753	user3753@test.com	Test	User3753
 3558	user3558@test.com	Test	User3558
 3830	user3830@test.com	Test	User3830
@@ -7285,7 +7368,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 3818	user3818@test.com	Test	User3818
 3573	user3573@test.com	Test	User3573
 3707	user3707@test.com	Test	User3707
-2796	user2796@test.com	Test	User2796
 3784	user3784@test.com	Test	User3784
 3802	user3802@test.com	Test	User3802
 3824	user3824@test.com	Test	User3824
@@ -7303,7 +7385,7 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 3653	user3653@test.com	Test	User3653
 2683	user2683@test.com	Test	User2683
 3798	user3798@test.com	Test	User3798
-559	user559@test.com	Test	User559
+2796	user2796@test.com	Test	User2796
 3810	user3810@test.com	Test	User3810
 3621	user3621@test.com	Test	User3621
 3971	user3971@test.com	Test	User3971
@@ -7357,7 +7439,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 3942	user3942@test.com	Test	User3942
 3979	user3979@test.com	Test	User3979
 3884	user3884@test.com	Test	User3884
-418	user418@test.com	Test	User418
 3949	user3949@test.com	Test	User3949
 4024	user4024@test.com	Test	User4024
 3844	user3844@test.com	Test	User3844
@@ -7407,6 +7488,7 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 2690	user2690@test.com	Test	User2690
 4117	user4117@test.com	Test	User4117
 4015	user4015@test.com	Test	User4015
+418	user418@test.com	Test	User418
 3934	user3934@test.com	Test	User3934
 2597	user2597@test.com	Test	User2597
 3986	user3986@test.com	Test	User3986
@@ -7414,8 +7496,8 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 4037	user4037@test.com	Test	User4037
 3851	user3851@test.com	Test	User3851
 3889	user3889@test.com	Test	User3889
-3931	user3931@test.com	Test	User3931
 4005	user4005@test.com	Test	User4005
+3931	user3931@test.com	Test	User3931
 3526	user3526@test.com	Test	User3526
 4120	user4120@test.com	Test	User4120
 4122	user4122@test.com	Test	User4122
@@ -7688,7 +7770,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 4975	user4975@test.com	Test	User4975
 5055	user5055@test.com	Test	User5055
 4900	user4900@test.com	Test	User4900
-5043	user5043@test.com	Test	User5043
 4976	user4976@test.com	Test	User4976
 4965	user4965@test.com	Test	User4965
 4817	user4817@test.com	Test	User4817
@@ -7741,6 +7822,7 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 4763	user4763@test.com	Test	User4763
 5023	user5023@test.com	Test	User5023
 4849	user4849@test.com	Test	User4849
+5043	user5043@test.com	Test	User5043
 5126	user5126@test.com	Test	User5126
 5128	user5128@test.com	Test	User5128
 5129	user5129@test.com	Test	User5129
@@ -7750,7 +7832,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 4946	user4946@test.com	Test	User4946
 5146	user5146@test.com	Test	User5146
 5148	user5148@test.com	Test	User5148
-5149	user5149@test.com	Test	User5149
 5151	user5151@test.com	Test	User5151
 5156	user5156@test.com	Test	User5156
 5157	user5157@test.com	Test	User5157
@@ -7779,8 +7860,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 5238	user5238@test.com	Test	User5238
 5496	user5496@test.com	Test	User5496
 5240	user5240@test.com	Test	User5240
-5340	user5340@test.com	Test	User5340
-5341	user5341@test.com	Test	User5341
 5245	user5245@test.com	Test	User5245
 5251	user5251@test.com	Test	User5251
 5193	user5193@test.com	Test	User5193
@@ -7809,7 +7888,6 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 5309	user5309@test.com	Test	User5309
 5417	user5417@test.com	Test	User5417
 5357	user5357@test.com	Test	User5357
-5241	user5241@test.com	Test	User5241
 5361	user5361@test.com	Test	User5361
 5363	user5363@test.com	Test	User5363
 5368	user5368@test.com	Test	User5368
@@ -7827,6 +7905,7 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 5430	user5430@test.com	Test	User5430
 5463	user5463@test.com	Test	User5463
 5466	user5466@test.com	Test	User5466
+5340	user5340@test.com	Test	User5340
 5467	user5467@test.com	Test	User5467
 5468	user5468@test.com	Test	User5468
 5471	user5471@test.com	Test	User5471
@@ -7849,6 +7928,9 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 5164	user5164@test.com	Test	User5164
 5362	user5362@test.com	Test	User5362
 5316	user5316@test.com	Test	User5316
+5149	user5149@test.com	Test	User5149
+5341	user5341@test.com	Test	User5341
+5241	user5241@test.com	Test	User5241
 5509	user5509@test.com	Test	User5509
 5510	user5510@test.com	Test	User5510
 5683	user5683@test.com	Test	User5683
@@ -7867,7 +7949,7 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 5546	user5546@test.com	Test	User5546
 5539	user5539@test.com	Test	User5539
 5557	user5557@test.com	Test	User5557
-5559	user5559@test.com	Test	User5559
+5670	user5670@test.com	Test	User5670
 5561	user5561@test.com	Test	User5561
 5790	user5790@test.com	Test	User5790
 5564	user5564@test.com	Test	User5564
@@ -7894,6 +7976,28 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 5796	user5796@test.com	Test	User5796
 5797	user5797@test.com	Test	User5797
 5745	user5745@test.com	Test	User5745
+5679	user5679@test.com	Test	User5679
+5825	user5825@test.com	Test	User5825
+5530	user5530@test.com	Test	User5530
+5754	user5754@test.com	Test	User5754
+5757	user5757@test.com	Test	User5757
+5758	user5758@test.com	Test	User5758
+5828	user5828@test.com	Test	User5828
+5767	user5767@test.com	Test	User5767
+5768	user5768@test.com	Test	User5768
+5770	user5770@test.com	Test	User5770
+5829	user5829@test.com	Test	User5829
+5801	user5801@test.com	Test	User5801
+5521	user5521@test.com	Test	User5521
+5778	user5778@test.com	Test	User5778
+5779	user5779@test.com	Test	User5779
+5843	user5843@test.com	Test	User5843
+5526	user5526@test.com	Test	User5526
+5808	user5808@test.com	Test	User5808
+5809	user5809@test.com	Test	User5809
+5813	user5813@test.com	Test	User5813
+5597	user5597@test.com	Test	User5597
+5549	user5549@test.com	Test	User5549
 5830	user5830@test.com	Test	User5830
 5831	user5831@test.com	Test	User5831
 5777	user5777@test.com	Test	User5777
@@ -7907,17 +8011,44 @@ COPY public."NeonEventRequester" (id, email, "firstName", "lastName") FROM stdin
 5816	user5816@test.com	Test	User5816
 5852	user5852@test.com	Test	User5852
 5857	user5857@test.com	Test	User5857
-5819	user5819@test.com	Test	User5819
+5810	user5810@test.com	Test	User5810
 5681	user5681@test.com	Test	User5681
 5870	user5870@test.com	Test	User5870
 5867	user5867@test.com	Test	User5867
 5871	user5871@test.com	Test	User5871
 5773	user5773@test.com	Test	User5773
+5819	user5819@test.com	Test	User5819
+5559	user5559@test.com	Test	User5559
+5764	user5764@test.com	Test	User5764
 5872	user5872@test.com	Test	User5872
 5880	user5880@test.com	Test	User5880
 5882	user5882@test.com	Test	User5882
 5889	user5889@test.com	Test	User5889
 5890	user5890@test.com	Test	User5890
+5900	user5900@test.com	Test	User5900
+5901	user5901@test.com	Test	User5901
+5903	user5903@test.com	Test	User5903
+5905	user5905@test.com	Test	User5905
+5909	user5909@test.com	Test	User5909
+5914	user5914@test.com	Test	User5914
+5924	user5924@test.com	Test	User5924
+5925	user5925@test.com	Test	User5925
+5928	user5928@test.com	Test	User5928
+5930	user5930@test.com	Test	User5930
+5931	user5931@test.com	Test	User5931
+5933	user5933@test.com	Test	User5933
+5941	user5941@test.com	Test	User5941
+5942	user5942@test.com	Test	User5942
+5945	user5945@test.com	Test	User5945
+5904	user5904@test.com	Test	User5904
+5949	user5949@test.com	Test	User5949
+5950	user5950@test.com	Test	User5950
+5951	user5951@test.com	Test	User5951
+5952	user5952@test.com	Test	User5952
+5954	user5954@test.com	Test	User5954
+5957	user5957@test.com	Test	User5957
+5958	user5958@test.com	Test	User5958
+5959	user5959@test.com	Test	User5959
 \.
 
 
@@ -8006,6 +8137,7 @@ COPY public."NeonEventTeacher" (id, name) FROM stdin;
 78	Teacher 78
 79	Teacher 79
 80	Teacher 80
+81	Teacher 81
 \.
 
 
@@ -8208,6 +8340,9 @@ COPY public."NeonEventType" (id, name, visible) FROM stdin;
 457	HERC Workshop Access 5	t
 458	Private Sewing	t
 459	Advanced MIG Welding	t
+461	Forge a Steel Pan	t
+462	HERC Workshop Access 7	t
+463	Weaponized Plastic Bots	t
 \.
 
 
@@ -9704,7 +9839,7 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 1275	2414	325	ONDEMAND	2026-01-17 17:42:38.885	f
 1403	893	333	NOTIFICATION	2025-11-11 01:29:53.107	t
 1488	3018	327	ONDEMAND	2025-07-16 02:12:32.731	t
-1436	2851	100	ONDEMAND	2026-03-09 01:51:27.365	f
+1436	2851	100	ONDEMAND	2026-03-09 01:51:27.365	t
 1443	2083	349	NOTIFICATION	2025-07-01 16:13:29.951	t
 1513	3054	24	NOTIFICATION	2025-07-28 12:54:47.787	t
 1507	2604	173	NOTIFICATION	2025-07-18 16:58:05.27	t
@@ -9745,7 +9880,6 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 1579	2075	315	ONDEMAND	2025-08-02 14:41:12.543	f
 1585	3170	315	ONDEMAND	2025-08-03 05:59:29.904	f
 1591	3039	326	ONDEMAND	2025-08-04 15:44:48.902	f
-1539	2443	173	ONDEMAND	2025-07-25 01:42:48.969	t
 1548	3105	173	ONDEMAND	2025-07-27 21:06:22.507	t
 1566	1116	173	ONDEMAND	2025-08-03 02:31:19.224	t
 1593	3186	315	ONDEMAND	2025-08-04 17:57:47.031	f
@@ -9827,12 +9961,13 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 1565	3135	174	NOTIFICATION	2025-07-29 19:22:26.372	t
 1534	3078	327	ONDEMAND	2025-08-30 15:42:40.019	t
 1455	987	357	NOTIFICATION	2025-10-17 16:45:14.814	t
-1643	2989	349	ONDEMAND	2025-12-05 00:52:10.306	t
+1539	2443	173	ONDEMAND	2026-03-23 05:51:45.733	f
 1653	3293	383	NOTIFICATION	2025-08-13 18:31:41.957	t
 1501	1729	388	NOTIFICATION	2025-12-09 13:13:53.054	t
 1544	3099	18	NOTIFICATION	2025-12-08 05:24:22.793	t
 1578	2075	321	NOTIFICATION	2025-12-31 04:03:49.204	t
 1555	43	327	ONDEMAND	2025-07-28 01:55:42.975	t
+1643	2989	349	ONDEMAND	2026-03-22 22:20:54.931	t
 1569	987	181	NOTIFICATION	2025-07-31 13:42:20.34	t
 1581	3162	396	NOTIFICATION	2025-08-02 22:16:10.491	t
 1616	3101	380	NOTIFICATION	2025-08-19 00:41:17.295	t
@@ -10319,7 +10454,7 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2045	4123	355	ONDEMAND	2026-01-04 03:48:56.298	f
 2116	1041	326	ONDEMAND	2026-01-04 20:21:33.572	f
 2137	4344	309	NOTIFICATION	2025-12-16 04:32:24.326	t
-2093	4005	100	ONDEMAND	2026-03-13 16:17:53.16	f
+2093	4005	100	ONDEMAND	2026-03-13 16:17:53.16	t
 2133	2760	84	ONDEMAND	2026-01-21 04:08:23.03	t
 2145	4357	385	ONDEMAND	2025-12-05 14:48:46.146	f
 2122	4296	333	NOTIFICATION	2025-12-01 14:46:43.964	t
@@ -10630,7 +10765,6 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2450	5129	395	NOTIFICATION	2026-01-18 18:54:11.521	t
 2457	5146	353	ONDEMAND	2026-01-20 00:34:28.034	f
 2459	1943	21	ONDEMAND	2026-01-20 07:05:50.304	f
-2460	5156	349	NOTIFICATION	2026-01-20 16:58:39.305	f
 2461	5157	315	ONDEMAND	2026-01-20 17:57:19.547	f
 2341	4417	333	NOTIFICATION	2026-01-19 23:03:25.081	t
 2373	4419	359	NOTIFICATION	2026-01-11 02:39:49.81	t
@@ -10679,6 +10813,7 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2473	368	359	NOTIFICATION	2026-01-30 19:42:11.768	t
 2476	5164	422	NOTIFICATION	2026-01-23 22:49:11.692	t
 2448	5123	84	NOTIFICATION	2026-01-18 15:10:27.651	t
+2460	5156	349	NOTIFICATION	2026-01-20 16:58:39.305	t
 2393	3851	383	NOTIFICATION	2026-01-12 22:34:59.871	t
 2481	5211	383	ONDEMAND	2026-01-24 05:21:32.252	t
 2489	5238	173	NOTIFICATION	2026-01-26 20:31:32.201	f
@@ -10686,22 +10821,18 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2465	5171	333	NOTIFICATION	2026-01-21 17:36:46.351	t
 2456	4089	427	NOTIFICATION	2026-01-19 22:19:07.726	t
 2499	5259	403	ONDEMAND	2026-01-29 04:40:20.082	f
-2501	5264	349	ONDEMAND	2026-01-29 21:00:27.323	f
 2480	5211	381	ONDEMAND	2026-01-24 05:21:12.108	t
 2488	3094	381	ONDEMAND	2026-01-26 16:13:21.669	t
 2506	4417	325	ONDEMAND	2026-01-30 04:56:42.213	f
-2510	4417	349	ONDEMAND	2026-01-30 04:59:25.163	f
 2511	5277	11	ONDEMAND	2026-01-30 08:08:29.424	f
 2515	5211	410	ONDEMAND	2026-01-30 12:49:11.661	f
 2517	2636	355	ONDEMAND	2026-01-30 15:19:04.332	f
 2519	4344	332	NOTIFICATION	2026-01-30 19:53:50.783	t
-2520	5291	175	NOTIFICATION	2026-01-30 21:55:29.039	f
 2521	5291	353	ONDEMAND	2026-01-30 21:57:24.324	f
 2512	5211	319	ONDEMAND	2026-01-31 05:30:18.411	f
 2482	5048	1	NOTIFICATION	2026-01-24 05:44:28.302	t
 2522	5299	325	ONDEMAND	2026-01-31 15:39:21.139	f
 2523	5303	2	ONDEMAND	2026-01-31 20:29:52.886	f
-2526	4405	322	NOTIFICATION	2026-01-31 22:22:58.903	f
 2557	5392	395	NOTIFICATION	2026-02-05 23:07:35.07	t
 2527	4834	429	ONDEMAND	2026-02-01 06:15:42.924	f
 2529	5316	355	ONDEMAND	2026-02-01 17:39:12.048	f
@@ -10709,19 +10840,14 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2532	5153	346	ONDEMAND	2026-02-02 03:31:30.354	f
 2494	5193	1	NOTIFICATION	2026-01-28 22:26:40	t
 2495	3219	321	ONDEMAND	2026-01-29 02:53:09.428	t
-2536	5340	325	ONDEMAND	2026-02-03 02:12:12.957	f
-2537	5341	325	ONDEMAND	2026-02-03 02:13:32.493	f
 2535	5337	19	NOTIFICATION	2026-02-02 23:13:17.803	t
 2539	5241	315	ONDEMAND	2026-02-03 17:48:53.431	f
 2540	5357	10	ONDEMAND	2026-02-03 17:56:04	f
-2603	5521	19	NOTIFICATION	2026-03-17 19:01:36.881	f
-2544	5363	427	NOTIFICATION	2026-02-04 04:06:33.664	f
+2520	5291	175	NOTIFICATION	2026-01-30 21:55:29.039	t
 2497	3219	380	NOTIFICATION	2026-01-29 03:01:46.274	t
 2546	4984	355	ONDEMAND	2026-02-04 13:19:01.228	f
-2549	5371	349	ONDEMAND	2026-02-04 16:52:00.539	f
 2505	4417	183	ONDEMAND	2026-01-30 04:52:39.424	t
 2514	5211	183	ONDEMAND	2026-01-30 12:48:43.332	t
-2553	5386	174	NOTIFICATION	2026-02-05 17:48:25.057	f
 2556	5392	173	NOTIFICATION	2026-02-05 23:07:09.197	f
 2485	3646	388	ONDEMAND	2026-01-25 01:49:40.82	t
 2504	4417	388	ONDEMAND	2026-01-30 04:47:49.139	t
@@ -10740,7 +10866,6 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2554	5381	1	NOTIFICATION	2026-02-05 18:01:22.581	t
 2555	5153	1	NOTIFICATION	2026-02-05 22:53:57.062	t
 2558	4971	1	NOTIFICATION	2026-02-06 03:09:44.815	t
-2582	2945	174	NOTIFICATION	2026-02-10 02:29:09.141	f
 2583	2945	355	ONDEMAND	2026-02-10 02:37:18.138	f
 2587	5468	325	ONDEMAND	2026-02-11 06:53:16.733	f
 2552	3001	24	NOTIFICATION	2026-02-05 00:26:15.826	t
@@ -10759,7 +10884,6 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2604	3001	321	ONDEMAND	2026-02-14 23:02:50.538	t
 2599	5509	10	ONDEMAND	2026-02-14 03:51:37.421	f
 2600	5510	325	ONDEMAND	2026-02-14 04:50:34.119	f
-2601	5510	349	ONDEMAND	2026-02-14 04:59:09.236	f
 2486	5226	85	NOTIFICATION	2026-01-25 14:08:36.451	t
 2606	5524	404	ONDEMAND	2026-02-15 01:08:14.484	f
 2607	4392	346	ONDEMAND	2026-02-15 05:46:43.107	f
@@ -10768,6 +10892,7 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2500	5264	316	NOTIFICATION	2026-01-29 20:59:17.2	t
 2568	5420	316	NOTIFICATION	2026-02-07 18:40:20.044	t
 2592	5496	19	NOTIFICATION	2026-02-13 00:54:12.707	t
+2603	5521	19	NOTIFICATION	2026-03-17 19:01:36.881	t
 2491	5246	31	NOTIFICATION	2026-01-28 17:25:23.256	t
 2493	5251	327	ONDEMAND	2026-01-28 19:13:07.529	t
 2502	987	417	ONDEMAND	2026-01-29 21:02:14.519	t
@@ -10796,10 +10921,17 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2578	5456	85	NOTIFICATION	2026-03-10 07:17:41.351	t
 2575	5321	395	NOTIFICATION	2026-02-09 03:01:45.081	t
 2503	5269	19	NOTIFICATION	2026-03-02 22:32:20.287	t
-2611	5541	427	NOTIFICATION	2026-02-15 19:09:23.567	f
-2613	4696	383	NOTIFICATION	2026-02-15 19:23:22.128	f
+2526	4405	322	NOTIFICATION	2026-01-31 22:22:58.903	t
+2544	5363	427	NOTIFICATION	2026-02-04 04:06:33.664	t
+2536	5340	325	ONDEMAND	2026-03-24 19:00:42.641	f
+2537	5341	325	ONDEMAND	2026-03-24 19:08:52.612	f
+2553	5386	174	NOTIFICATION	2026-02-05 17:48:25.057	t
+2582	2945	174	NOTIFICATION	2026-02-10 02:29:09.141	t
+2501	5264	349	ONDEMAND	2026-01-29 21:00:27.323	t
+2510	4417	349	ONDEMAND	2026-01-30 04:59:25.163	t
+2549	5371	349	ONDEMAND	2026-02-04 16:52:00.539	t
+2601	5510	349	ONDEMAND	2026-02-14 04:59:09.236	t
 2618	5316	382	ONDEMAND	2026-02-16 00:13:04.552	f
-2622	4492	349	ONDEMAND	2026-02-16 02:43:10.658	f
 2623	5559	325	ONDEMAND	2026-02-16 02:55:11.519	f
 2634	4451	173	ONDEMAND	2026-02-17 03:41:46.033	f
 2484	5220	24	NOTIFICATION	2026-02-11 19:05:18.986	t
@@ -10843,7 +10975,6 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2605	5524	309	NOTIFICATION	2026-02-15 01:05:32.451	t
 2620	5316	417	ONDEMAND	2026-02-16 00:16:14.365	t
 2654	5624	4	ONDEMAND	2026-02-19 03:22:12.295	f
-2655	4176	361	NOTIFICATION	2026-02-19 03:29:18.729	f
 2614	5546	85	NOTIFICATION	2026-02-15 20:38:49.06	t
 2657	5630	380	ONDEMAND	2026-02-19 04:47:49.149	t
 2643	5597	17	NOTIFICATION	2026-02-18 01:24:38.515	t
@@ -10857,10 +10988,7 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2639	5316	321	NOTIFICATION	2026-02-17 23:47:51.818	t
 2646	2945	321	NOTIFICATION	2026-02-18 01:36:21.603	t
 2667	5659	321	NOTIFICATION	2026-02-21 15:06:53.397	f
-2668	4763	175	ONDEMAND	2026-02-21 18:07:49.206	f
 2672	5665	380	ONDEMAND	2026-02-21 20:09:40.324	t
-2701	5728	422	NOTIFICATION	2026-02-26 16:41:14.718	f
-2673	4405	349	ONDEMAND	2026-02-21 20:15:43.099	f
 2676	4849	382	ONDEMAND	2026-02-22 14:39:54.89	f
 2677	5679	321	NOTIFICATION	2026-02-22 17:26:53.854	f
 2615	5549	393	NOTIFICATION	2026-02-15 20:48:32.07	t
@@ -10868,7 +10996,6 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2631	5164	396	NOTIFICATION	2026-02-17 00:08:36.533	t
 2638	5164	350	NOTIFICATION	2026-02-17 22:24:57.273	t
 2645	5597	84	ONDEMAND	2026-02-18 01:25:29.837	t
-2702	5729	174	NOTIFICATION	2026-02-26 17:12:45.814	f
 2656	5193	153	NOTIFICATION	2026-02-19 03:54:55.538	t
 2660	5193	184	NOTIFICATION	2026-02-19 19:40:10.218	t
 2663	4971	184	NOTIFICATION	2026-02-20 03:29:54.199	t
@@ -10877,36 +11004,28 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2671	1805	396	ONDEMAND	2026-02-21 20:07:03.162	t
 2675	3080	328	NOTIFICATION	2026-02-22 04:20:36.357	t
 2679	5418	84	NOTIFICATION	2026-02-23 05:15:04.633	f
-2681	5685	333	NOTIFICATION	2026-02-23 20:47:58.31	f
 2682	5685	434	NOTIFICATION	2026-02-23 20:49:40.487	f
 2683	5685	315	ONDEMAND	2026-02-23 20:51:18.087	f
 2685	4847	314	ONDEMAND	2026-02-24 00:09:26.279	f
 2686	4847	409	ONDEMAND	2026-02-24 00:10:17.262	f
 2642	5597	85	NOTIFICATION	2026-03-09 16:56:43.474	t
 2688	5597	84	NOTIFICATION	2026-02-24 15:33:34.463	f
-2648	5607	153	NOTIFICATION	2026-02-24 16:56:13.007	f
+2655	4176	361	NOTIFICATION	2026-02-19 03:29:18.729	t
 2689	5392	173	ONDEMAND	2026-02-24 18:41:04.363	f
-2691	4971	100	NOTIFICATION	2026-02-25 02:32:04.208	f
 2694	5718	388	NOTIFICATION	2026-02-26 02:34:09.443	f
 2695	4363	315	ONDEMAND	2026-02-26 07:23:46.563	f
 2698	5597	379	ONDEMAND	2026-02-26 13:24:34.9	f
 2697	5597	184	NOTIFICATION	2026-02-26 13:23:39.583	t
 2703	5732	382	ONDEMAND	2026-02-26 21:38:55.734	f
-2704	5733	175	ONDEMAND	2026-02-26 21:40:40.5	f
 2705	2844	321	NOTIFICATION	2026-02-27 02:19:27.362	f
-2706	4644	405	ONDEMAND	2026-02-27 12:49:41.856	f
-2674	5670	316	NOTIFICATION	2026-02-22 01:21:28.162	t
+2668	4763	175	ONDEMAND	2026-02-21 18:07:49.206	t
 2678	5549	316	NOTIFICATION	2026-02-23 02:35:06.842	t
 2687	5694	316	NOTIFICATION	2026-02-24 04:33:14.744	t
-2709	5738	333	NOTIFICATION	2026-02-28 00:02:37.533	f
-2711	5745	333	NOTIFICATION	2026-03-01 09:20:18.093	f
 2712	5745	455	NOTIFICATION	2026-03-01 09:26:34.4	f
 2692	5714	2	ONDEMAND	2026-03-02 03:22:25.146	f
 2713	5751	6	ONDEMAND	2026-03-02 16:01:44.617	f
 2714	5530	382	ONDEMAND	2026-03-02 18:43:23.76	f
-2716	5303	24	NOTIFICATION	2026-03-03 02:28:34.459	f
-2717	5757	175	ONDEMAND	2026-03-03 19:42:42.771	f
-2718	5758	183	NOTIFICATION	2026-03-03 21:06:23.354	f
+2613	4696	383	NOTIFICATION	2026-02-15 19:23:22.128	t
 2658	5631	19	NOTIFICATION	2026-02-19 14:10:59.372	t
 2664	5652	19	NOTIFICATION	2026-02-20 21:31:31.37	t
 2665	3996	19	NOTIFICATION	2026-02-20 21:31:51.996	t
@@ -10921,11 +11040,23 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2696	5597	406	ONDEMAND	2026-02-26 13:23:20.162	t
 2715	5754	406	ONDEMAND	2026-03-02 23:33:57.196	t
 2644	5597	18	NOTIFICATION	2026-02-24 15:32:24.904	t
-2720	5764	100	ONDEMAND	2026-03-04 05:54:29.671	f
-2721	2851	324	NOTIFICATION	2026-03-04 06:00:32.922	f
-2722	2851	323	NOTIFICATION	2026-03-04 06:01:20.137	f
+2716	5303	24	NOTIFICATION	2026-03-03 02:28:34.459	t
+2706	4644	405	ONDEMAND	2026-02-27 12:49:41.856	t
+2648	5607	153	NOTIFICATION	2026-02-24 16:56:13.007	t
+2718	5758	183	NOTIFICATION	2026-03-03 21:06:23.354	t
+2611	5541	427	NOTIFICATION	2026-02-15 19:09:23.567	t
+2701	5728	422	NOTIFICATION	2026-02-26 16:41:14.718	t
+2704	5733	175	ONDEMAND	2026-02-26 21:40:40.5	t
+2717	5757	175	ONDEMAND	2026-03-03 19:42:42.771	t
+2674	5670	316	NOTIFICATION	2026-03-24 15:27:58.354	t
+2681	5685	333	NOTIFICATION	2026-02-23 20:47:58.31	t
+2691	4971	100	NOTIFICATION	2026-02-25 02:32:04.208	t
+2709	5738	333	NOTIFICATION	2026-02-28 00:02:37.533	t
+2711	5745	333	NOTIFICATION	2026-03-01 09:20:18.093	t
+2702	5729	174	NOTIFICATION	2026-02-26 17:12:45.814	t
+2622	4492	349	ONDEMAND	2026-02-16 02:43:10.658	t
+2673	4405	349	ONDEMAND	2026-02-21 20:15:43.099	t
 2723	5768	6	ONDEMAND	2026-03-04 14:34:11.164	f
-2725	5778	309	NOTIFICATION	2026-03-05 04:26:55.38	f
 2726	5783	173	ONDEMAND	2026-03-05 21:16:08.092	f
 2629	5574	395	NOTIFICATION	2026-02-16 21:19:28.037	t
 2661	5647	395	NOTIFICATION	2026-02-19 22:29:47.547	t
@@ -10934,11 +11065,9 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2690	5392	395	ONDEMAND	2026-02-24 18:41:31.435	t
 2693	5549	395	ONDEMAND	2026-02-26 00:15:44.313	t
 2700	5727	395	ONDEMAND	2026-02-26 15:53:07.493	t
-2728	5786	316	NOTIFICATION	2026-03-06 17:27:03.162	f
 2729	5786	388	NOTIFICATION	2026-03-06 17:31:23.074	f
 2730	5790	388	NOTIFICATION	2026-03-06 18:03:30.414	f
-2731	934	316	NOTIFICATION	2026-03-06 21:11:49.849	f
-2630	5362	395	NOTIFICATION	2026-03-07 20:00:15.655	f
+2813	5149	333	NOTIFICATION	2026-03-25 17:04:17.768	f
 2734	199	429	ONDEMAND	2026-03-07 21:00:36.969	f
 2732	5795	19	NOTIFICATION	2026-03-07 15:59:20.845	t
 2733	5796	19	NOTIFICATION	2026-03-07 17:22:46.069	t
@@ -10946,55 +11075,102 @@ COPY public."NeonEventTypeRequest" (id, "requesterId", "classTypeId", "requestTy
 2737	5813	388	NOTIFICATION	2026-03-09 15:37:56.485	f
 2724	3300	1	NOTIFICATION	2026-03-04 19:13:19.049	t
 2727	4921	1	NOTIFICATION	2026-03-05 22:40:44.977	t
-2738	5549	333	NOTIFICATION	2026-03-09 18:13:47.862	f
-2740	5819	19	NOTIFICATION	2026-03-10 13:39:26.024	f
-2743	5824	175	ONDEMAND	2026-03-10 20:15:09.228	f
 2744	5825	184	NOTIFICATION	2026-03-10 22:15:33.405	t
 2745	985	325	ONDEMAND	2026-03-11 02:17:14.599	f
 2746	5828	319	ONDEMAND	2026-03-11 04:01:47.3	f
-2747	5829	422	NOTIFICATION	2026-03-11 15:34:07.906	f
-2748	5830	316	NOTIFICATION	2026-03-11 15:46:21.14	f
-2749	5834	5	NOTIFICATION	2026-03-11 16:44:45.31	f
 2750	5834	415	ONDEMAND	2026-03-11 17:28:06.803	f
-2752	5222	417	NOTIFICATION	2026-03-12 01:12:32.618	f
 2735	5801	406	ONDEMAND	2026-03-08 03:46:05.702	t
 2754	5819	406	ONDEMAND	2026-03-12 02:30:07.741	t
 2742	5822	18	NOTIFICATION	2026-03-10 17:31:08.546	t
-2755	5847	19	NOTIFICATION	2026-03-13 01:32:53.322	f
-2756	5848	19	NOTIFICATION	2026-03-13 02:27:36.187	f
 2757	5849	181	ONDEMAND	2026-03-13 03:40:58.456	f
 2758	3563	181	ONDEMAND	2026-03-13 03:44:40.22	f
-2739	5816	19	NOTIFICATION	2026-03-13 06:31:19.416	f
+2796	19	321	ONDEMAND	2026-03-21 21:34:54.07	f
 2759	5852	173	ONDEMAND	2026-03-13 13:06:41.001	f
 2760	1386	388	NOTIFICATION	2026-03-13 20:10:58.998	f
 2761	4419	388	NOTIFICATION	2026-03-13 22:20:31.746	f
 2762	5857	10	ONDEMAND	2026-03-13 23:54:42.218	f
-2763	5857	19	NOTIFICATION	2026-03-14 00:06:51.546	f
 2753	5819	320	ONDEMAND	2026-03-14 11:25:56.438	f
 2764	5819	319	ONDEMAND	2026-03-14 11:26:24.971	f
 2766	5862	385	ONDEMAND	2026-03-14 13:28:37.623	f
-2767	5681	88	ONDEMAND	2026-03-14 19:42:52.229	f
-2768	5681	100	ONDEMAND	2026-03-14 19:44:25.137	f
 2769	1128	177	NOTIFICATION	2026-03-14 20:05:41.611	f
 2770	1128	355	ONDEMAND	2026-03-14 20:09:26.351	f
-2771	5867	88	ONDEMAND	2026-03-14 23:00:19.056	f
-2772	5867	100	ONDEMAND	2026-03-14 23:00:47.365	f
-2773	5870	333	NOTIFICATION	2026-03-15 01:16:21.657	f
-2774	5871	153	ONDEMAND	2026-03-15 07:53:22.387	f
-2775	5872	24	NOTIFICATION	2026-03-15 19:41:59.794	f
-2776	5872	1	NOTIFICATION	2026-03-15 19:43:56.586	f
-2765	5819	24	NOTIFICATION	2026-03-16 12:50:32.691	f
+2814	5941	4	ONDEMAND	2026-03-25 18:50:39.583	f
 2778	5882	325	ONDEMAND	2026-03-16 20:14:05.331	f
 2779	5882	385	ONDEMAND	2026-03-16 20:15:54.22	f
 2780	5309	10	ONDEMAND	2026-03-16 23:07:01.213	f
 2741	5820	85	NOTIFICATION	2026-03-10 14:09:28.155	t
 2751	5836	85	NOTIFICATION	2026-03-11 22:09:17.146	t
 2777	5880	85	NOTIFICATION	2026-03-16 15:21:02.247	t
-2781	5889	359	NOTIFICATION	2026-03-17 20:00:47.944	f
-2782	5890	316	NOTIFICATION	2026-03-17 21:04:34.424	f
-2783	5316	417	NOTIFICATION	2026-03-17 23:25:42.824	f
 2784	5023	173	ONDEMAND	2026-03-18 00:58:03.319	f
 2785	5316	452	ONDEMAND	2026-03-18 02:08:53.481	f
+2765	5819	24	NOTIFICATION	2026-03-16 12:50:32.691	t
+2775	5872	24	NOTIFICATION	2026-03-15 19:41:59.794	t
+2739	5816	19	NOTIFICATION	2026-03-13 06:31:19.416	t
+2740	5819	19	NOTIFICATION	2026-03-10 13:39:26.024	t
+2755	5847	19	NOTIFICATION	2026-03-13 01:32:53.322	t
+2756	5848	19	NOTIFICATION	2026-03-13 02:27:36.187	t
+2763	5857	19	NOTIFICATION	2026-03-14 00:06:51.546	t
+2787	5810	177	NOTIFICATION	2026-03-18 22:02:33.827	f
+2788	5043	346	ONDEMAND	2026-03-19 08:21:50.55	f
+2725	5778	309	NOTIFICATION	2026-03-18 14:01:03.778	t
+2776	5872	1	NOTIFICATION	2026-03-15 19:43:56.586	t
+2793	5905	346	ONDEMAND	2026-03-19 20:15:13.157	f
+2728	5786	316	NOTIFICATION	2026-03-06 17:27:03.162	t
+2748	5830	316	NOTIFICATION	2026-03-11 15:46:21.14	t
+2781	5889	359	NOTIFICATION	2026-03-17 20:00:47.944	t
+2782	5890	316	NOTIFICATION	2026-03-17 21:04:34.424	t
+2790	5901	18	NOTIFICATION	2026-03-19 16:36:01.313	t
+2749	5834	5	NOTIFICATION	2026-03-11 16:44:45.31	t
+2721	2851	324	NOTIFICATION	2026-03-04 06:00:32.922	t
+2722	2851	323	NOTIFICATION	2026-03-04 06:01:20.137	t
+2774	5871	153	ONDEMAND	2026-03-15 07:53:22.387	t
+2786	5819	324	NOTIFICATION	2026-03-18 18:22:32.537	t
+2815	5945	93	ONDEMAND	2026-03-26 04:41:59.469	f
+2794	787	181	ONDEMAND	2026-03-21 14:27:45.739	f
+2795	5909	181	ONDEMAND	2026-03-21 14:29:31.256	f
+2801	147	181	ONDEMAND	2026-03-23 14:10:19.307	f
+2802	147	415	ONDEMAND	2026-03-23 14:12:09.955	f
+2789	5900	19	NOTIFICATION	2026-03-19 12:27:46.063	t
+2807	5928	379	ONDEMAND	2026-03-24 03:54:32.048	f
+2630	5362	395	NOTIFICATION	2026-03-07 20:00:15.655	t
+2804	5924	395	NOTIFICATION	2026-03-23 20:03:47.236	t
+2797	19	182	ONDEMAND	2026-03-21 21:35:41.58	t
+2743	5824	175	ONDEMAND	2026-03-10 20:15:09.228	t
+2747	5829	422	NOTIFICATION	2026-03-11 15:34:07.906	t
+2720	5764	100	ONDEMAND	2026-03-04 05:54:29.671	t
+2731	934	316	NOTIFICATION	2026-03-20 19:11:01.351	t
+2738	5549	333	NOTIFICATION	2026-03-09 18:13:47.862	t
+2767	5681	88	ONDEMAND	2026-03-14 19:42:52.229	t
+2768	5681	100	ONDEMAND	2026-03-14 19:44:25.137	t
+2771	5867	88	ONDEMAND	2026-03-14 23:00:19.056	t
+2772	5867	100	ONDEMAND	2026-03-14 23:00:47.365	t
+2773	5870	333	NOTIFICATION	2026-03-15 01:16:21.657	t
+2791	5903	381	NOTIFICATION	2026-03-19 18:22:58.732	t
+2799	2989	88	ONDEMAND	2026-03-22 22:22:19.32	t
+2800	559	381	ONDEMAND	2026-03-22 22:37:07.604	t
+2803	147	381	ONDEMAND	2026-03-23 14:13:58.497	t
+2806	389	88	ONDEMAND	2026-03-24 01:26:33.15	t
+2808	5930	325	ONDEMAND	2026-03-24 17:51:02.302	f
+2809	5931	325	ONDEMAND	2026-03-24 18:04:18.312	f
+2810	5340	404	ONDEMAND	2026-03-24 19:07:05.372	f
+2811	5340	181	ONDEMAND	2026-03-24 19:07:51.694	f
+2812	5341	181	ONDEMAND	2026-03-24 19:08:02.699	f
+2816	5241	321	ONDEMAND	2026-03-26 14:38:03.541	f
+2792	5904	174	ONDEMAND	2026-03-19 18:28:34.826	t
+2752	5222	417	NOTIFICATION	2026-03-12 01:12:32.618	t
+2783	5316	417	NOTIFICATION	2026-03-17 23:25:42.824	t
+2817	5904	174	NOTIFICATION	2026-03-26 17:03:30.743	f
+2818	5950	404	ONDEMAND	2026-03-27 01:51:56.477	f
+2819	5952	315	ONDEMAND	2026-03-27 15:51:11.659	f
+2820	5952	19	NOTIFICATION	2026-03-27 15:54:31.261	f
+2821	5954	24	NOTIFICATION	2026-03-27 15:59:00.259	f
+2798	2688	1	NOTIFICATION	2026-03-21 23:59:01.987	t
+2805	389	1	NOTIFICATION	2026-03-24 01:24:48.339	t
+2822	5957	325	ONDEMAND	2026-03-28 14:58:36.777	f
+2823	5958	1	NOTIFICATION	2026-03-28 16:43:39.604	f
+2824	5959	396	ONDEMAND	2026-03-28 17:32:25.982	f
+2825	5764	323	NOTIFICATION	2026-03-29 05:22:00.99	f
+2826	3931	404	ONDEMAND	2026-03-29 17:51:54.551	f
 \.
 
 
@@ -11250,6 +11426,9 @@ COPY public."_NeonEventCategoryToNeonEventType" ("A", "B") FROM stdin;
 8	457
 8	458
 5	459
+5	461
+8	462
+6	463
 \.
 
 
@@ -11258,671 +11437,677 @@ COPY public."_NeonEventCategoryToNeonEventType" ("A", "B") FROM stdin;
 --
 
 COPY public."_NeonEventInstanceToNeonEventInstanceCancellee" ("A", "B") FROM stdin;
-85075	1
-79541	2
-86407	3
-79611	4
-88486	4
-95721	6
-78399	7
-95368	7
-86121	8
-87508	8
-80108	9
-85140	9
-80713	11
-79511	11
-60407	12
-67462	14
-76443	14
-87347	15
-86472	15
-84788	16
-69907	17
-57377	18
-92378	19
-83143	20
-62462	21
-76778	22
-93479	23
-71957	24
-97971	25
-85730	27
-66887	28
-78269	29
-63212	30
-77583	31
-89697	31
-80163	32
-80148	32
-95057	32
-71957	33
-73347	33
-72722	34
-84923	35
-79491	36
-82063	36
-60377	38
-79325	39
-55622	40
-73747	41
-84538	42
-95746	43
-78454	44
-78529	45
-79626	46
-94756	47
-93489	48
-68952	49
-90130	50
-94761	50
-94756	50
-94781	50
-71762	51
-72177	51
-72977	51
-57077	52
-79511	53
-84873	53
-90898	53
-77869	54
-69707	56
-95831	57
-60322	58
-62507	59
-72177	60
-80148	60
-86702	60
-93228	60
-95831	61
-57277	62
-60387	63
-74572	64
-78099	64
-73397	65
-86290	66
-90528	66
-59142	67
-58227	68
-59657	69
-95062	70
-82418	71
-57077	72
-59847	73
-60487	73
-90493	74
-87307	75
-57827	76
-80188	76
-60942	77
-60642	77
-79846	78
-59832	79
-56822	80
-60217	81
-58027	81
-79199	82
-78534	82
-79451	82
-56822	83
-68962	84
-68952	84
-78064	84
-57377	85
-60437	86
-60397	87
-60117	88
-62467	89
-62692	89
-60267	90
-94837	91
-83653	92
-61192	93
-59727	94
+96286	1
+85075	2
+79541	3
+86407	4
+79611	5
+88486	5
+95721	7
+78399	8
+95368	8
+86121	9
+87508	9
+80108	10
+85140	10
+80713	12
+79511	12
+60407	13
+67462	15
+76443	15
+87347	16
+86472	16
+84788	17
+69907	18
+57377	19
+92378	20
+83143	21
+62462	22
+76778	23
+93479	24
+71957	25
+97971	26
+85730	28
+66887	29
+78269	30
+63212	31
+77583	32
+89697	32
+80163	33
+80148	33
+95057	33
+71957	34
+73347	34
+72722	35
+84923	36
+79491	37
+82063	37
+97906	38
+60377	39
+79325	40
+55622	41
+73747	42
+84538	43
+95746	44
+78454	45
+78529	46
+79626	47
+94756	48
+93489	49
+68952	50
+90130	51
+94761	51
+94756	51
+94781	51
+71762	52
+72177	52
+72977	52
+57077	53
+79511	54
+84873	54
+90898	54
+77869	55
+69707	57
+95831	58
+60322	59
+62507	60
+72177	61
+80148	61
+86702	61
+93228	61
+95831	62
+57277	63
+60387	64
+74572	65
+78099	65
+73397	66
+86290	67
+90528	67
+59142	68
+58227	69
+59657	70
+95062	71
+82418	72
+57077	73
+59847	74
+60487	74
+90493	75
+87307	76
+57827	77
+80188	77
+60942	78
+60642	78
+79846	79
+59832	80
+56822	81
+60217	82
+58027	82
+79199	83
+78534	83
+79451	83
+56822	84
+68962	85
+68952	85
+78064	85
+57377	86
+60437	87
+60397	88
+60117	89
+62467	90
+62692	90
+60267	91
+94837	92
+83653	93
+61192	94
 59727	95
-62487	96
-60402	98
-61312	99
-62757	100
-63332	101
-89047	102
-90317	102
-78119	103
+59727	96
+62487	97
+60402	99
+61312	100
+62757	101
+63332	102
 89047	103
 90317	103
-65197	104
-64992	104
-62957	105
-64312	105
-60392	106
-61462	107
-62807	108
-61462	109
-61612	110
-62907	112
-63327	113
-61512	114
-62462	115
-64262	116
-63677	117
-66517	118
-84989	119
-66472	120
-68972	123
-68952	124
-68222	125
-68472	126
-79214	127
-79199	127
-79536	127
-68722	128
-68822	129
-65447	130
-93279	130
-92528	130
-72977	131
-68372	132
-68422	133
-70457	134
-66962	135
-76983	136
-69407	137
-94887	138
-66682	139
-86137	140
-69457	141
-79420	143
-70507	144
-69507	145
-71357	146
-80718	146
-72982	147
-72392	148
-72622	148
-73647	148
-71357	149
-70657	150
-73647	151
-78244	152
-88667	152
-70557	153
-71952	154
-70607	155
-84028	156
-85260	156
-85040	156
-85220	156
-86020	156
-86138	156
-85125	156
-85105	156
-86110	156
-86265	156
-86238	156
-86305	156
-86208	156
-72802	157
-70607	158
-73037	159
-72807	160
-79400	161
-71957	162
-73802	163
-70657	164
+78119	104
+89047	104
+90317	104
+65197	105
+64992	105
+62957	106
+64312	106
+60392	107
+61462	108
+62807	109
+61462	110
+61612	111
+62907	113
+63327	114
+61512	115
+62462	116
+64262	117
+63677	118
+66517	119
+84989	120
+66472	121
+68972	124
+68952	125
+68222	126
+68472	127
+79214	128
+79199	128
+79536	128
+68722	129
+68822	130
+65447	131
+93279	131
+92528	131
+72977	132
+68372	133
+68422	134
+70457	135
+66962	136
+76983	137
+69407	138
+94887	139
+66682	140
+86137	141
+69457	142
+79420	144
+70507	145
+69507	146
+71357	147
+80718	147
+72982	148
+72392	149
+72622	149
+73647	149
+71357	150
+70657	151
+73647	152
+78244	153
+88667	153
+70557	154
+71952	155
+70607	156
+84028	157
+85260	157
+85040	157
+85220	157
+86020	157
+86138	157
+85125	157
+85105	157
+86110	157
+86265	157
+86238	157
+86305	157
+86208	157
+72802	158
+70607	159
+73037	160
+72807	161
+79400	162
+71957	163
+73802	164
 70657	165
-70707	166
-71957	167
-69807	168
-72802	168
-76468	168
-69757	169
-70757	170
-70857	170
+70657	166
+70707	167
+71957	168
+69807	169
+72802	169
+76468	169
+69757	170
+70757	171
 70857	171
-72977	172
-73037	173
-72802	174
-70307	175
-77939	175
-74012	176
+70857	172
+72977	173
+73037	174
+72802	175
+70307	176
+77939	176
 74012	177
-79209	178
-74072	179
-74172	180
-78209	181
-79279	181
-74122	182
+74012	178
+79209	179
+74072	180
+74172	181
+78209	182
+79279	182
 74122	183
-72852	184
-74272	185
-76983	186
-77033	186
-83213	186
-74472	187
-72872	188
-75348	189
+74122	184
+72852	185
+74272	186
+76983	187
+77033	187
+83213	187
+74472	188
+72872	189
 75348	190
-78139	191
-78129	192
-74472	193
-75608	194
-79636	194
-79641	194
-84939	194
-78059	195
-84949	195
-74572	196
-87487	197
-74572	198
-77964	199
-78319	199
-79355	199
-84944	199
-94827	199
-74672	200
-74822	201
-86356	202
-80133	203
-79506	203
-84843	203
-77869	204
-74822	205
-76163	206
-74848	207
-77033	208
-83103	209
-77433	210
-76063	211
-77533	212
-77483	212
-79204	213
-78014	214
+75348	191
+78139	192
+78129	193
+74472	194
+75608	195
+79636	195
+79641	195
+84939	195
+78059	196
+84949	196
+74572	197
+87487	198
+74572	199
+77964	200
+78319	200
+79355	200
+84944	200
+94827	200
+74672	201
+74822	202
+86356	203
+80133	204
+79506	204
+84843	204
+77869	205
+74822	206
+76163	207
+74848	208
+77033	209
+83103	210
+77433	211
+76063	212
+77533	213
+77483	213
+79204	214
 78014	215
-77133	216
-77533	217
-78154	218
-91653	218
-91613	218
-94917	219
-78184	220
-78174	220
-77533	221
-87814	222
-77133	223
+78014	216
+77133	217
+77533	218
+78154	219
+91653	219
+91613	219
+94917	220
+78184	221
+78174	221
+77533	222
+87814	223
 77133	224
-79224	225
-77133	226
-77633	227
-77283	228
-78509	229
-77633	230
-78304	231
-90382	231
-79320	232
-78294	233
-78449	234
-79425	235
-78289	236
+77133	225
+79224	226
+77133	227
+77633	228
+77283	229
+78509	230
+77633	231
+78304	232
+90382	232
+79320	233
+78294	234
+78449	235
+79425	236
 78289	237
-77283	238
-77683	238
-93489	239
-77283	240
+78289	238
+77283	239
+77683	239
+93489	240
 77283	241
-79360	242
-78964	242
-79350	242
-79214	243
-78994	243
-79345	243
+77283	242
+79360	243
 78964	243
-79284	243
-80213	243
-80718	243
-81773	243
-80153	244
-78499	245
-85170	245
-87784	246
-79571	247
-79274	248
-77383	249
-77783	250
-92028	250
+79350	243
+79214	244
+78994	244
+79345	244
+78964	244
+79284	244
+80213	244
+80718	244
+81773	244
+80153	245
+78499	246
+85170	246
+87784	247
+79571	248
+79274	249
+77383	250
 77783	251
 92028	251
-79214	252
-79204	253
-78554	253
-78199	254
-78269	255
-79636	256
-87764	257
-79234	258
-80163	259
-78719	260
-79395	261
-78614	262
-78769	263
-79254	264
-79049	265
+77783	252
+92028	252
+79214	253
+79204	254
+78554	254
+78199	255
+78269	256
+79636	257
+87764	258
+79234	259
+80163	260
+78719	261
+79395	262
+78614	263
+78769	264
 79254	265
-78819	267
-94634	268
-79189	269
-78819	270
-85145	271
-88832	271
-79446	272
-78664	273
-78979	274
-78869	276
-79099	278
-80148	279
-79511	280
-79516	281
-84853	282
-93399	282
+79049	266
+79254	266
+78819	268
+94634	269
+79189	270
+78819	271
+85145	272
+88832	272
+79446	273
+78664	274
+78979	275
+78869	277
+79099	279
+80148	280
+79511	281
+79516	282
 84853	283
-79496	284
-84868	286
-80046	287
-79846	288
-80153	288
-87312	288
-86482	288
-85360	288
-80123	289
-79896	290
+93399	283
+84853	284
+79496	285
+84868	287
+80046	288
+79846	289
+80153	289
+87312	289
+86482	289
+85360	289
+80123	290
 79896	291
-79996	292
-88867	293
-80498	294
-92778	295
-95393	295
-80046	296
-91638	297
-88857	298
-80548	299
-90266	300
-80046	301
-82568	304
-84588	305
-80648	306
-95157	307
-95383	307
-81338	308
+79896	292
+79996	293
+88867	294
+80498	295
+92778	296
+95393	296
+80046	297
+91638	298
+88857	299
+80548	300
+90266	301
+80046	302
+82568	305
+84588	306
+80648	307
+95157	308
+95383	308
 81338	309
-87252	309
-80648	310
-91663	310
-95032	310
-85325	311
-86233	311
+81338	310
+87252	310
+80648	311
+91663	311
+95032	311
 85325	312
-91618	313
-89879	314
-84738	315
-85480	316
-86412	317
-86138	317
-86391	317
-86497	317
-80698	319
+86233	312
+85325	313
+91618	314
+89879	315
+84738	316
+85480	317
+86412	318
+86138	318
+86391	318
+86497	318
 80698	320
-87814	321
-87513	321
-88662	322
-85100	324
-85105	324
-85680	325
+80698	321
+87814	322
+87513	322
+88662	323
+85100	325
+85105	325
 85680	326
-95463	327
-95468	327
-85950	328
+85680	327
+95463	328
+95468	328
 85950	329
-87487	330
-85950	331
+85950	330
+87487	331
 85950	332
-85835	333
-85580	334
-84528	334
+85950	333
+85835	334
 85580	335
-85730	336
-85985	337
-85630	338
-95328	339
-87347	340
-85630	341
-88667	342
-88672	342
-95082	342
-95771	342
-95836	342
-95851	342
-87578	343
-87487	343
-84528	344
-85945	345
-87472	346
-87152	347
+84528	335
+85580	336
+85730	337
+85985	338
+85630	339
+95328	340
+87347	341
+85630	342
+88667	343
+88672	343
+95082	343
+95771	343
+95836	343
+95851	343
+87578	344
+87487	344
+84528	345
+85945	346
+87472	347
 87152	348
-90095	349
-87052	350
+87152	349
+90095	350
 87052	351
-89647	351
 87052	352
-95761	353
-87477	354
-85395	355
-97916	356
-87152	357
-89772	358
-90468	359
-86652	360
-90372	361
-86952	362
-86652	363
-87986	364
-90367	365
-90135	365
-90478	365
-90156	365
-90483	365
-87744	366
-88842	366
-88852	366
-88802	366
-90065	366
-90120	366
-86852	367
-87102	368
-86702	368
-86852	369
-97816	370
-86852	371
-88892	372
-86702	373
-90100	374
-90888	375
-90146	376
-90156	377
-95002	377
-95032	377
-88857	378
-91598	379
-95625	380
-87002	381
-88997	382
+89647	352
+87052	353
+95761	354
+87477	355
+85395	356
+97916	357
+87152	358
+89772	359
+90468	360
+86652	361
+90372	362
+86952	363
+86652	364
+87986	365
+90367	366
+90135	366
+90478	366
+90156	366
+90483	366
+87744	367
+88842	367
+88852	367
+88802	367
+90065	367
+90120	367
+86852	368
+87102	369
+86702	369
+86852	370
+97816	371
+86852	372
+88892	373
+86702	374
+90100	375
+90888	376
+90146	377
+90156	378
+95002	378
+95032	378
+88857	379
+91598	380
+95625	381
+87002	382
 88997	383
-90095	384
-89647	385
-95182	386
-90085	387
-90483	388
-89047	389
+88997	384
+90095	385
+89647	386
+95182	387
+90085	388
+90483	389
 89047	390
-89497	391
-90422	392
-89447	393
-91668	394
-89097	395
-90468	396
-96036	397
-89497	398
-88336	399
-97661	399
-89497	400
-93319	401
-91058	402
-93489	403
-91623	403
-89197	404
-95203	405
-91008	406
-94832	406
-90673	407
-91473	408
-89247	409
-93769	409
-91638	410
-88386	411
-91663	412
-89297	413
-92528	414
-90823	415
-89297	416
-88536	417
-93979	417
-89347	418
-91613	419
-93489	420
-93274	420
-93279	421
-92578	422
-91778	423
+89047	391
+89497	392
+90422	393
+89447	394
+91668	395
+89097	396
+90468	397
+96036	398
+89497	399
+88336	400
+97661	400
+89497	401
+93319	402
+91058	403
+93489	404
+91623	404
+89197	405
+95203	406
+91008	407
+94832	407
+90673	408
+91473	409
+89247	410
+93769	410
+91638	411
+88386	412
+91663	413
+89297	414
+92528	415
+90823	416
+89297	417
+88536	418
+93979	418
+89347	419
+91613	420
+93489	421
+93274	421
+93279	422
+92578	423
 91778	424
-94817	425
-92678	426
-93374	427
-95468	428
-97816	429
-92578	430
-95203	431
-91878	432
-94917	433
-95062	433
-97821	433
-94937	434
-92678	435
-94479	436
-93078	436
-93589	437
-95092	437
-95786	438
-94902	439
+91778	425
+94817	426
+92678	427
+93374	428
+95468	429
+97816	430
+92578	431
+95203	432
+91878	433
+94917	434
+95062	434
+97821	434
+94937	435
+92678	436
+94479	437
+93078	437
+93589	438
+95092	438
+95786	439
 94902	440
-94674	441
-91978	442
-94887	442
-95413	442
-94912	443
-94079	444
-94129	444
-92028	445
+94902	441
+94674	442
+91978	443
+94887	443
+95413	443
+94912	444
+94079	445
+94129	445
 92028	446
-94987	447
-92778	448
-95097	449
-94837	449
-92478	450
-94827	451
-95393	452
-95413	453
-92078	454
-95087	455
-97976	456
-95087	457
-92128	458
-95619	458
-94329	459
+92028	447
+94987	448
+92778	449
+95097	450
+94837	450
+92478	451
+94827	452
+95393	453
+95413	454
+92078	455
+95087	456
+98071	457
+98076	457
+97976	458
+95087	459
 92128	460
-92128	461
+95619	460
+94329	461
 92128	462
-93178	463
-95741	465
-95711	466
-95741	466
-95278	468
-95453	469
-96781	469
-95478	470
-95518	471
-97181	474
-97191	475
-97196	476
-97936	477
-96586	477
-97936	478
-93128	479
-95574	479
-95554	479
-92328	481
-92428	487
-93228	490
-95343	492
-97891	493
-93128	494
-93128	495
-92428	496
-96741	497
-95746	498
-95283	499
-94329	501
-95579	502
-92378	503
-97226	504
-97206	505
-95781	506
-92428	507
-97386	508
-96386	509
-95986	510
-95831	511
-96436	511
-95831	512
-92478	513
-93228	514
-96486	515
-95771	516
-96906	517
-95776	518
-96336	519
-96386	520
-96436	521
-95761	522
-98026	523
-96386	524
-95986	524
-97181	525
-96036	526
+92128	463
+92128	464
+93178	465
+95741	467
+95711	468
+95741	468
+95278	470
+95453	471
+96781	471
+95478	472
+95518	473
+97181	476
+97191	477
+97196	478
+97936	479
+96586	479
+97936	480
+93128	481
+95574	481
+95554	481
+92328	483
+97906	487
+92428	489
+93228	492
+95343	494
+97891	495
+93128	496
+93128	497
+92428	498
+96741	499
+95746	500
+95283	501
+94329	503
+95579	504
+92378	505
+97226	506
+97206	507
+95781	508
+92428	509
+97386	510
+98578	510
+96386	511
+95986	512
+95831	513
+96436	513
+95831	514
+92478	515
+93228	516
+96486	517
+95771	518
+96906	519
+95776	520
+96336	521
+96386	522
+96436	523
+95761	524
+98026	525
+96386	526
+95986	526
 97181	527
-96731	528
-96731	529
-96536	530
-96536	531
-96036	532
-97361	533
-97911	534
-97996	535
-96536	536
-98307	537
-98251	538
-96136	539
-96586	540
-97886	541
+96036	528
+97181	529
+96731	530
+96731	531
+96536	532
+96536	533
+96036	534
+97361	535
+97911	536
+97996	537
+96536	538
+98307	539
+98251	540
+96136	541
 96586	542
-96186	543
+97886	543
+96586	544
+96186	545
 \.
 
 
@@ -12253,6 +12438,10 @@ COPY public."_NeonEventTeacherToNeonEventType" ("A", "B") FROM stdin;
 69	458
 27	184
 11	459
+44	461
+27	401
+46	462
+81	463
 \.
 
 
@@ -12295,35 +12484,35 @@ SELECT pg_catalog.setval('public."NeonEventCategory_id_seq"', 14, true);
 -- Name: NeonEventInstanceRequest_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."NeonEventInstanceRequest_id_seq"', 2383, true);
+SELECT pg_catalog.setval('public."NeonEventInstanceRequest_id_seq"', 2400, true);
 
 
 --
 -- Name: NeonEventRequester_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."NeonEventRequester_id_seq"', 5895, true);
+SELECT pg_catalog.setval('public."NeonEventRequester_id_seq"', 5961, true);
 
 
 --
 -- Name: NeonEventTeacher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."NeonEventTeacher_id_seq"', 80, true);
+SELECT pg_catalog.setval('public."NeonEventTeacher_id_seq"', 81, true);
 
 
 --
 -- Name: NeonEventTypeRequest_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."NeonEventTypeRequest_id_seq"', 2785, true);
+SELECT pg_catalog.setval('public."NeonEventTypeRequest_id_seq"', 2826, true);
 
 
 --
 -- Name: NeonEventType_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."NeonEventType_id_seq"', 459, true);
+SELECT pg_catalog.setval('public."NeonEventType_id_seq"', 464, true);
 
 
 --
@@ -12680,5 +12869,5 @@ ALTER TABLE ONLY public."_NeonEventTeacherToNeonEventType"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 5HMtp7se2fBxeTGiscFXwev8ifs5ROjKU225M8JSBg1zI4O1ykQdIhKsOa02Guf
+\unrestrict 6kdX2YoWrG8fdKnQrpXOh3EsBBWTk7QsRsT2a0HfYLfF0Pgycnzbkekw4s0QoaT
 

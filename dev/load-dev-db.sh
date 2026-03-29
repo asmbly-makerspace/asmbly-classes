@@ -18,6 +18,21 @@ if [ ! -f "$DB_FILE" ]; then
   exit 1
 fi
 
+if ! docker info > /dev/null 2>&1; then
+  echo "==> Starting Docker Desktop..."
+  open -a Docker
+  for i in $(seq 1 60); do
+    if docker info > /dev/null 2>&1; then
+      break
+    fi
+    sleep 1
+  done
+  if ! docker info > /dev/null 2>&1; then
+    echo "ERROR: Docker did not start within 60 seconds." >&2
+    exit 1
+  fi
+fi
+
 # Start or restart the container
 if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
   echo "==> Removing existing container..."
