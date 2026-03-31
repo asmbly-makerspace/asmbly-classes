@@ -41,7 +41,7 @@ export default {
 		'./src/app.html',
 		'./src/routes/**/*.{svelte,js,ts}',
 		'./src/lib/components/**/*.{svelte,js,ts}',
-		'./src/lib/images/AsmblyLogo.svg',
+		'./src/lib/app_images/AsmblyLogo.svg',
 	],
 	theme: {
 		colors,
