@@ -18,11 +18,7 @@ export function printClasses() {
     if (
       !matchedImages.has(img) &&
       !img.includes('Default') &&
-      !img.includes('Neon') &&
-      !img.includes('DavidDiskoNew') &&
-      !img.includes('GabriellePierce') &&
-      !img.includes('JamesFreeman') &&
-      !img.includes('SavannaHarvey')
+      !img.includes('Neon')
     ) {
       s += `missing\t${cleanImage(img)}\n`;
     }
