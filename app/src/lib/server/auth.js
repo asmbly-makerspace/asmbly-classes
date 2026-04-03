@@ -98,6 +98,11 @@ async function getSession(sessionId) {
 		return { session: null, user: null };
 	}
 
+	// Check if user exists
+	if (!result.user) {
+		return { session: null, user: null };
+	}
+
 	const session = {
 		id: result.id,
 		neonId: result.user_id,

@@ -51,8 +51,10 @@ async function getActualAttendees(eventId) {
 	if (registrationList !== null && registrationList !== undefined) {
 		for (const registration of registrationList) {
 			const tickets = registration.tickets[0].attendees;
-			if (tickets[0].registrationStatus === 'SUCCEEDED') {
-				count += tickets.length;
+			for (const attendee of tickets) {
+				if (attendee.registrationStatus === 'SUCCEEDED') {
+					count++;
+				}
 			}
 		}
 	}
