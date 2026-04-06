@@ -27,10 +27,12 @@
 		'Small Lasers Class',
 		'Woodshop Safety',
 		'Metal Shop Safety',
-		'Ceramics Studio Introduction (CSI)'
+		'Ceramics Studio Introduction (CSI)',
+		'Stationary Sanders'
 	];
 
 	$: classType = new NeonEventType(data.classJson);
+	$: allowsCheckout = !noCheckouts.includes(classType.name);
 
 	$: classInstanceId = $page.url.searchParams.get('eventId');
 
@@ -344,13 +346,13 @@
 					</div>
 				{/if}
 			</div>
-			{#if classType.category !== 'Orientation' && classType.classInstances[0].startDateTime > DateTime.local( { zone: 'America/Chicago' } )}
+			{#if classType.category !== 'Orientation'}
 				<div class="mt-12 flex max-w-md justify-between px-4">
 					<button
 						class="btn btn-primary rounded-none"
 						on:click={() => document.getElementById('privateAndCheckout').showModal()}
 					>
-						Request a Private or Checkout Session</button
+						{allowsCheckout ? 'Request a Private or Checkout Session' : 'Request a Private Session'}</button
 					>
 					<dialog id="privateAndCheckout" class="modal">
 						<div class="modal-box rounded-none">
@@ -362,14 +364,22 @@
 							<!-- Modal content -->
 
 							<div class="prose">
-								<h2 class="font-asmbly">Private/Checkout Class Request</h2>
-								<p>
-									Sign up below to request a private or checkout session. Note that we do not offer
-									checkout sessions for all classes. This will be indicated by a disabled "Checkout"
-									option. More info about private and checkout classes can be found in our <a
-										href="https://asmbly.org/faq/#classfaq">Classes FAQ</a
-									>.
-								</p>
+								<h2 class="font-asmbly">{allowsCheckout ? 'Private/Checkout' : 'Private'} Class Request</h2>
+								{#if allowsCheckout}
+									<p>
+										Sign up below to request a private or checkout session. More info about private
+										and checkout classes can be found in our <a
+											href="https://asmbly.org/faq/#classfaq">Classes FAQ</a
+										>.
+									</p>
+								{:else}
+									<p>
+										Sign up below to request a private session. This class does not offer checkout
+										sessions. More info about private classes can be found in our <a
+											href="https://asmbly.org/faq/#classfaq">Classes FAQ</a
+										>.
+									</p>
+								{/if}
 							</div>
 
 							<SuperForm
@@ -407,10 +417,8 @@
 								<RadioField
 									{form}
 									field="sessionType"
-									options={['Private', 'Checkout']}
+									options={allowsCheckout ? ['Private', 'Checkout'] : ['Private']}
 									class="radio radio-accent my-4 ml-2"
-									{noCheckouts}
-									className={classType.name}
 								/>
 
 								<p class="flex">
