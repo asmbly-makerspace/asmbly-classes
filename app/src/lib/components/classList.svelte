@@ -1,9 +1,7 @@
 <script>
 	import NeonEventType from '$lib/models/neonEventType.js'
-	import NeonEventInstance from '$lib/models/neonEventInstance.js'
 	import ClassCard from '$lib/components/classCard.svelte'
 	import Fuse from 'fuse.js';
-	import { DateTime } from 'luxon';
 
 	export let classJson
 	export let filters = {}
@@ -39,7 +37,8 @@
 			const fuse = new Fuse(classList, {
 				useExtendedSearch: true,
 				includeScore: true,
-				threshold: 0.25,
+				threshold: 0.3,
+				ignoreLocation: true,
 				keys,
 			})
 			result = fuse.search(query).map(i => i.item)
@@ -49,7 +48,6 @@
 
 		// hide full or past
 		if (!filters.showAll) {
-			const now = DateTime.local({zone: 'America/Chicago'})
 			result = result.filter(r => r.isAvailable(filters.groupByClass))
 		}
 
