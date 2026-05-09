@@ -1,0 +1,43 @@
+name: Image Check
+
+on:
+  pull_request:
+    paths:
+      - 'app/src/lib/images/**'
+      - 'app/src/lib/components/classCard.svelte'
+      - 'app/src/lib/components/myClassCard.svelte'
+      - 'app/src/lib/models/neonEventInstance.js'
+      - 'app/src/routes/__image-check/**'
+      - 'app/tests/**'
+      - 'app/package.json'
+      - 'app/package-lock.json'
+      - 'app/playwright.config.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/image-check.yml'
+
+jobs:
+  image-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            app/package-lock.json
+
+      - run: npm ci
+
+      - run: npm ci --prefix app
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run build --prefix app
+
+      - run: npm run test:images
