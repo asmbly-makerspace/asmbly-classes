@@ -38,6 +38,8 @@ jobs:
 
       - run: npx playwright install --with-deps chromium
 
+      - run: npm exec --prefix app -- prisma generate --schema app/prisma/schema.prisma
+
       - run: npm run build --prefix app
 
       - run: npm run test:images
