@@ -19,7 +19,11 @@
 </script>
 
 {#if event}
-<div class="card mx-2 mb-4 rounded-none bg-base-100 shadow-xl lg:card-side lg:max-h-72">
+<div
+	class="card mx-2 mb-4 rounded-none bg-base-100 shadow-xl lg:card-side lg:max-h-72"
+	data-testid="class-card"
+	data-category={event.category}
+>
 	<figure class="{filters.compact ? ' lg:w-1/3' : 'w-full lg:w-4/5 lg:flex'}">
 		<enhanced:img
 			class="object-cover h-full {filters.compact ? 'hidden lg:block' : 'lg:w-auto lg-flex-shrink-0 lg:object-center'}"
