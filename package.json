@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "test:images": "playwright test -c app/playwright.config.js"
+    "test": "playwright test -c app/playwright.config.js",
+    "test:db:up": "docker compose -f compose.test.yaml up -d --wait",
+    "test:db:down": "docker compose -f compose.test.yaml down -v"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1"

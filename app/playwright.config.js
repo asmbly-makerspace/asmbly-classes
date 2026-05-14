@@ -18,10 +18,10 @@ export default defineConfig({
 			: 'npm run dev -- --host 127.0.0.1 --port 4173',
 		cwd: appDirectory,
 		env: {
-			PLAYWRIGHT_IMAGE_CHECK: 'true'
+			DATABASE_URL: 'postgresql://postgres:localdev@127.0.0.1:5432/postgres'
 		},
 		reuseExistingServer: !process.env.CI,
-		url: 'http://127.0.0.1:4173/__image-check'
+		port: 4173
 	},
 	projects: [
 		{

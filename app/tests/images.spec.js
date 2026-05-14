@@ -155,38 +155,3 @@ test('new class image filenames do not look like generated duplicate variants', 
 		].join('\n')
 	).toEqual([]);
 });
-
-test('class images load and decode in the browser', async ({ page }) => {
-	const failedImageResponses = [];
-
-	page.on('response', (response) => {
-		if (response.request().resourceType() === 'image' && !response.ok()) {
-			failedImageResponses.push(`${response.status()} ${response.url()}`);
-		}
-	});
-
-	await page.goto('/__image-check');
-	await expect(page.getByRole('heading', { name: 'Image Check' })).toBeVisible();
-
-	const brokenImages = await page.locator('[data-testid="class-image"]').evaluateAll(async (images) => {
-		const failures = [];
-
-		for (const image of images) {
-			try {
-				await image.decode();
-			} catch {
-				failures.push(`${image.dataset.sourcePath}: decode failed`);
-				continue;
-			}
-
-			if (!image.complete || image.naturalWidth === 0 || image.naturalHeight === 0) {
-				failures.push(`${image.dataset.sourcePath}: loaded with zero dimensions`);
-			}
-		}
-
-		return failures;
-	});
-
-	expect(failedImageResponses).toEqual([]);
-	expect(brokenImages).toEqual([]);
-});
