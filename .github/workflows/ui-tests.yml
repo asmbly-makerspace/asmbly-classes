@@ -1,29 +1,22 @@
-name: Image Check
+name: UI Tests
 
 on:
   pull_request:
     paths:
-      - 'app/src/lib/images/**'
-      - 'app/src/lib/components/classCard.svelte'
-      - 'app/src/lib/components/myClassCard.svelte'
-      - 'app/src/lib/models/neonEventInstance.js'
-      - 'app/src/routes/__image-check/**'
-      - 'app/tests/**'
-      - 'app/package.json'
-      - 'app/package-lock.json'
-      - 'app/playwright.config.js'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/image-check.yml'
+      - "app/**"
+      - "compose.test.yaml"
+      - "dev/dev-db.sql"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/ui-tests.yml"
 
 jobs:
-  image-check:
+  ui-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -31,15 +24,10 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             app/package-lock.json
-
+      - run: docker compose -f compose.test.yaml up -d --wait
       - run: npm ci
-
       - run: npm ci --prefix app
-
       - run: npx playwright install --with-deps chromium
-
       - run: npm exec --prefix app -- prisma generate --schema app/prisma/schema.prisma
-
       - run: npm run build --prefix app
-
-      - run: npm run test:images
+      - run: npm test
