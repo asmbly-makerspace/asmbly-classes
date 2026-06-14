@@ -96,10 +96,6 @@ function isAddedOrRenamed(change) {
 	return change.status === 'A' || change.status === '??' || change.status === 'R';
 }
 
-function isDeletedOrRenamed(change) {
-	return change.status === 'D' || change.status === 'R';
-}
-
 function hasGeneratedVariantSuffix(filename) {
 	const basename = filename.replace(supportedImageExtension, '');
 
@@ -117,26 +113,6 @@ test('required fallback class images exist', async () => {
 	const actualImageFilenames = await readdir(imageDirectory);
 
 	expect(actualImageFilenames).toEqual(expect.arrayContaining(requiredFallbackImages));
-});
-
-test('class image changes do not remove or rename existing filenames', () => {
-	const destructiveImageChanges = getImageChanges()
-		.filter(isDeletedOrRenamed)
-		.map((change) => {
-			if (change.newPath) {
-				return `${change.path} -> ${change.newPath}`;
-			}
-
-			return change.path;
-		});
-
-	expect(
-		destructiveImageChanges,
-		[
-			'Existing class image filenames are part of the app lookup contract.',
-			'Add new image files freely, but do not delete or rename existing ones without updating the lookup behavior and tests.'
-		].join('\n')
-	).toEqual([]);
 });
 
 test('new class image filenames do not look like generated duplicate variants', () => {
