@@ -56,7 +56,6 @@
 	},
 	"type": "module",
 	"prisma": {
-		"seed": "vite-node ./prisma/seed.js",
-		"schema": "./prisma/schema.prisma"
+		"schema": "../classes-prisma/schema.prisma"
 	}
 }

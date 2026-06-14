@@ -25,8 +25,8 @@ services:
     env_file:
       - .env
     build:
-      context: ./app
-      dockerfile: Dockerfile.dev
+      context: .
+      dockerfile: app/Dockerfile.dev
       secrets:
         - postgres-user
         - postgres-password
@@ -44,6 +44,7 @@ services:
     volumes:
       - ./app:/usr/src/app
       - /usr/src/app/node_modules
+      - ./classes-prisma:/usr/src/classes-prisma
     environment:
       DEVELOPMENT: "true"
       TZ: "America/Chicago"
@@ -55,13 +56,16 @@ services:
   cron:
     env_file:
       - .env
-    build: ./cron-service
+    build:
+      context: .
+      dockerfile: cron-service/Dockerfile
     depends_on:
       - db
     restart: unless-stopped
     volumes:
       - ./cron-service:/var/task
       - /var/task/node_modules
+      - ./classes-prisma:/classes-prisma
     networks:
       - backend
 
