@@ -76,8 +76,26 @@ Run from `app/`. Other scripts in `package.json` are container-internal or unuse
 | ---------------- | --------------------------------------------------------- |
 | `npm run lint`   | Prettier check + ESLint                                   |
 | `npm run format` | Prettier write                                            |
-| `npm test`       | Vitest (currently only a placeholder test)                |
 | `npm run dev`    | Vite dev server — usually invoked by `dev/load-dev-db.sh` |
+
+## Testing
+
+Run from `app/`.
+
+| Command                | What it runs                                                                                  |
+| ---------------------- | --------------------------------------------------------------------------------------------- |
+| `npm test`             | **Unit tests** (Vitest) — colocated `*.test.js` files; mock external deps, no Docker needed.  |
+| `npm run test:watch`   | Same suite in watch mode for local iteration.                                                 |
+| `npm run test:e2e`     | **End-to-end tests** (Playwright) — drive Chromium against a real SvelteKit + Postgres stack. |
+| `npm run test:all`     | Unit then E2E in sequence.                                                                    |
+| `npm run test:db:up`   | Start the Postgres test container (required before E2E).                                      |
+| `npm run test:db:down` | Stop + wipe the test container.                                                               |
+
+First-time E2E setup: `npx playwright install chromium` (browser binaries) and `npx prisma generate` (Prisma client) from `app/`.
+
+The E2E suite runs against a Postgres container seeded from `dev/dev-db.sql` — the same dump used for local dev. The fresher that dump is, the more representative the tests are; running them against stale seed data may pass while real production data would fail.
+
+CI posts a coverage report on each PR, generated from the **unit** suite only (`npm test -- --coverage`). E2E tests aren't instrumented, so the percentages reflect only what the unit/Vitest tests exercise. Run locally the same way to preview the report at `app/coverage/index.html`, which is git-ignored.
 
 ## Environment variables
 

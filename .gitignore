@@ -3,6 +3,8 @@ node_modules
 */build
 */.svelte-kit
 */package
+*/playwright-report
+*/test-results
 .env
 .env.*
 !.env.example
@@ -15,3 +17,4 @@ app/src/lib/server/prismaClient.js
 compose.preview.yaml
 compose.debug.yaml
 Dockerfile.preview
+app/coverage
