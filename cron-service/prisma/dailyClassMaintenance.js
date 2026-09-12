@@ -255,6 +255,11 @@ async function main(config) {
 					select: {
 						name: true
 					}
+				},
+				category: {
+					select: {
+						name: true
+					}
 				}
 			}
 		});
@@ -283,6 +288,13 @@ async function main(config) {
     for (let result of results) {
 		if (result.eventId != null) {
 			console.log('Successfully added/updated: ' +  result.eventType.name + ' on ' + result.startDateTime);
+
+			// Private sessions are hidden on the website, so don't notify anyone about them.
+			if (result.category.name === 'Private') {
+				console.log(`Skipping notifications for private session of ${result.eventType.name}.`);
+				continue;
+			}
+
         	eventTypesAddedToday.add(result.eventTypeId);
 		}
     }
