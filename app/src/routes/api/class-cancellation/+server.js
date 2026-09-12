@@ -113,7 +113,18 @@ export async function POST({ request }) {
         return error(500, 'Database error');
     }
 
-    if (eventInstanceDecrement.requests.length > 0) {
+    // Bookkeeping cancellations can land days after a class has run
+    const sessionIsUpcoming = eventInstanceDecrement.startDateTime > new Date();
+
+    if (!sessionIsUpcoming) {
+        const sessionDate = DateTime.fromJSDate(eventInstanceDecrement.startDateTime)
+            .setZone('America/Chicago')
+            .toLocaleString(DateTime.DATETIME_MED);
+        console.log(`Cancellation received for a past session of ${eventInstanceDecrement.eventType.name} on ${sessionDate}. `
+            + `Seat count updated; skipping ${eventInstanceDecrement.requests.length} waitlist email(s).`);
+    }
+
+    if (sessionIsUpcoming && eventInstanceDecrement.requests.length > 0) {
 
         const startDateTime = DateTime.fromJSDate(eventInstanceDecrement.startDateTime).setZone('America/Chicago').toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
 
