@@ -182,7 +182,7 @@ describe('POST /api/class-cancellation', () => {
 			eventTypeId: 1,
 			attendeeCount: 10,
 			capacity: 10,
-			startDateTime: new Date('2026-03-15T14:00:00Z')
+			startDateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
 		});
 
 		mockPrisma._setData('neonEventInstanceRequest', requester1Id, {
@@ -247,6 +247,63 @@ describe('POST /api/class-cancellation', () => {
 		expect(request2.fulfilled).toBe(true);
 	});
 
+	it('does not email the waitlist when the session has already happened', async () => {
+		const eventId = 123;
+		const neonId = 456;
+		const requesterId = 789;
+
+		mockPrisma._setData('neonEventType', 1, {
+			id: 1,
+			name: 'Intro to Filament 3D Printing',
+			eventTypeId: 100
+		});
+
+		// Class ran a week ago; the education team is reconciling a no-show.
+		mockPrisma._setData('neonEventInstance', eventId, {
+			eventId,
+			eventTypeId: 1,
+			attendeeCount: 10,
+			capacity: 10,
+			startDateTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+		});
+
+		mockPrisma._setData('neonEventInstanceRequest', requesterId, {
+			id: requesterId,
+			eventId,
+			requesterId: requesterId,
+			fulfilled: false,
+			requester: {
+				id: requesterId,
+				email: 'waitlist@example.com',
+				firstName: 'Lance'
+			}
+		});
+
+		mockPrisma._setData('neonBaseRegLink', 'default', {
+			url: 'https://example.com/register/'
+		});
+
+		const webhook = new NeonWebhookMock(eventId, neonId, { status: 'CANCELED' });
+		const request = {
+			json: async () => webhook.toRequest()
+		};
+
+		const response = await POST({ request });
+		const data = await response.json();
+
+		expect(response.status).toBe(200);
+		expect(data.updated).toBe(true);
+
+		// The seat count is still corrected...
+		const updatedEvent = mockPrisma._getData('neonEventInstance', eventId);
+		expect(updatedEvent.attendeeCount).toBe(9);
+
+		// ...but nobody is told about a seat in a class that already ran,
+		// and their waitlist request stays open for a future session.
+		expect(mockSendMIMEmessage).not.toHaveBeenCalled();
+		expect(mockPrisma._getData('neonEventInstanceRequest', requesterId).fulfilled).toBe(false);
+	});
+
 	it('handles refunded status same as canceled', async () => {
 		const eventId = 123;
 		const neonId = 456;
@@ -304,7 +361,7 @@ describe('POST /api/class-cancellation', () => {
 			eventTypeId: 1,
 			attendeeCount: 10,
 			capacity: 10,
-			startDateTime: new Date('2026-03-15T14:00:00Z')
+			startDateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
 		});
 
 		mockPrisma._setData('neonEventInstanceRequest', requester1Id, {
