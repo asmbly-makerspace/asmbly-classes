@@ -86,10 +86,10 @@ Run from `app/`.
 | ---------------------- | --------------------------------------------------------------------------------------------- |
 | `npm test`             | **Unit tests** (Vitest) — colocated `*.test.js` files; mock external deps, no Docker needed.  |
 | `npm run test:watch`   | Same suite in watch mode for local iteration.                                                 |
-| `npm run test:e2e`     | **End-to-end tests** (Playwright) — drive Chromium against a real SvelteKit + Postgres stack. |
-| `npm run test:all`     | Unit then E2E in sequence.                                                                    |
 | `npm run test:db:up`   | Start the Postgres test container (required before E2E).                                      |
+| `npm run test:e2e`     | **End-to-end tests** (Playwright) — drive Chromium against a real SvelteKit + Postgres stack. |
 | `npm run test:db:down` | Stop + wipe the test container.                                                               |
+| `npm run test:all`     | Unit then E2E in sequence.                                                                    |
 
 First-time E2E setup: `npx playwright install chromium` (browser binaries) and `npx prisma generate` (Prisma client) from `app/`.
 
