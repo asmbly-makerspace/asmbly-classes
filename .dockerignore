@@ -1,0 +1,21 @@
+**/.git
+**/.gitignore
+**/.idea
+**/.vscode
+**/.DS_Store
+**/node_modules
+.env
+.env.*
+!.env.example
+secrets/
+
+# App-specific
+app/.svelte-kit
+app/build
+app/.npmrc
+app/.prettierignore
+app/.prettierrc
+app/.eslintignore
+app/.eslintrc.cjs
+app/npm-debug.log
+

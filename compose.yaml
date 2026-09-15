@@ -44,7 +44,9 @@ services:
   cron:
     env_file:
       - .env
-    build: ./cron-service
+    build:
+      context: .
+      dockerfile: cron-service/Dockerfile
     depends_on:
       - db
     restart: unless-stopped
