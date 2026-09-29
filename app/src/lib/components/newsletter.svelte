@@ -15,6 +15,7 @@
 		autoFocusOnError: 'detect',
 		applyAction: true,
 		resetForm: true,
+		taintedMessage: null,
 	});
 
 	const {
