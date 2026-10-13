@@ -93,8 +93,16 @@ async function main() {
 
 		const startDateTime = DateTime.fromISO(startDateTimeString, { zone: 'America/Chicago' }).toJSDate();
 		const endDateTime = DateTime.fromISO(endDateTimeString, { zone: 'America/Chicago' }).toJSDate();
+		const eventCapacity = parseInt(event['Event Capacity']) || 0;
 
-        if (typeof exists !== 'undefined' && exists !== null && DateTime.fromJSDate(startDateTime).equals(DateTime.fromJSDate(exists.startDateTime)) && DateTime.fromJSDate(endDateTime).equals(DateTime.fromJSDate(exists.endDateTime)) && parseInt(event['Actual Registrants']) === exists.attendeeCount && event['Event Topic'] === exists.teacher.name) {
+		const eventAlreadyUpToDate = typeof exists !== 'undefined' && exists !== null
+			&& DateTime.fromJSDate(startDateTime).equals(DateTime.fromJSDate(exists.startDateTime))
+			&& DateTime.fromJSDate(endDateTime).equals(DateTime.fromJSDate(exists.endDateTime))
+			&& parseInt(event['Actual Registrants']) === exists.attendeeCount
+			&& event['Event Topic'] === exists.teacher.name
+			&& eventCapacity === exists.capacity;
+
+        if (eventAlreadyUpToDate) {
             continue;
         }
 
@@ -173,7 +181,6 @@ async function main() {
 		}
 		
 
-		const eventCapacity = parseInt(event['Event Capacity']) || 0;
 		const eventPrice = parseFloat(event['Event Admission Fee']);
 		const summary = event['Event Summary'];
 		const eventName = event['Event Name'].split(' w/ ')[0].trim();
