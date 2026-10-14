@@ -19,6 +19,97 @@ async function connectArchCat(model, archCatName, catId) {
 	return record;
 }
 
+async function notifyWaitlistOfOpenSeats(eventIds) {
+	if (eventIds.length === 0) {
+		return;
+	}
+
+	const eventInstancesCall = prisma.neonEventInstance.findMany({
+		where: {
+			eventId: {
+				in: eventIds
+			}
+		},
+		include: {
+			eventType: {
+				select: {
+					name: true
+				}
+			},
+			requests: {
+				where: {
+					fulfilled: false
+				},
+				select: {
+					requester: true,
+					id: true
+				}
+			}
+		}
+	});
+
+	const baseRegLinkCall = prisma.neonBaseRegLink.findFirst({
+		select: {
+			url: true
+		}
+	});
+
+	const [eventInstances, baseRegLink] = await prisma.$transaction([eventInstancesCall, baseRegLinkCall]);
+
+	const emailsToSend = [];
+	const requestsToFulfill = [];
+
+	for (const eventInstance of eventInstances) {
+		const startDateTime = DateTime.fromJSDate(eventInstance.startDateTime).setZone('America/Chicago').toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
+
+		for (const request of eventInstance.requests) {
+			const emailBody = `
+            <div>
+            <p>Hi ${request.requester.firstName},</p>
+            <p>More seats have opened up in ${eventInstance.eventType.name} on ${startDateTime}.</p>
+            <p>If you are interested in attending, please use <a href="${baseRegLink.url}${eventInstance.eventId}">this link</a> to register through Neon.</p>
+            <p>As a reminder, seats are first come first served.</p>
+            <p><b>Please note:</b> If the open seats have already been taken, Neon will still allow you to "register" and join Neon's waitlist system without
+            paying for the class. This means that you are not a confirmed student, and you will not be able to join this session. If Neon collects your registration fee and you
+            receive an event registration confirmation email, you are a confirmed student.</p>
+            <p>If you have any questions, feel free to reply to this email.</p>
+            <p>Best, <br>Asmbly Education Team</p>
+            </div>
+            `
+
+			const email = sendMIMEmessage({
+				from: 'Asmbly Education Team <notification@asmbly.org>',
+				to: request.requester.email,
+				replyTo: 'membership@asmbly.org',
+				subject: `Open seats in ${eventInstance.eventType.name} at Asmbly`,
+				html: emailBody
+			});
+
+			emailsToSend.push(email);
+			requestsToFulfill.push(request.id);
+
+			console.log(`Sending waitlist seat opening email to ${request.requester.email} for ${eventInstance.eventType.name} on ${startDateTime}`);
+		}
+	}
+
+	if (requestsToFulfill.length === 0) {
+		return;
+	}
+
+	await Promise.all(emailsToSend);
+
+	await prisma.neonEventInstanceRequest.updateMany({
+		where: {
+			id: {
+				in: requestsToFulfill
+			}
+		},
+		data: {
+			fulfilled: true
+		}
+	});
+}
+
 async function main() {
 
 	console.log('');
@@ -34,6 +125,8 @@ async function main() {
 	const remainingPrismaCalls = [];
 
 	const alreadyAddedCats = {};
+
+	const capacityIncreasedEventIds = [];
 
 	const currentInactiveEvents = await prisma.neonEventInstance.findMany({
 		where: {
@@ -105,6 +198,14 @@ async function main() {
         if (eventAlreadyUpToDate) {
             continue;
         }
+
+		const seatsOpenedByCapacityIncrease = typeof exists !== 'undefined' && exists !== null
+			&& eventCapacity > exists.capacity
+			&& parseInt(event['Actual Registrants']) < eventCapacity;
+
+		if (seatsOpenedByCapacityIncrease) {
+			capacityIncreasedEventIds.push(parseInt(event['Event ID']));
+		}
 
 		let category = event['Event Category Name'];
 		let addCategory;
@@ -283,6 +384,13 @@ async function main() {
 		console.log(`Error adding events to the database:`);
 		console.error(e);
 		return
+	}
+
+	try {
+		await notifyWaitlistOfOpenSeats(capacityIncreasedEventIds);
+	} catch (e) {
+		console.log(`Error notifying waitlist of open seats:`);
+		console.error(e);
 	}
 
     const eventTypesAddedToday = new Set();
