@@ -59,6 +59,8 @@ services:
     depends_on:
       - db
     restart: unless-stopped
+    environment:
+      APP_URL: http://app:5173
     volumes:
       - ./cron-service:/usr/src/app
       - /usr/src/app/node_modules

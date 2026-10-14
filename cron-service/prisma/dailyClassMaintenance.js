@@ -2,6 +2,9 @@ import { prisma } from './prismaClient.js';
 import { getCurrentEvents, getInactiveEvents } from './neonHelpers.js';
 import { sendMIMEmessage } from './gmailEmailFactory.js';
 import { DateTime } from 'luxon';
+import { apiCall } from './apiCall.js';
+
+const APP_URL = process.env.APP_URL || 'http://app:3000';
 
 async function connectArchCat(model, archCatName, catId) {
 	const record = await model.update({
@@ -24,90 +27,11 @@ async function notifyWaitlistOfOpenSeats(eventIds) {
 		return;
 	}
 
-	const eventInstancesCall = prisma.neonEventInstance.findMany({
-		where: {
-			eventId: {
-				in: eventIds
-			}
-		},
-		include: {
-			eventType: {
-				select: {
-					name: true
-				}
-			},
-			requests: {
-				where: {
-					fulfilled: false
-				},
-				select: {
-					requester: true,
-					id: true
-				}
-			}
-		}
-	});
+	const response = await apiCall('POST', `${APP_URL}/api/waitlist-notification`, { apiKey: process.env.INTERNAL_API_KEY, eventIds: eventIds }, { 'Content-Type': 'application/json' });
 
-	const baseRegLinkCall = prisma.neonBaseRegLink.findFirst({
-		select: {
-			url: true
-		}
-	});
-
-	const [eventInstances, baseRegLink] = await prisma.$transaction([eventInstancesCall, baseRegLinkCall]);
-
-	const emailsToSend = [];
-	const requestsToFulfill = [];
-
-	for (const eventInstance of eventInstances) {
-		const startDateTime = DateTime.fromJSDate(eventInstance.startDateTime).setZone('America/Chicago').toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
-
-		for (const request of eventInstance.requests) {
-			const emailBody = `
-            <div>
-            <p>Hi ${request.requester.firstName},</p>
-            <p>More seats have opened up in ${eventInstance.eventType.name} on ${startDateTime}.</p>
-            <p>If you are interested in attending, please use <a href="${baseRegLink.url}${eventInstance.eventId}">this link</a> to register through Neon.</p>
-            <p>As a reminder, seats are first come first served.</p>
-            <p><b>Please note:</b> If the open seats have already been taken, Neon will still allow you to "register" and join Neon's waitlist system without
-            paying for the class. This means that you are not a confirmed student, and you will not be able to join this session. If Neon collects your registration fee and you
-            receive an event registration confirmation email, you are a confirmed student.</p>
-            <p>If you have any questions, feel free to reply to this email.</p>
-            <p>Best, <br>Asmbly Education Team</p>
-            </div>
-            `
-
-			const email = sendMIMEmessage({
-				from: 'Asmbly Education Team <notification@asmbly.org>',
-				to: request.requester.email,
-				replyTo: 'membership@asmbly.org',
-				subject: `Open seats in ${eventInstance.eventType.name} at Asmbly`,
-				html: emailBody
-			});
-
-			emailsToSend.push(email);
-			requestsToFulfill.push(request.id);
-
-			console.log(`Sending waitlist seat opening email to ${request.requester.email} for ${eventInstance.eventType.name} on ${startDateTime}`);
-		}
+	if (response.notified !== true) {
+		throw new Error(`Waitlist notification failed with status ${response.status}: ${response.statusText}`);
 	}
-
-	if (requestsToFulfill.length === 0) {
-		return;
-	}
-
-	await Promise.all(emailsToSend);
-
-	await prisma.neonEventInstanceRequest.updateMany({
-		where: {
-			id: {
-				in: requestsToFulfill
-			}
-		},
-		data: {
-			fulfilled: true
-		}
-	});
 }
 
 async function main() {
