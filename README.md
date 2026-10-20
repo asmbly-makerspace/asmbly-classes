@@ -11,7 +11,7 @@ Members browse + waitlist + request classes, and are routed to Neon to register 
 ├── app/                # SvelteKit application (the site itself)
 ├── cron-service/       # AWS Lambda jobs: Neon sync + weekly reporting
 ├── dev/                # Local dev DB tooling (see dev/README.md)
-└── .github/workflows/  # CI: build/push images to ECR, deploy Lambda
+└── .github/            # CI: tests, build/push images to ECR, deploy Lambda, merge class photos
 ```
 
 ## Tech stack overview
@@ -124,10 +124,31 @@ The webapp expects the following (referenced from `app/src/lib/server/secrets.js
 
 `.github/workflows/`:
 
-- **`build-and-push.yml`** — on push to `main` touching `app/**`: build linux/amd64 image, push to ECR repo `classes-page` tagged `latest` and `${sha}`, with BuildKit cache pushed to a `buildcache` tag.
+- **`build-and-push.yml`** — on push to `main` touching `app/**`, or when started by hand or by `merge-class-photos.yml`: build linux/amd64 image, push to ECR repo `classes-page` tagged `latest` and `${sha}`, with BuildKit cache pushed to a `buildcache` tag. One build runs at a time, so an older build can't push `latest` after a newer one.
 - **`build-cron.yml`** — on push to `main` touching `cron-service/**`: build linux/arm64 image, push to ECR repo `classes-cron`, then deploy to Lambda function `classes-crons` via `aws-actions/aws-lambda-deploy@v1.1.0` (timeout 600s).
+- **`tests.yml`** — on pull requests touching `app/**`: unit tests, then E2E tests.
+- **`merge-class-photos.yml`** — after `tests.yml` passes on a pull request from the class photo upload page: merges it and starts `build-and-push.yml`. See [Class photos](#class-photos).
 
-Both run in `us-east-2` and use AWS credentials from repo secrets.
+Both build workflows run in `us-east-2` and use AWS credentials from repo secrets.
+
+## Class photos
+
+Class images live in `app/src/lib/images/`. Staff change one from the class photo upload page at `https://facilities.asmbly.org/class-photo-upload` (code in [`asmbly-facilities-and-maintenance-tracking-automation`](https://github.com/asmbly-makerspace/asmbly-facilities-and-maintenance-tracking-automation)). The page checks the photo, then the `asmbly-class-photos-upload` GitHub App opens a pull request from a `class-photo/` branch. A new photo for a class with an open pull request updates that pull request.
+
+`merge-class-photos.yml` merges these pull requests without review. When `tests.yml` passes, it runs `.github/scripts/merge-class-photo.sh` from `main`, which merges only when:
+
+- the App opened the pull request and made every commit on it, from a `class-photo/` branch in this repo, into `main`;
+- it adds or replaces exactly one `.jpg` directly in `app/src/lib/images/`, and removes only images the class list matches to the same class (the same `simplifyName` key in `neonEventInstance.js`), which is what the upload page does;
+- it doesn't touch the fallback images (`classDefault.jpg`, `lasersDefault.jpg` and the other `*Default.jpg`);
+- the tests passed on the pull request's current commit.
+
+It squash-merges that commit, then starts `build-and-push.yml`, because a merge made with the workflow's token doesn't trigger push workflows. A photo is live about 20–30 minutes after it is submitted (tests, then the image build, then App Runner's deploy). A pull request someone else opened, or one that moved on after its tests, is left alone. When the App's pull request breaks any other rule, the run fails with the reason and the pull request stays open for a person.
+
+- **To undo a photo:** submit another one, or revert the commit.
+- **If a run fails after it logs `Merged #<n>`:** the photo is on `main` but wasn't deployed. Start the deploy by hand with `gh workflow run build-and-push.yml`; rerunning the failed run won't, because the pull request is already merged.
+- **To review photos by hand again:** disable the workflow (`gh workflow disable merge-class-photos.yml`). Pull requests then wait for a person.
+- **To see what it would do:** `REPO=asmbly-makerspace/asmbly-classes HEAD_BRANCH=<branch> HEAD_SHA=<sha> DRY_RUN=1 .github/scripts/merge-class-photo.sh` runs every check without merging.
+- **If `main` gets a rule requiring reviews:** add GitHub Actions to its bypass list, or this workflow can't merge.
 
 ## Legacy / unused
 

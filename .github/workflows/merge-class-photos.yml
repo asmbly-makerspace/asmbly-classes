@@ -1,0 +1,35 @@
+name: Merge Class Photos
+
+on:
+  workflow_run:
+    workflows: [ "Tests" ]
+    types: [ completed ]
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: merge-class-photos-${{ github.event.workflow_run.head_branch }}
+
+jobs:
+  merge:
+    name: Merge class photo pull request
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository &&
+      startsWith(github.event.workflow_run.head_branch, 'class-photo/')
+    runs-on: ubuntu-latest
+    steps:
+      # workflow_run checks out main, never the pull request's code.
+      - uses: actions/checkout@v4
+
+      - name: Check and merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: .github/scripts/merge-class-photo.sh

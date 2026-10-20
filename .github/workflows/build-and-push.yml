@@ -5,6 +5,13 @@ on:
     branches: [ "main" ]
     paths:
       - 'app/**'
+  # Started by merge-class-photos.yml, whose merges don't trigger push.
+  workflow_dispatch:
+
+# One build at a time, so an older build can't push `latest` after a newer one.
+# A waiting build is replaced by a newer one, which builds a later main.
+concurrency:
+  group: build-and-push
 
 env:
   AWS_REGION: us-east-2
