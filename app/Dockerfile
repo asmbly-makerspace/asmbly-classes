@@ -1,20 +1,18 @@
 # Builder image
 FROM node:lts AS builder
 
-# Set environment variables
 ARG NODE_ENV=development
 
-# Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Copy package.json from app subdirectory
+COPY app/package*.json ./
 
-# Install dependencies
 RUN npm ci
 
-# Copy source code
-COPY . .
+# Copy app source and shared schema
+COPY app/ .
+COPY classes-prisma/ /usr/src/classes-prisma/
 
 # Add build secrets
 RUN --mount=type=secret,id=postgres-user \
@@ -23,13 +21,10 @@ RUN --mount=type=secret,id=postgres-user \
 RUN --mount=type=secret,id=postgres-pass \
   POSTGRES_PASS=$(cat /run/secrets/postgres-pass)
 
-# Generate Prisma Client for build
 RUN npx prisma generate
 
-# Build the app
 RUN npm run build
 
-# Remove dev dependencies
 RUN npm prune --production
 
 # Running image
@@ -39,20 +34,17 @@ RUN apt-get update && apt-get upgrade -y
 
 ENV NODE_ENV=production
 
-# Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json
-COPY  --chown=node:node package*.json ./
+COPY --chown=node:node app/package*.json ./
 
-#Copy prisma files
-COPY --chown=node:node ./prisma ./prisma
+# Copy shared Prisma schema and migrations
+COPY --chown=node:node classes-prisma/ /usr/src/classes-prisma/
 
-# Copy built assets
 COPY --chown=node:node --from=builder /usr/src/app/build ./build
 COPY --chown=node:node --from=builder /usr/src/app/node_modules ./node_modules
 
-COPY --chown=node:node ./wait-for-it.sh /wait-for-it.sh
+COPY --chown=node:node app/wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 
 USER node
